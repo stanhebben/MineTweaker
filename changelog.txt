@@ -1,0 +1,64 @@
+[Version 2.1.0]
+- Liquid support
+- Liquid container support
+- BuildCraft support: change assembly table recipes, change refinery recipes, change fuels and coolants
+- (1.5.2 only) IC2 support: add and remove compressor, extractor and macerator recipes
+- Furnace now supports ore dictionary entries for recipe input
+- Improved logging system
+- Now logs the actions that are being performed
+- Non-undoable actions can now be used on servers. If the player attempts to join another server (or singleplayer game) after such action, the game will request a restart.
+- Fix for specific furnace recipe removal not working
+- Fix for errors printing a strange string instead of the script filename
+- Fix for some mods breaking name registration
+
+[Version 2.0.3]
+- Added furnace.remove
+- Added a ton of checks to print meaningful error messages instead of crashing
+- Fix for dedicated server crash (somewhat experimental but should work)
+
+[Version 2.0.2]
+- Fixed a crash with blocks that have no name registered for them
+- Fixed a potential minor bug preventing the registration of certain items in the name tables
+
+[Version 2.0.1]
+- Fixed a crash with blocks that have no item registered for them
+
+[Version 2.0.0]
+- Almost entirely rewritten
+- Now uses fully scripted files. Script version is now 2.
+- Old script files are automatically converted to the new system.
+- Now has two ways of storing script files: inside the config or with the world
+- Script files stored with the world will be transmitted to all clients when they connect with the server
+- Script files received from the server will be executed upon connection, and the changes will be undone when disconnecting
+- Multiple script files can be used, they are stored in the minetweaker directory (in the config / savegame)
+- Recipes can now have a modification function, enabling damage and NBT tags to be modified or copied from ingredients
+- Mod API: mods can provide their own interface to MineTweaker
+- Clear function can undo all modifications made (handy to start a server with)
+
+[Version 1.2.0]
+- Internal code refactoring to make it easier to add many machines
+- Support for all thermal expansion machines
+
+[Version 1.1.2]
+- Fixed display of the meta value of wildcard ore dictionary entries
+- Fixed a bug where remove patterns containing ore dictionary entries would not work
+
+[Version 1.1.1]
+- Can now set the burning time of mod items, or add new furnace fuels. Does not work with vanilla fuels.
+
+[Version 1.1.0]
+- Ore dictionary names can now be loaded
+- Ore dictionary values can be used in shaped and shapeless recipes
+- Ore dictionary values can be used in recipe patterns
+- The ~ operator has been added for use in patterns
+- Ore dictionary entries can be added and removed
+- Server commands are added to view the ore dictionary contents
+- Server command is added to see a list of all recipes for a specific item
+- Server command is added to see the item name for a specific item id (will be used in a future version)
+- Fixed the removal of shapeless recipes
+
+[Version 1.0.1]
+- No more example file is generated, fixing the NullPointerException on initial startup.
+
+[Version 1.0.0]
+- Initial release
