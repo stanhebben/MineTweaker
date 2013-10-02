@@ -5,9 +5,9 @@
 package stanhebben.minetweaker.mods.buildcraft.actions;
 
 //#ifndef MC152
-//+import buildcraft.api.core.StackWrapper;
-//+import net.minecraftforge.fluids.FluidStack;
-//+import buildcraft.api.fuels.IronEngineCoolant;
+import buildcraft.api.core.StackWrapper;
+import net.minecraftforge.fluids.FluidStack;
+import buildcraft.api.fuels.IronEngineCoolant;
 //#endif
 import stanhebben.minetweaker.api.IUndoableAction;
 
@@ -17,18 +17,18 @@ import stanhebben.minetweaker.api.IUndoableAction;
  */
 public class RemoveSolidCoolantAction implements IUndoableAction {
 	//#ifndef MC152
-	//+private StackWrapper stack;
-	//+private FluidStack fluid;
+	private StackWrapper stack;
+	private FluidStack fluid;
 	
-	//+public RemoveSolidCoolantAction(StackWrapper stack) {
-		//+this.stack = stack;
-		//+fluid = IronEngineCoolant.solidCoolants.get(stack);
-	//+}
+	public RemoveSolidCoolantAction(StackWrapper stack) {
+		this.stack = stack;
+		fluid = (FluidStack) IronEngineCoolant.solidCoolants.get(stack);
+	}
 	//#endif
 
 	public void apply() {
 		//#ifndef MC152
-		//+IronEngineCoolant.solidCoolants.remove(stack);
+		IronEngineCoolant.solidCoolants.remove(stack);
 		//#endif
 	}
 
@@ -38,23 +38,23 @@ public class RemoveSolidCoolantAction implements IUndoableAction {
 
 	public void undo() {
 		//#ifndef MC152
-		//+IronEngineCoolant.solidCoolants.put(stack, fluid);
+		IronEngineCoolant.solidCoolants.put(stack, fluid);
 		//#endif
 	}
 
 	public String describe() {
 		//#ifdef MC152
-		return "NOP";
+		//+return "NOP";
 		//#else
-		//+return "Removing coolant item " + stack.stack.getDisplayName();
+		return "Removing coolant item " + stack.stack.getDisplayName();
 		//#endif
 	}
 
 	public String describeUndo() {
 		//#ifdef MC152
-		return "NOP";
+		//+return "NOP";
 		//#else
-		//+return "Restoring coolant item " + stack.stack.getDisplayName();
+		return "Restoring coolant item " + stack.stack.getDisplayName();
 		//#endif
 	}
 }

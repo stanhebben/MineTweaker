@@ -22,11 +22,11 @@ import stanhebben.minetweaker.api.value.TweakerValue;
  * @author Stanneke
  */
 public class ShapedAdvancedRecipe implements IRecipe {
-	private TweakerItemStackPattern[] contents;
-	private TweakerItemStack output;
-	private int width;
-	private int height;
-	private TweakerValue function;
+	private final TweakerItemStackPattern[] contents;
+	private final TweakerItemStack output;
+	private final int width;
+	private final int height;
+	private final TweakerValue function;
 	
 	public ShapedAdvancedRecipe(TweakerItemStack output, TweakerItemStackPattern[] contents, int width, TweakerValue function) {
 		this.output = output;
@@ -37,8 +37,9 @@ public class ShapedAdvancedRecipe implements IRecipe {
 	}
 
 	public boolean matches(InventoryCrafting ingredients, World world) {
-		for (int i = 0; i < 3 - width; i++) {
-			for (int j = 0; j < 3 - height; j++) {
+		int size = (int) Math.sqrt(ingredients.getSizeInventory());
+		for (int i = 0; i < size - width; i++) {
+			for (int j = 0; j < size - height; j++) {
 				if (matches(i, j, ingredients, world)) return true;
 			}
 		}
@@ -89,7 +90,9 @@ public class ShapedAdvancedRecipe implements IRecipe {
 						return false;
 					}
 				} else {
-					if (ingredients.getStackInRowAndColumn(i, j) != null) return false;
+					if (ingredients.getStackInRowAndColumn(i, j) != null) {
+						return false;
+					}
 				}
 			}
 		}

@@ -13,8 +13,10 @@ import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerArray;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
+import stanhebben.minetweaker.api.value.TweakerItemStackPattern;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.base.actions.AddRecipeAction;
+import stanhebben.minetweaker.base.functions.recipes.ShapedAdvancedRecipe;
 import stanhebben.minetweaker.base.functions.recipes.ShapedFunctionRecipes;
 import stanhebben.minetweaker.base.functions.recipes.ShapedOreFunctionRecipe;
 
@@ -42,6 +44,7 @@ public class AddShapedFunction extends TweakerFunction {
 		int height = recipe.size();
 		int width = 0;
 		boolean hasOreEntries = false;
+		boolean hasAdvancedEntries = false;
 		
 		for (int i = 0; i < height; i++) {
 			TweakerArray recipeRow = 
@@ -51,14 +54,38 @@ public class AddShapedFunction extends TweakerFunction {
 			width = Math.max(width, recipeRow.size());
 			
 			for (int j = 0; j < recipeRow.size(); j++) {
-				Object item = recipeRow.get(j) == null ? null :
-					recipeRow.get(j).toRecipeItem("each item in a shaped recipe must be a valid recipe item, or null");
-				if (item == null) continue;
-				hasOreEntries |= item.getClass() == String.class;
+				if (recipeRow.get(j) != null) {
+					Object item = recipeRow.get(j).asRecipeItem();
+					if (item != null) {
+						if (item.getClass() == String.class) {
+							hasOreEntries = true;
+						}
+					} else if (recipeRow.get(j).asItemStackPattern() != null) {
+						hasAdvancedEntries = true;
+					} else {
+						throw new TweakerExecuteException("each item in a shaped recipe must be a valid item stack pattern, or null");
+					}
+				}
 			}
 		}
 		
-		if (hasOreEntries) {
+		if (hasAdvancedEntries) {
+			TweakerItemStackPattern[] stacks = new TweakerItemStackPattern[width * height];
+			for (int i = 0; i < height; i++) {
+				TweakerArray row = recipe.get(i).asArray();
+				for (int j = 0; j < row.size(); j++) {
+					int ix = i * width + j;
+					if (row.get(j) != null) {
+						stacks[ix] = row.get(j).asItemStackPattern();
+					}
+				}
+			}
+			if (arguments.length >= 3) {
+				Tweaker.apply(new AddRecipeAction(new ShapedAdvancedRecipe(target, stacks, width, arguments[2])));
+			} else {
+				Tweaker.apply(new AddRecipeAction(new ShapedAdvancedRecipe(target, stacks, width, null)));
+			}
+		} else if (hasOreEntries) {
 			int counter = 0;
 			String[] parts = new String[height];
 			ArrayList rarguments = new ArrayList();

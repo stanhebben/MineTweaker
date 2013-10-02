@@ -5,9 +5,9 @@
 package stanhebben.minetweaker.mods.buildcraft.values;
 
 //#ifdef MC152
-import buildcraft.api.fuels.IronEngineFuel;
+//+import buildcraft.api.fuels.IronEngineFuel;
 //#else
-//+import buildcraft.api.fuels.IronEngineFuel.Fuel;
+import buildcraft.api.fuels.IronEngineFuel.Fuel;
 //#endif
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -24,17 +24,17 @@ import stanhebben.minetweaker.mods.buildcraft.actions.SetFuelAction;
  */
 public class FuelValue extends TweakerValue {
 	//#ifdef MC152
-	private IronEngineFuel fuel;
+	//+private IronEngineFuel fuel;
 	
-	public FuelValue(IronEngineFuel fuel) {
-		this.fuel = fuel;
-	}
-	//#else
-	//+private Fuel fuel;
-	
-	//+public FuelValue(Fuel fuel) {
+	//+public FuelValue(IronEngineFuel fuel) {
 		//+this.fuel = fuel;
 	//+}
+	//#else
+	private Fuel fuel;
+	
+	public FuelValue(Fuel fuel) {
+		this.fuel = fuel;
+	}
 	//#endif
 	
 	@Override
@@ -75,9 +75,9 @@ public class FuelValue extends TweakerValue {
 	@Override
 	public String toString() {
 		//#ifdef MC152
-		return "fuel:" + fuel.liquid.asItemStack().getItemName();
+		//+return "fuel:" + fuel.liquid.asItemStack().getItemName();
 		//#else
-		//+return "fuel:" + fuel.liquid.getName();
+		return "fuel:" + fuel.liquid.getName();
 		//#endif
 	}
 }

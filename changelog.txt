@@ -1,3 +1,13 @@
+[Version 2.1.2]
+- IC2 support extended for versions 1.6.2 and 1.6.4
+- 1.6.4 version added
+- Fixed a bug with function recipes
+- .only modifier added, enabling input checks
+- Function recipes can now return false to disable crafting
+
+[Version 2.1.1]
+- Fixed NPE when an empty MineTweaker packet is received
+
 [Version 2.1.0]
 - Liquid support
 - Liquid container support

@@ -5,9 +5,9 @@
 package stanhebben.minetweaker.mods.buildcraft.functions;
 
 //#ifdef MC152
-import buildcraft.api.recipes.RefineryRecipe;
+//+import buildcraft.api.recipes.RefineryRecipe;
 //#else
-//+import buildcraft.api.recipes.RefineryRecipes.Recipe;
+import buildcraft.api.recipes.RefineryRecipes.Recipe;
 //#endif
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -56,27 +56,27 @@ public class RefineryRemoveRecipeFunction extends TweakerFunction {
 			} else {
 				ArrayList<RefineryRemoveRecipeAction> actions = new ArrayList<RefineryRemoveRecipeAction>();
 				//#ifdef MC152
-				for (RefineryRecipe recipe : BuildCraftUtil.getRefineryRecipes()) {
-					if (!output.equalsFluid(TweakerItem.get(recipe.result.asItemStack()))) continue;
-					if (!input1.equalsFluid(TweakerItem.get(recipe.ingredient1.asItemStack()))) continue;
-					if (input2 == null) {
-						if (recipe.ingredient2 != null) continue;
-					} else {
-						if (!input2.equalsFluid(TweakerItem.get(recipe.ingredient2.asItemStack()))) continue;
-					}
-					actions.add(new RefineryRemoveRecipeAction(recipe));
-				}
-				//#else
-				//+for (Recipe recipe : BuildCraftUtil.getRefineryRecipes()) {
-					//+if (!output.equalsFluid(recipe.result.getFluid())) continue;
-					//+if (!input1.equalsFluid(recipe.ingredient1.getFluid())) continue;
+				//+for (RefineryRecipe recipe : BuildCraftUtil.getRefineryRecipes()) {
+					//+if (!output.equalsFluid(TweakerItem.get(recipe.result.asItemStack()))) continue;
+					//+if (!input1.equalsFluid(TweakerItem.get(recipe.ingredient1.asItemStack()))) continue;
 					//+if (input2 == null) {
 						//+if (recipe.ingredient2 != null) continue;
 					//+} else {
-						//+if (!input2.equalsFluid(recipe.ingredient2.getFluid())) continue;
+						//+if (!input2.equalsFluid(TweakerItem.get(recipe.ingredient2.asItemStack()))) continue;
 					//+}
 					//+actions.add(new RefineryRemoveRecipeAction(recipe));
 				//+}
+				//#else
+				for (Recipe recipe : BuildCraftUtil.getRefineryRecipes()) {
+					if (!output.equalsFluid(recipe.result.getFluid())) continue;
+					if (!input1.equalsFluid(recipe.ingredient1.getFluid())) continue;
+					if (input2 == null) {
+						if (recipe.ingredient2 != null) continue;
+					} else {
+						if (!input2.equalsFluid(recipe.ingredient2.getFluid())) continue;
+					}
+					actions.add(new RefineryRemoveRecipeAction(recipe));
+				}
 				//#endif
 				for (RefineryRemoveRecipeAction action : actions) {
 					Tweaker.apply(action);

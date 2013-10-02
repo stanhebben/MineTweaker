@@ -23,16 +23,19 @@ public enum TweakerField {
 	BREAKUNDO,
 	BYTEARRAY,
 	CANCLEAR,
+	CENTRIFUGE,
 	CLEAR,
 	COMPRESSOR,
 	CONTAINS,
 	COOLANTS,
 	COOLING,
+	CUTTING,
 	DAMAGE,
 	DAMAGED,
 	DENSITY,
 	DISPLAYNAME,
 	EXTRACTOR,
+	EXTRUDING,
 	FLUID,
 	FUEL,
 	FUELS,
@@ -49,8 +52,10 @@ public enum TweakerField {
 	LUMINOSITY,
 	MACERATOR,
 	MATCHES,
+	MATTERAMPLIFIER,
 	MAXDAMAGE,
 	META,
+	METALFORMER,
 	NAME,
 	ONLY,
 	POWERPERCYCLE,
@@ -60,6 +65,7 @@ public enum TweakerField {
 	REMOVERECIPE,
 	REMOVESHAPED,
 	REMOVESHAPELESS,
+	ROLLING,
 	SETDISPLAYNAME,
 	SETENERGY,
 	SETSOFTBLOCK,
@@ -86,6 +92,7 @@ public enum TweakerField {
 		fieldForName.put("assemblyTable", ASSEMBLYTABLE);
 		fieldForName.put("byteArray", BYTEARRAY);
 		fieldForName.put("canClear", CANCLEAR);
+		fieldForName.put("centrifuge", CENTRIFUGE);
 		fieldForName.put("clear", CLEAR);
 		fieldForName.put("compressor", COMPRESSOR);
 		fieldForName.put("contains", CONTAINS);
@@ -111,6 +118,7 @@ public enum TweakerField {
 		fieldForName.put("luminosity", LUMINOSITY);
 		fieldForName.put("macerator", MACERATOR);
 		fieldForName.put("matches", MATCHES);
+		fieldForName.put("matterAmplifier", MATTERAMPLIFIER);
 		fieldForName.put("maxDamage", MAXDAMAGE);
 		fieldForName.put("meta", META);
 		fieldForName.put("name", NAME);

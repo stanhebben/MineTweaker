@@ -12,10 +12,10 @@ import java.util.logging.Level;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-//#ifdef MC162
-//+import net.minecraftforge.fluids.FluidRegistry;
-//#elseif MC152
-import net.minecraftforge.liquids.LiquidDictionary;
+//#ifdef OLDLIQUIDS
+//+import net.minecraftforge.liquids.LiquidDictionary;
+//#else
+import net.minecraftforge.fluids.FluidRegistry;
 //#endif
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -116,14 +116,14 @@ public class MineTweakerRegistry {
 			Tweaker.log(Level.SEVERE, "Exception loading blocks", ex);
 		}
 		
-		//#ifdef MC152
-		for (String name : LiquidDictionary.getLiquids().keySet()) {
-			collectPrefixes(name, fluidPrefixes);
-		}
-		//#else
-		//+for (String name : FluidRegistry.getRegisteredFluidIDs().keySet()) {
+		//#ifdef OLDLIQUIDS
+		//+for (String name : LiquidDictionary.getLiquids().keySet()) {
 			//+collectPrefixes(name, fluidPrefixes);
 		//+}
+		//#else
+		for (String name : FluidRegistry.getRegisteredFluidIDs().keySet()) {
+			collectPrefixes(name, fluidPrefixes);
+		}
 		//#endif
 	}
 	

@@ -17,11 +17,11 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.server.MinecraftServer;
 //#ifdef MC152
-import net.minecraftforge.liquids.LiquidContainerData;
-import net.minecraftforge.liquids.LiquidContainerRegistry;
+//+import net.minecraftforge.liquids.LiquidContainerData;
+//+import net.minecraftforge.liquids.LiquidContainerRegistry;
 //#else
-//+import net.minecraftforge.fluids.FluidContainerRegistry;
-//+import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 //#endif
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -34,13 +34,13 @@ public class MineTweakerUtil {
 	private static Field anvilFile = null;
 	
 	//#ifdef MC152
-	static Map<List, LiquidContainerData> mapFilledItemFromLiquid = null;
-	static Map<List, LiquidContainerData> mapLiquidFromFilledItem = null;
-	static Set<List> setContainerValidation = null;
+	//+static Map<List, LiquidContainerData> mapFilledItemFromLiquid = null;
+	//+static Map<List, LiquidContainerData> mapLiquidFromFilledItem = null;
+	//+static Set<List> setContainerValidation = null;
 	//#else
-	//+static Map<List, FluidContainerData> containerFluidMap = null; // id + damage + fluid => filled
-	//+static Map<List, FluidContainerData> filledContainerMap = null; // id + damage => empty
-	//+static Set<List> emptyContainers = null;
+	static Map<List, FluidContainerData> containerFluidMap = null; // id + damage + fluid => filled
+	static Map<List, FluidContainerData> filledContainerMap = null; // id + damage => empty
+	static Set<List> emptyContainers = null;
 	//#endif
 	
 	static {
@@ -55,35 +55,35 @@ public class MineTweakerUtil {
 		}
 		
 		//#ifdef MC152
-		mapFilledItemFromLiquid = getPrivateStaticObject(LiquidContainerRegistry.class, "mapFilledItemFromLiquid");
-		if (mapFilledItemFromLiquid == null) {
-			Tweaker.log(Level.SEVERE, "Could not get LiquidContainerRegistry mapFilledItemFromLiquid field. Cannot remove fluid containers.");
-		}
+		//+mapFilledItemFromLiquid = getPrivateStaticObject(LiquidContainerRegistry.class, "mapFilledItemFromLiquid");
+		//+if (mapFilledItemFromLiquid == null) {
+			//+Tweaker.log(Level.SEVERE, "Could not get LiquidContainerRegistry mapFilledItemFromLiquid field. Cannot remove fluid containers.");
+		//+}
 		
-		mapLiquidFromFilledItem = getPrivateStaticObject(LiquidContainerRegistry.class, "mapLiquidFromFilledItem");
-		if (mapLiquidFromFilledItem == null) {
-			Tweaker.log(Level.SEVERE, "Could not get LiquidContainerRegistry mapLiquidFromFilledItem field. Cannot remove fluid containers.");
-		}
+		//+mapLiquidFromFilledItem = getPrivateStaticObject(LiquidContainerRegistry.class, "mapLiquidFromFilledItem");
+		//+if (mapLiquidFromFilledItem == null) {
+			//+Tweaker.log(Level.SEVERE, "Could not get LiquidContainerRegistry mapLiquidFromFilledItem field. Cannot remove fluid containers.");
+		//+}
 		
-		setContainerValidation = getPrivateStaticObject(LiquidContainerRegistry.class, "setContainerValidation");
-		if (setContainerValidation == null) {
-			Tweaker.log(Level.SEVERE, "Could not get LiquidContainerRegistry setContainerValidation field. Cannot remove fluid containers.");
-		}
+		//+setContainerValidation = getPrivateStaticObject(LiquidContainerRegistry.class, "setContainerValidation");
+		//+if (setContainerValidation == null) {
+			//+Tweaker.log(Level.SEVERE, "Could not get LiquidContainerRegistry setContainerValidation field. Cannot remove fluid containers.");
+		//+}
 		//#else
-		//+containerFluidMap = getPrivateStaticObject(FluidContainerRegistry.class, "containerFluidMap");
-		//+if (containerFluidMap == null) {
-			//+Tweaker.log(Level.SEVERE, "Could not get FluidContainerRegistry containerFluidMap field. Cannot remove fluid containers.");
-		//+}
+		containerFluidMap = getPrivateStaticObject(FluidContainerRegistry.class, "containerFluidMap");
+		if (containerFluidMap == null) {
+			Tweaker.log(Level.SEVERE, "Could not get FluidContainerRegistry containerFluidMap field. Cannot remove fluid containers.");
+		}
 		
-		//+filledContainerMap = getPrivateStaticObject(FluidContainerRegistry.class, "filledContainerMap");
-		//+if (filledContainerMap == null) {
-			//+Tweaker.log(Level.SEVERE, "Could not get FluidContainerRegistry filledContainerMap field. Cannot remove fluid containers.");
-		//+}
+		filledContainerMap = getPrivateStaticObject(FluidContainerRegistry.class, "filledContainerMap");
+		if (filledContainerMap == null) {
+			Tweaker.log(Level.SEVERE, "Could not get FluidContainerRegistry filledContainerMap field. Cannot remove fluid containers.");
+		}
 		
-		//+emptyContainers = getPrivateStaticObject(FluidContainerRegistry.class, "emptyContainers");
-		//+if (emptyContainers == null) {
-			//+Tweaker.log(Level.SEVERE, "Could not get FluidContainerRegistry emptyContainers field. Cannot remove fluid containers.");
-		//+}
+		emptyContainers = getPrivateStaticObject(FluidContainerRegistry.class, "emptyContainers");
+		if (emptyContainers == null) {
+			Tweaker.log(Level.SEVERE, "Could not get FluidContainerRegistry emptyContainers field. Cannot remove fluid containers.");
+		}
 		//#endif
 	}
 
@@ -311,63 +311,63 @@ public class MineTweakerUtil {
 	
 	public static boolean canRemoveContainer() {
 		//#ifdef MC152
-		return setContainerValidation != null && mapFilledItemFromLiquid != null && mapLiquidFromFilledItem != null;
+		//+return setContainerValidation != null && mapFilledItemFromLiquid != null && mapLiquidFromFilledItem != null;
 		//#else
-		//+return emptyContainers != null && containerFluidMap != null && filledContainerMap != null;
+		return emptyContainers != null && containerFluidMap != null && filledContainerMap != null;
 		//#endif
 	}
 	
 	public static boolean hasEmptyContainer(TweakerItem item) {
 		//#ifdef MC152
-		return setContainerValidation.contains(Arrays.asList(item.getItemId(), item.getItemSubId()));
+		//+return setContainerValidation.contains(Arrays.asList(item.getItemId(), item.getItemSubId()));
 		//#else
-		//+return emptyContainers.contains(Arrays.asList(item.getItemId(), item.getItemSubId()));
+		return emptyContainers.contains(Arrays.asList(item.getItemId(), item.getItemSubId()));
 		//#endif
 	}
 	
 	//#ifdef MC152
-	public static boolean removeEmptyContainer(ItemStack item) {
-		return setContainerValidation.remove(Arrays.asList(item.itemID, item.getItemDamage()));
-	}
-	//#else
-	//+public static boolean removeEmptyContainer(TweakerItem item) {
-		//+return emptyContainers.remove(Arrays.asList(item.getItemId(), item.getItemSubId()));
+	//+public static boolean removeEmptyContainer(ItemStack item) {
+		//+return setContainerValidation.remove(Arrays.asList(item.itemID, item.getItemDamage()));
 	//+}
+	//#else
+	public static boolean removeEmptyContainer(TweakerItem item) {
+		return emptyContainers.remove(Arrays.asList(item.getItemId(), item.getItemSubId()));
+	}
 	//#endif
 
 	//#ifdef MC152
-	public static boolean removeContainer(TweakerItem filled) {
-		List filledId = Arrays.asList(filled.getItemId(), filled.getItemSubId());
-		if (mapLiquidFromFilledItem.containsKey(filledId)) {
-			LiquidContainerData data = mapLiquidFromFilledItem.get(filledId);
-			mapLiquidFromFilledItem.remove(filledId);
-			mapFilledItemFromLiquid.remove(Arrays.asList(data.stillLiquid.itemID, data.stillLiquid.itemMeta));
-			return true;
-		} else {
-			return false;
-		}
-	}
-	//#else
 	//+public static boolean removeContainer(TweakerItem filled) {
 		//+List filledId = Arrays.asList(filled.getItemId(), filled.getItemSubId());
-		//+if (filledContainerMap.containsKey(filledId)) {
-			//+FluidContainerData data = filledContainerMap.get(filledId);
-			//+filledContainerMap.remove(filledId);
-			//+containerFluidMap.remove(Arrays.asList(data.emptyContainer.itemID, data.emptyContainer.getItemDamage(), data.fluid));
+		//+if (mapLiquidFromFilledItem.containsKey(filledId)) {
+			//+LiquidContainerData data = mapLiquidFromFilledItem.get(filledId);
+			//+mapLiquidFromFilledItem.remove(filledId);
+			//+mapFilledItemFromLiquid.remove(Arrays.asList(data.stillLiquid.itemID, data.stillLiquid.itemMeta));
 			//+return true;
 		//+} else {
 			//+return false;
 		//+}
 	//+}
+	//#else
+	public static boolean removeContainer(TweakerItem filled) {
+		List filledId = Arrays.asList(filled.getItemId(), filled.getItemSubId());
+		if (filledContainerMap.containsKey(filledId)) {
+			FluidContainerData data = filledContainerMap.get(filledId);
+			filledContainerMap.remove(filledId);
+			containerFluidMap.remove(Arrays.asList(data.emptyContainer.itemID, data.emptyContainer.getItemDamage(), data.fluid));
+			return true;
+		} else {
+			return false;
+		}
+	}
 	//#endif
 	
 	//#ifdef MC152
-	public static LiquidContainerData getContainerData(TweakerItem filled) {
-		return mapLiquidFromFilledItem.get(Arrays.asList(filled.getItemId(), filled.getItemSubId()));
-	}
-	//#else
-	//+public static FluidContainerData getContainerData(TweakerItem filled) {
-		//+return filledContainerMap.get(Arrays.asList(filled.getItemId(), filled.getItemSubId()));
+	//+public static LiquidContainerData getContainerData(TweakerItem filled) {
+		//+return mapLiquidFromFilledItem.get(Arrays.asList(filled.getItemId(), filled.getItemSubId()));
 	//+}
+	//#else
+	public static FluidContainerData getContainerData(TweakerItem filled) {
+		return filledContainerMap.get(Arrays.asList(filled.getItemId(), filled.getItemSubId()));
+	}
 	//#endif
 }

@@ -12,7 +12,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import stanhebben.minetweaker.api.value.TweakerBool;
 
 public class ShapedOreFunctionRecipe extends ShapedOreRecipe {
-	private TweakerValue function;
+	private final TweakerValue function;
 	
 	public ShapedOreFunctionRecipe(ItemStack result, Object[] recipe, TweakerValue function) {
 		super(result, recipe);
@@ -28,7 +28,7 @@ public class ShapedOreFunctionRecipe extends ShapedOreRecipe {
 			TweakerArrayValue input = new TweakerArrayValue();
 			for (int i = 0; i < crafting.getSizeInventory(); i++) {
 				if (crafting.getStackInSlot(i) != null) {
-					input.add(new TweakerItemStack(crafting.getStackInSlot(i)));
+					input.addAssign(new TweakerItemStack(crafting.getStackInSlot(i)));
 				}
 			}
 			

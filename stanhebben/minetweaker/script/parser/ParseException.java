@@ -10,8 +10,8 @@ package stanhebben.minetweaker.script.parser;
  * @author Stan
  */
 public class ParseException extends RuntimeException {
-	private Token token;
-	private String message;
+	private final Token token;
+	private final String message;
 	
     public ParseException(Token token, String error) {
         super("Error parsing line " + token.getLine() + ":" + token.getLineOffset() + " - " + error + " (last token: " + token.getValue() + ")");

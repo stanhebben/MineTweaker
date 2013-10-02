@@ -1,7 +1,6 @@
 package stanhebben.minetweaker.api.value;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
@@ -13,7 +12,7 @@ import stanhebben.minetweaker.oredict.TweakerOreDict;
 import stanhebben.minetweaker.oredict.TweakerOreEntry;
 
 public class TweakerItemPatternOreAny extends TweakerItemPattern {
-	private String value;
+	private final String value;
 	
 	public TweakerItemPatternOreAny(String value) {
 		this.value = value;
@@ -85,8 +84,8 @@ public class TweakerItemPatternOreAny extends TweakerItemPattern {
 	}
 
 	@Override
-	public Iterator<TweakerItem> getMatches() {
-		return TweakerOreDict.getEntry(value).getItems().iterator();
+	public List<TweakerItem> getMatches() {
+		return TweakerOreDict.getEntry(value).getItems();
 	}
 
 	@Override
@@ -100,9 +99,9 @@ public class TweakerItemPatternOreAny extends TweakerItemPattern {
 	}
 	
 	private static class OrePatternListener implements OreEntryListener {
-		private IPatternListener base;
+		private final IPatternListener base;
 		
-		public OrePatternListener(IPatternListener base) {
+		OrePatternListener(IPatternListener base) {
 			this.base = base;
 		}
 

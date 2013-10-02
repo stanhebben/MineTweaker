@@ -2,6 +2,7 @@ package stanhebben.minetweaker.base.values;
 
 import net.minecraft.nbt.NBTBase;
 import stanhebben.minetweaker.api.TweakerExecuteException;
+import stanhebben.minetweaker.api.functions.FunctionItemPatternOnly;
 import stanhebben.minetweaker.api.value.TweakerField;
 import stanhebben.minetweaker.api.value.TweakerItemPattern;
 import stanhebben.minetweaker.api.value.TweakerItemPatternOre;
@@ -38,7 +39,9 @@ public class OreValue extends TweakerValue {
 				return new OreAddFunction(value);
 			case REMOVE:
 				return new OreRemoveFunction(value);
-		}
+			case ONLY:
+				return new FunctionItemPatternOnly(new TweakerItemPatternOre(value));
+		};
 		throw new TweakerExecuteException("no member " + index + " in ore");
 	}
 	

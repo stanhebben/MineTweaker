@@ -5,9 +5,9 @@
 package stanhebben.minetweaker.mods.buildcraft.actions;
 
 //#ifdef MC152
-import buildcraft.api.recipes.RefineryRecipe;
+//+import buildcraft.api.recipes.RefineryRecipe;
 //#else
-//+import buildcraft.api.recipes.RefineryRecipes.Recipe;
+import buildcraft.api.recipes.RefineryRecipes.Recipe;
 //#endif
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.mods.buildcraft.BuildCraftUtil;
@@ -18,17 +18,17 @@ import stanhebben.minetweaker.mods.buildcraft.BuildCraftUtil;
  */
 public class RefineryRemoveRecipeAction implements IUndoableAction {
 	//#ifdef MC152
-	private RefineryRecipe recipe;
+	//+private RefineryRecipe recipe;
 	
-	public RefineryRemoveRecipeAction(RefineryRecipe recipe) {
-		this.recipe = recipe;
-	}
-	//#else
-	//+private Recipe recipe;
-	
-	//+public RefineryRemoveRecipeAction(Recipe recipe) {
+	//+public RefineryRemoveRecipeAction(RefineryRecipe recipe) {
 		//+this.recipe = recipe;
 	//+}
+	//#else
+	private Recipe recipe;
+	
+	public RefineryRemoveRecipeAction(Recipe recipe) {
+		this.recipe = recipe;
+	}
 	//#endif
 
 	public void apply() {
@@ -45,17 +45,17 @@ public class RefineryRemoveRecipeAction implements IUndoableAction {
 
 	public String describe() {
 		//#ifdef MC152
-		return "Removing a refinery recipe for " + recipe.result.asItemStack().getDisplayName();
+		//+return "Removing a refinery recipe for " + recipe.result.asItemStack().getDisplayName();
 		//#else
-		//+return "Removing a refinery recipe for " + recipe.result.getFluid().getLocalizedName();
+		return "Removing a refinery recipe for " + recipe.result.getFluid().getLocalizedName();
 		//#endif
 	}
 
 	public String describeUndo() {
 		//#ifdef MC152
-		return "Restoring a refinery recipe for " + recipe.result.asItemStack().getDisplayName();
+		//+return "Restoring a refinery recipe for " + recipe.result.asItemStack().getDisplayName();
 		//#else
-		//+return "Restoring a refinery recipe for " + recipe.result.getFluid().getLocalizedName();
+		return "Restoring a refinery recipe for " + recipe.result.getFluid().getLocalizedName();
 		//#endif
 	}
 }

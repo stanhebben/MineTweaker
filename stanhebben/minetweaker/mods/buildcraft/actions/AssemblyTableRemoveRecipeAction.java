@@ -17,7 +17,7 @@ public class AssemblyTableRemoveRecipeAction implements IUndoableAction {
 	
 	public AssemblyTableRemoveRecipeAction(int index) {
 		this.index = index;
-		value = AssemblyRecipe.assemblyRecipes.get(index);
+		value = (AssemblyRecipe) AssemblyRecipe.assemblyRecipes.get(index);
 	}
 
 	public void apply() {

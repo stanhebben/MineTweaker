@@ -53,7 +53,11 @@ public class TweakerItemSimple extends TweakerItem {
 
 	@Override
 	public String getDisplayName() {
-		return item.getLocalizedName(stack);
+		//#ifdef MC152
+		//+return item.getLocalizedName(stack);
+		//#else
+		return item.getItemStackDisplayName(stack);
+		//#endif
 	}
 
 	@Override

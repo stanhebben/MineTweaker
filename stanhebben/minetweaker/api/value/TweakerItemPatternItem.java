@@ -1,12 +1,12 @@
 package stanhebben.minetweaker.api.value;
 
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.IPatternListener;
-import stanhebben.minetweaker.util.SingleIterator;
 
 public class TweakerItemPatternItem extends TweakerItemPattern {
-	private TweakerItem item;
+	private final TweakerItem item;
 	
 	public TweakerItemPatternItem(TweakerItem item) {
 		this.item = item;
@@ -58,8 +58,8 @@ public class TweakerItemPatternItem extends TweakerItemPattern {
 	}
 
 	@Override
-	public Iterator<TweakerItem> getMatches() {
-		return new SingleIterator<TweakerItem>(item);
+	public List<TweakerItem> getMatches() {
+		return Collections.singletonList(item);
 	}
 
 	@Override

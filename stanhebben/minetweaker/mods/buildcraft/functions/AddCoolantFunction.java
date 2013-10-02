@@ -6,12 +6,15 @@ package stanhebben.minetweaker.mods.buildcraft.functions;
 
 //#ifdef MC152
 //#else
-//+import buildcraft.api.core.StackWrapper;
-//+import net.minecraftforge.fluids.FluidContainerRegistry;
-//+import stanhebben.minetweaker.api.value.TweakerItem;
-//+import stanhebben.minetweaker.mods.buildcraft.actions.AddSolidCoolantAction;
+import buildcraft.api.core.StackWrapper;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import stanhebben.minetweaker.api.value.TweakerItem;
+import stanhebben.minetweaker.mods.buildcraft.actions.AddSolidCoolantAction;
 //#endif
 import buildcraft.api.fuels.IronEngineCoolant;
+import buildcraft.api.fuels.IronEngineFuel;
+
+import java.util.LinkedList;
 import java.util.logging.Level;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -42,15 +45,15 @@ public class AddCoolantFunction extends TweakerFunction {
 			// fluid coolant
 			TweakerFluid coolantFluid = coolant.asFluid();
 			//#ifdef MC152
-			for (IronEngineCoolant ieCoolant : IronEngineCoolant.coolants) {
-				if (coolantFluid.equalsFluid(ieCoolant.liquid)) {
-					throw new TweakerExecuteException(coolantFluid.getName() + " is already a coolant");
-				}
-			}
-			//#else
-			//+if (IronEngineCoolant.isCoolant(coolantFluid.get())) {
-				//+throw new TweakerExecuteException(coolantFluid.getName() + " is already a coolant");
+			//+for (IronEngineCoolant ieCoolant : (LinkedList<IronEngineCoolant>) IronEngineCoolant.coolants) {
+				//+if (coolantFluid.equalsFluid(ieCoolant.liquid)) {
+					//+throw new TweakerExecuteException(coolantFluid.getName() + " is already a coolant");
+				//+}
 			//+}
+			//#else
+			if (IronEngineCoolant.isCoolant(coolantFluid.get())) {
+				throw new TweakerExecuteException(coolantFluid.getName() + " is already a coolant");
+			}
 			//#endif
 			float cooling =
 					notNull(arguments[1], "coolants.add cooling value cannot be null")
@@ -60,23 +63,23 @@ public class AddCoolantFunction extends TweakerFunction {
 		} else if (coolant.asItem() != null) {
 			// item coolant
 			//#ifdef MC152
-			Tweaker.log(Level.WARNING, "This version of BuildCraft has no solid coolants.");
+			//+Tweaker.log(Level.WARNING, "This version of BuildCraft has no solid coolants.");
 			//#else
-			//+TweakerItem item = coolant.asItem();
-			//+if (IronEngineCoolant.solidCoolants.containsKey(new StackWrapper(item.make(1)))) {
-				//+throw new TweakerExecuteException(item.getDisplayName() + " is already a coolant");
-			//+} else if (FluidContainerRegistry.isContainer(item.make(1))) {
-				//+Tweaker.log(Level.INFO, item.getDisplayName() + " is already registered as fluid");
-			//+} else {
-				//+TweakerFluidStack cooling =
-						//+notNull(arguments[1], "coolants.add cooling value must not be null")
-						//+.toFluidStack("coolants.add cooling value must be a fluid stack");
-				//+if (IronEngineCoolant.liquidCoolants.containsKey(cooling.get().getFluid().getName())) {
-					//+Tweaker.apply(new AddSolidCoolantAction(item.make(1), cooling.get()));
-				//+} else {
-					//+throw new TweakerExecuteException(cooling.get().getFluid().getLocalizedName() + " must be registered as coolant first");
-				//+}
-			//+}
+			TweakerItem item = coolant.asItem();
+			if (IronEngineCoolant.solidCoolants.containsKey(new StackWrapper(item.make(1)))) {
+				throw new TweakerExecuteException(item.getDisplayName() + " is already a coolant");
+			} else if (FluidContainerRegistry.isContainer(item.make(1))) {
+				Tweaker.log(Level.INFO, item.getDisplayName() + " is already registered as fluid");
+			} else {
+				TweakerFluidStack cooling =
+						notNull(arguments[1], "coolants.add cooling value must not be null")
+						.toFluidStack("coolants.add cooling value must be a fluid stack");
+				if (IronEngineCoolant.liquidCoolants.containsKey(cooling.get().getFluid().getName())) {
+					Tweaker.apply(new AddSolidCoolantAction(item.make(1), cooling.get()));
+				} else {
+					throw new TweakerExecuteException(cooling.get().getFluid().getLocalizedName() + " must be registered as coolant first");
+				}
+			}
 			//#endif
 		} else {
 			throw new TweakerExecuteException("coolants.add requires either a fluid or item");

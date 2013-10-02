@@ -39,12 +39,16 @@ import stanhebben.minetweaker.script.parser.ParseException;
 import stanhebben.minetweaker.tweaker.FuelTweaker;
 
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
+//#ifdef OLDEVENTS
+//+import cpw.mods.fml.common.Mod.Init;
+//+import cpw.mods.fml.common.Mod.PreInit;
+//+import cpw.mods.fml.common.Mod.PostInit;
+//+import cpw.mods.fml.common.Mod.ServerStarting;
+//+import cpw.mods.fml.common.Mod.ServerStopping;
+//#else
+import cpw.mods.fml.common.Mod.EventHandler;
+//#endif
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
-import cpw.mods.fml.common.Mod.ServerStopping;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -65,9 +69,7 @@ import stanhebben.minetweaker.base.functions.PrintFunction;
 import stanhebben.minetweaker.base.functions.RemoveRecipesFunction;
 import stanhebben.minetweaker.base.values.FluidGroupValue;
 import stanhebben.minetweaker.mods.buildcraft.BuildCraftModSupport;
-//#ifdef MC152
 import stanhebben.minetweaker.mods.ic2.IC2ModSupport;
-//#endif
 
 /**
  * MineTweaker mod class. Includes the functionality needed for Forge mods,
@@ -75,14 +77,17 @@ import stanhebben.minetweaker.mods.ic2.IC2ModSupport;
  * 
  * @author Stan Hebben
  */
-@Mod(modid = "MineTweaker", name = "MineTweaker", version = MineTweaker.MCVERSION + "-2.1.1")
+@Mod(modid = "MineTweaker", name = "MineTweaker", version = MineTweaker.MCVERSION + "-2.1.2")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true, channels = {TweakerPacketHandler.CHANNEL_SERVERSCRIPT}, packetHandler = TweakerPacketHandler.class)
 public class MineTweaker {
 	//#ifdef MC152
-	public static final String MCVERSION = "1.5.2";
+	//+public static final String MCVERSION = "1.5.2";
 	//#endif
 	//#ifdef MC162
 	//+public static final String MCVERSION = "1.6.2";
+	//#endif
+	//#ifdef MC164
+	public static final String MCVERSION = "1.6.4";
 	//#endif
 	
 	@Instance("MineTweaker")
@@ -93,8 +98,8 @@ public class MineTweaker {
 	private final TweakerNameSpace global;
 	private final List<MineTweakerInterface> interfaces; // contains interfaces added by mods (mods.xxx)
 	private final List<MineTweakerInterface> supportInterfaces; // contains interfaces for mod support (modSupport.xxx)
-	private TweakerTable mods = new TweakerTable();
-	private TweakerTable modSupport = new TweakerTable();
+	private final TweakerTable mods = new TweakerTable();
+	private final TweakerTable modSupport = new TweakerTable();
 	
 	private File tweakerDir;
 	private File mainFile;
@@ -389,7 +394,11 @@ public class MineTweaker {
 	// -- Forge mod implementation --
 	// ------------------------------
 
-	@PreInit
+	//#ifdef OLDEVENTS
+	//+@PreInit
+	//#else
+	@EventHandler
+	//#endif
 	public void preInit(FMLPreInitializationEvent event) {
 		Tweaker.onInit();
 		
@@ -420,12 +429,20 @@ public class MineTweaker {
 		NetworkRegistry.instance().registerConnectionHandler(new TweakerConnectionHandler());
 	}
 
-	@Init
+	//#ifdef OLDEVENTS
+	//+@Init
+	//#else
+	@EventHandler
+	//#endif
 	public void load(FMLInitializationEvent event) {
 		// Stub Method
 	}
 
-	@PostInit
+	//#ifdef OLDEVENTS
+	//+@PostInit
+	//#else
+	@EventHandler
+	//#endif
 	public void postInit(FMLPostInitializationEvent event) {
 		MineTweakerRegistry.INSTANCE.init();
 		
@@ -437,12 +454,10 @@ public class MineTweaker {
 			MineTweaker.instance.registerSupportInterface(BuildCraftModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "BuildCraft support loaded");
 		}
-		//#ifdef MC152
 		if (ModLoader.isModLoaded("IC2")) {
 			MineTweaker.instance.registerSupportInterface(IC2ModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "IC2 support loaded");
 		}
-		//#endif
 		
 		// Execute boot script
 		
@@ -461,7 +476,11 @@ public class MineTweaker {
 		}
 	}
 	
-	@ServerStarting
+	//#ifdef OLDEVENTS
+	//+@ServerStarting
+	//#else
+	@EventHandler
+	//#endif
 	public void serverLoad(FMLServerStartingEvent event) {
 		event.registerServerCommand(new MineTweakerCommand());
 	    
@@ -490,7 +509,11 @@ public class MineTweaker {
 		Tweaker.apply(new ServerAction(new InetSocketAddress("myself", 0), serverScriptBytes));
 	}
 	
-	@ServerStopping
+	//#ifdef OLDEVENTS
+	//+@ServerStopping
+	//#else
+	@EventHandler
+	//#endif
 	public void serverStop(FMLServerStoppingEvent ev) {
 		iAmTheServer = false;
 		this.serverScriptBytes = null;

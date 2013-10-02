@@ -5,9 +5,12 @@
 package stanhebben.minetweaker.mods.buildcraft.functions;
 
 //#ifndef MC152
-//+import buildcraft.api.core.StackWrapper;
+import buildcraft.api.core.StackWrapper;
 //#endif
+import java.util.LinkedList;
+
 import buildcraft.api.fuels.IronEngineCoolant;
+import buildcraft.api.fuels.IronEngineFuel;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerBool;
@@ -33,24 +36,24 @@ public class ContainsCoolantFunction extends TweakerFunction {
 		TweakerValue value = notNull(arguments[0], "the coolants.contains argument cannot be null");
 		if (value.asFluid() != null) {
 			//#ifdef MC152
-			TweakerItem fluid = value.asFluid().get();
-			for (IronEngineCoolant coolant : IronEngineCoolant.coolants) {
-				if (coolant.liquid.itemID == fluid.getItemId()
-						&& coolant.liquid.itemMeta == fluid.getItemSubId()) {
-					return TweakerBool.TRUE;
-				}
-			}
-			return TweakerBool.FALSE;
+			//+TweakerItem fluid = value.asFluid().get();
+			//+for (IronEngineCoolant coolant : (LinkedList<IronEngineCoolant>) IronEngineCoolant.coolants) {
+				//+if (coolant.liquid.itemID == fluid.getItemId()
+						//+&& coolant.liquid.itemMeta == fluid.getItemSubId()) {
+					//+return TweakerBool.TRUE;
+				//+}
+			//+}
+			//+return TweakerBool.FALSE;
 			//#else
-			//+return TweakerBool.get(
-					//+IronEngineCoolant.liquidCoolants.containsKey(value.asFluid().get().getName()));
+			return TweakerBool.get(
+					IronEngineCoolant.liquidCoolants.containsKey(value.asFluid().get().getName()));
 			//#endif
 		} else if (value.asItem() != null) {
 			//#ifdef MC152
-			return TweakerBool.FALSE;
+			//+return TweakerBool.FALSE;
 			//#else
-			//+return TweakerBool.get(
-					//+IronEngineCoolant.solidCoolants.containsKey(new StackWrapper(value.asItem().make(1))));
+			return TweakerBool.get(
+					IronEngineCoolant.solidCoolants.containsKey(new StackWrapper(value.asItem().make(1))));
 			//#endif
 		} else {
 			throw new TweakerExecuteException("the coolants.contains argument must be a fluid or item");

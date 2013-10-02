@@ -5,11 +5,13 @@
 package stanhebben.minetweaker.mods.buildcraft.functions;
 
 import buildcraft.api.fuels.IronEngineFuel;
+
+import java.util.LinkedList;
 import java.util.logging.Level;
 //#ifdef MC152
-import stanhebben.minetweaker.api.value.TweakerItem;
+//+import stanhebben.minetweaker.api.value.TweakerItem;
 //#else
-//+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.Fluid;
 //#endif
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -34,32 +36,32 @@ public class RemoveFuelFunction extends TweakerFunction {
 		}
 		
 		//#ifdef MC152
-		TweakerItem fluid =
-				notNull(arguments[0], "fuels.remove argument cannot be null")
-				.toFluid("fuels.remove argument must be a fluid").get();
-		
-		RemoveFuelAction action = null;
-		for (IronEngineFuel fuel : IronEngineFuel.fuels) {
-			if (fuel.liquid.itemID == fluid.getItemId()
-					&& fuel.liquid.itemMeta == fluid.getItemSubId()) {
-				action = new RemoveFuelAction(fuel);
-			}
-		}
-		if (action == null) {
-			Tweaker.log(Level.INFO, "No such fuel: " + fluid.getName());
-		} else {
-			Tweaker.apply(action);
-		}
-		//#else
-		//+Fluid fluid =
+		//+TweakerItem fluid =
 				//+notNull(arguments[0], "fuels.remove argument cannot be null")
 				//+.toFluid("fuels.remove argument must be a fluid").get();
 		
-		//+if (IronEngineFuel.fuels.containsKey(fluid.getName())) {
-			//+Tweaker.apply(new RemoveFuelAction(fluid));
-		//+} else {
-			//+Tweaker.log(Level.INFO, "No such fuel: " + fluid.getName());
+		//+RemoveFuelAction action = null;
+		//+for (IronEngineFuel fuel : (LinkedList<IronEngineFuel>) IronEngineFuel.fuels) {
+			//+if (fuel.liquid.itemID == fluid.getItemId()
+					//+&& fuel.liquid.itemMeta == fluid.getItemSubId()) {
+				//+action = new RemoveFuelAction(fuel);
+			//+}
 		//+}
+		//+if (action == null) {
+			//+Tweaker.log(Level.INFO, "No such fuel: " + fluid.getName());
+		//+} else {
+			//+Tweaker.apply(action);
+		//+}
+		//#else
+		Fluid fluid =
+				notNull(arguments[0], "fuels.remove argument cannot be null")
+				.toFluid("fuels.remove argument must be a fluid").get();
+		
+		if (IronEngineFuel.fuels.containsKey(fluid.getName())) {
+			Tweaker.apply(new RemoveFuelAction(fluid));
+		} else {
+			Tweaker.log(Level.INFO, "No such fuel: " + fluid.getName());
+		}
 		//#endif
 		
 		return null;

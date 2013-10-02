@@ -1,10 +1,10 @@
-//#fileifdef MC152
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package stanhebben.minetweaker.mods.ic2.values;
 
+import ic2.api.recipe.Recipes;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.value.TweakerField;
 import stanhebben.minetweaker.api.value.TweakerValue;
@@ -16,17 +16,47 @@ import stanhebben.minetweaker.api.value.TweakerValue;
 public class IC2Value extends TweakerValue {
 	public static final IC2Value INSTANCE = new IC2Value();
 	
+	//#ifndef MC152
+	private static final MachineValue CENTRIFUGE = new MachineValue(Recipes.centrifuge, "centrifuge");
+	private static final MachineValue COMPRESSOR = new MachineValue(Recipes.compressor, "compressor");
+	private static final MachineValue EXTRACTOR = new MachineValue(Recipes.extractor, "extractor");
+	private static final MachineValue MACERATOR = new MachineValue(Recipes.macerator, "macerator");
+	private static final MachineValue MATTERAMPLIFIER = new MachineValue(Recipes.matterAmplifier, "matterAmplifier");
+	
+	//#endif
+	
 	private IC2Value() {}
 	
 	@Override
 	public TweakerValue index(String index) {
 		switch (TweakerField.get(index)) {
 			case MACERATOR:
-				return MaceratorValue.INSTANCE;
+				//#ifdef MC152
+				//+return MaceratorValue.INSTANCE;
+				//#else
+				return MACERATOR;
+				//#endif
 			case EXTRACTOR:
-				return ExtractorValue.INSTANCE;
+				//#ifdef MC152
+				//+return ExtractorValue.INSTANCE;
+				//#else
+				return EXTRACTOR;
+				//#endif
 			case COMPRESSOR:
-				return CompressorValue.INSTANCE;
+				//#ifdef MC152
+				//+return CompressorValue.INSTANCE;
+				//#else
+				return COMPRESSOR;
+				//#endif
+			//#ifndef MC152
+			case CENTRIFUGE:
+				return CENTRIFUGE;
+			case MATTERAMPLIFIER:
+				return MATTERAMPLIFIER;
+			case METALFORMER:
+				return MetalFormer.INSTANCE;
+			//#else
+			//#endif
 		}
 		throw new TweakerExecuteException("No such member in ic2: " + index);
 	}

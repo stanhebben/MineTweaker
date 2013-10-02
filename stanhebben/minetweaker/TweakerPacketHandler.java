@@ -12,7 +12,9 @@ public class TweakerPacketHandler implements IPacketHandler {
 	public void onPacketData(INetworkManager manager,
 			Packet250CustomPayload packet, Player player) {
 		if (packet.channel.equals(CHANNEL_SERVERSCRIPT)) {
-			if (packet.data.length == 0) {
+			if (packet == null || packet.data == null) {
+				return;
+			} else if (packet.data.length == 0) {
 				MineTweaker.instance.serverExecute(manager.getSocketAddress(), null);
 			} else {
 				MineTweaker.instance.serverExecute(manager.getSocketAddress(), packet.data);

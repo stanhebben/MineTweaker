@@ -1,16 +1,15 @@
 package stanhebben.minetweaker.api.value;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.IPatternListener;
 import stanhebben.minetweaker.MineTweakerUtil;
-import stanhebben.minetweaker.util.EmptyIterator;
 
 public class TweakerItemPatternAnyMeta extends TweakerItemPattern {
-	private int id;
+	private final int id;
 	
 	public TweakerItemPatternAnyMeta(int id) {
 		this.id = id;
@@ -60,26 +59,19 @@ public class TweakerItemPatternAnyMeta extends TweakerItemPattern {
 	}
 
 	@Override
-	public Iterator<TweakerItem> getMatches() {
+	public List<TweakerItem> getMatches() {
 		Item item = Item.itemsList[id];
 		if (item.getHasSubtypes()) {
 			final List<ItemStack> subItems = new ArrayList<ItemStack>();
 			MineTweakerUtil.getSubItems(id, subItems);
-			return new Iterator<TweakerItem>() {
-				private Iterator<ItemStack> inner = subItems.iterator();
-				
-				public boolean hasNext() {
-					return inner.hasNext();
-				}
-
-				public TweakerItem next() {
-					return TweakerItem.get(inner.next());
-				}
-
-				public void remove() {}
-			};
+			
+			List<TweakerItem> result  = new ArrayList<TweakerItem>();
+			for (ItemStack stack : subItems) {
+				result.add(TweakerItem.get(stack));
+			}
+			return result;
 		} else {
-			return new EmptyIterator<TweakerItem>();
+			return Collections.emptyList();
 		}
 	}
 

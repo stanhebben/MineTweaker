@@ -5,9 +5,9 @@
 package stanhebben.minetweaker.mods.buildcraft.actions;
 
 //#ifdef MC152
-import buildcraft.api.recipes.RefineryRecipe;
+//+import buildcraft.api.recipes.RefineryRecipe;
 //#else
-//+import buildcraft.api.recipes.RefineryRecipes;
+import buildcraft.api.recipes.RefineryRecipes;
 //#endif
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.value.TweakerFluidStack;
@@ -39,9 +39,9 @@ public class RefineryAddRecipeAction implements IUndoableAction {
 
 	public void apply() {
 		//#ifdef MC152
-		RefineryRecipe.registerRefineryRecipe(new RefineryRecipe(input1.get(), input2 == null ? null : input2.get(), output.get(), energy, delay));
+		//+RefineryRecipe.registerRefineryRecipe(new RefineryRecipe(input1.get(), input2 == null ? null : input2.get(), output.get(), energy, delay));
 		//#else
-		//+RefineryRecipes.addRecipe(input1.get(), input2 == null ? null : input2.get(), output.get(), energy, delay);
+		RefineryRecipes.addRecipe(input1.get(), input2 == null ? null : input2.get(), output.get(), energy, delay);
 		//#endif
 	}
 

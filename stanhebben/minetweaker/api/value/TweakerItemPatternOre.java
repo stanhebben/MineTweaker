@@ -1,15 +1,14 @@
 package stanhebben.minetweaker.api.value;
 
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import stanhebben.minetweaker.IPatternListener;
-import stanhebben.minetweaker.util.EmptyIterator;
 
 public class TweakerItemPatternOre extends TweakerItemPattern {
-	private String value;
+	private final String value;
 	
 	public TweakerItemPatternOre(String value) {
 		this.value = value;
@@ -32,10 +31,9 @@ public class TweakerItemPatternOre extends TweakerItemPattern {
 	@Override
 	public boolean matches(Object object) {
 		if (object == null) return false;
-		List ores = OreDictionary.getOres(value);
+		List<?> ores = OreDictionary.getOres(value);
 		if (ores == object) return true;
-		if (value.equals(object)) return true;
-		return false;
+		return value.equals(object);
 	}
 
 	@Override
@@ -59,8 +57,8 @@ public class TweakerItemPatternOre extends TweakerItemPattern {
 	}
 
 	@Override
-	public Iterator<TweakerItem> getMatches() {
-		return new EmptyIterator<TweakerItem>();
+	public List<TweakerItem> getMatches() {
+		return Collections.emptyList();
 	}
 
 	@Override

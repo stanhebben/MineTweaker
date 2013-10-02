@@ -19,14 +19,12 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntityFurnace;
 //#ifdef MC152
-import net.minecraftforge.liquids.LiquidContainerRegistry;
+//+import net.minecraftforge.liquids.LiquidContainerRegistry;
 //#else
-//+import net.minecraftforge.fluids.FluidContainerRegistry;
-//#endif
-//#ifdef MC162
-//+import net.minecraft.util.ChatMessageComponent;
-//+import net.minecraftforge.fluids.IFluidBlock;
-//+import net.minecraft.block.Block;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraft.util.ChatMessageComponent;
+import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraft.block.Block;
 //#endif
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -67,7 +65,7 @@ public class MineTweakerCommand implements ICommand {
 	}
 
 	@Override
-	public List getCommandAliases() {
+	public List<String> getCommandAliases() {
 		return aliases;
 	}
 
@@ -97,25 +95,25 @@ public class MineTweakerCommand implements ICommand {
 				try {
 					TweakerItem item = TweakerItem.parse(arguments[1]);
 					//#ifdef MC152
-					if (LiquidContainerRegistry.isLiquid(item.make(1))) {
-						sendChatMessage(icommandsender, "Liquid name: " + item.getName());
-					} else if (LiquidContainerRegistry.isFilledContainer(item.make(1))) {
-						sendChatMessage(icommandsender, "Liquid name: " + LiquidContainerRegistry.getLiquidForFilledItem(item.make(1)).asItemStack().getItemName());
-					} else {
-						sendChatMessage(icommandsender, "This item is not a liquid or liquid container");
-					}
-					//#else
-					//+if (item.getItemId() == 9) {
-						//+sendChatMessage(icommandsender, "Liquid name: fluid.tile.water");
-					//+} else if (item.getItemId() == 11) {
-						//+sendChatMessage(icommandsender, "Liquid name: fluid.tile.lava");
-					//+} else if (Block.blocksList[item.getItemId()] != null && Block.blocksList[item.getItemId()] instanceof IFluidBlock) {
-						//+sendChatMessage(icommandsender, "Liquid name: " + ((IFluidBlock)(Block.blocksList[item.getItemId()])).getFluid().getUnlocalizedName());
-					//+} else if (FluidContainerRegistry.isFilledContainer(item.make(1))) {
-						//+sendChatMessage(icommandsender, "Liquid name: " + FluidContainerRegistry.getFluidForFilledItem(item.make(1)).getFluid().getUnlocalizedName());
+					//+if (LiquidContainerRegistry.isLiquid(item.make(1))) {
+						//+sendChatMessage(icommandsender, "Liquid name: " + item.getName());
+					//+} else if (LiquidContainerRegistry.isFilledContainer(item.make(1))) {
+						//+sendChatMessage(icommandsender, "Liquid name: " + LiquidContainerRegistry.getLiquidForFilledItem(item.make(1)).asItemStack().getItemName());
 					//+} else {
 						//+sendChatMessage(icommandsender, "This item is not a liquid or liquid container");
 					//+}
+					//#else
+					if (item.getItemId() == 9) {
+						sendChatMessage(icommandsender, "Liquid name: fluid.tile.water");
+					} else if (item.getItemId() == 11) {
+						sendChatMessage(icommandsender, "Liquid name: fluid.tile.lava");
+					} else if (Block.blocksList[item.getItemId()] != null && Block.blocksList[item.getItemId()] instanceof IFluidBlock) {
+						sendChatMessage(icommandsender, "Liquid name: " + ((IFluidBlock)(Block.blocksList[item.getItemId()])).getFluid().getUnlocalizedName());
+					} else if (FluidContainerRegistry.isFilledContainer(item.make(1))) {
+						sendChatMessage(icommandsender, "Liquid name: " + FluidContainerRegistry.getFluidForFilledItem(item.make(1)).getFluid().getUnlocalizedName());
+					} else {
+						sendChatMessage(icommandsender, "This item is not a liquid or liquid container");
+					}
 					//#endif
 				} catch (TweakerExecuteException ex) {
 					sendChatMessage(icommandsender, ex.getMessage());
@@ -131,9 +129,15 @@ public class MineTweakerCommand implements ICommand {
 					sendChatMessage(icommandsender, "[" + name + "]");
 					ArrayList<ItemStack> entries = OreDictionary.getOres(name);
 					for (ItemStack stack : entries) {
+						//#ifdef MC152
+						//+sendChatMessage(icommandsender, 
+								//+"  " + MineTweakerUtil.getItemString(stack) + " - " +
+								//+(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItemName()));
+						//#else
 						sendChatMessage(icommandsender, 
 								"  " + MineTweakerUtil.getItemString(stack) + " - " +
-								(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItemName()));
+								(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getUnlocalizedName()));
+						//#endif
 					}
 				}
 			} else {
@@ -150,9 +154,15 @@ public class MineTweakerCommand implements ICommand {
 						}
 					} else {
 						for (ItemStack stack : OreDictionary.getOres(arguments[1])) {
+							//#ifdef MC152
+							//+sendChatMessage(icommandsender, 
+									//+"  " + MineTweakerUtil.getItemString(stack) + " - " +
+									//+(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItemName()));
+							//#else
 							sendChatMessage(icommandsender, 
 									"  " + MineTweakerUtil.getItemString(stack) + " - " +
-									(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItemName()));
+									(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getUnlocalizedName()));
+							//#endif
 						}
 					}
 				} catch (TweakerExecuteException ex) {
@@ -171,7 +181,10 @@ public class MineTweakerCommand implements ICommand {
 				sendChatMessage(icommandsender, "Recipes for item " + item.toIdString());
 				
 				TweakerItemPattern pattern = item.asItemPattern();
+				
+				@SuppressWarnings("unchecked")
 				List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+				
 				for (IRecipe recipe : recipes) {
 					if (pattern.matches(recipe.getRecipeOutput())) {
 						sendChatMessage(icommandsender, "  " + MineTweakerUtil.getRecipeString(recipe));
@@ -215,7 +228,7 @@ public class MineTweakerCommand implements ICommand {
 	}
 
 	@Override
-	public List addTabCompletionOptions(ICommandSender icommandsender,
+	public List<?> addTabCompletionOptions(ICommandSender icommandsender,
 			String[] astring) {
 		return null;
 	}
@@ -227,9 +240,9 @@ public class MineTweakerCommand implements ICommand {
 	
 	public static void sendChatMessage(ICommandSender sender, String message) {
 		//#ifdef MC152
-		sender.sendChatToPlayer(message);
+		//+sender.sendChatToPlayer(message);
 		//#else
-		//+sender.sendChatToPlayer(ChatMessageComponent.func_111066_d(message));
+		sender.sendChatToPlayer(ChatMessageComponent.createFromText(message));
 		//#endif
 	}
 }

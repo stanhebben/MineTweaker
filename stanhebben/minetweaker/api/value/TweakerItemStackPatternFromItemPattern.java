@@ -1,9 +1,10 @@
 package stanhebben.minetweaker.api.value;
 
+import java.util.List;
 import net.minecraft.item.ItemStack;
 
-public class TweakerItemStackPatternFromItemPattern extends TweakerItemStackPattern {
-	private TweakerItemPattern pattern;
+public final class TweakerItemStackPatternFromItemPattern extends TweakerItemStackPattern {
+	private final TweakerItemPattern pattern;
 	
 	public TweakerItemStackPatternFromItemPattern(TweakerItemPattern pattern) {
 		this.pattern = pattern;
@@ -12,6 +13,16 @@ public class TweakerItemStackPatternFromItemPattern extends TweakerItemStackPatt
 	@Override
 	public boolean matches(ItemStack stack) {
 		return pattern.matches(stack);
+	}
+	
+	@Override
+	public List<TweakerItem> getMatches() {
+		return pattern.getMatches();
+	}
+	
+	@Override
+	public int getAmount() {
+		return 1;
 	}
 	
 	@Override

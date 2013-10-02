@@ -4,7 +4,8 @@
  */
 package stanhebben.minetweaker.api.value;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.IPatternListener;
 import stanhebben.minetweaker.api.Tweaker;
@@ -14,8 +15,8 @@ import stanhebben.minetweaker.api.Tweaker;
  * @author Stanneke
  */
 public class TweakerItemPatternOnly extends TweakerItemPattern {
-	private TweakerItemPattern base;
-	private TweakerValue test;
+	private final TweakerItemPattern base;
+	private final TweakerValue test;
 	
 	public TweakerItemPatternOnly(TweakerItemPattern base, TweakerValue test) {
 		this.base = base;
@@ -64,9 +65,13 @@ public class TweakerItemPatternOnly extends TweakerItemPattern {
 	}
 
 	@Override
-	public Iterator<TweakerItem> getMatches() {
-		Iterator<TweakerItem> baseIterator = base.getMatches();
-		return new FilteredIterator(baseIterator);
+	public List<TweakerItem> getMatches() {
+		List<TweakerItem> baseMatches = base.getMatches();
+		List<TweakerItem> result = new ArrayList<TweakerItem>();
+		for (TweakerItem item : baseMatches) {
+			if (matches(item)) result.add(item);
+		}
+		return result;
 	}
 
 	@Override
@@ -80,9 +85,9 @@ public class TweakerItemPatternOnly extends TweakerItemPattern {
 	}
 	
 	private class FilteredListener implements IPatternListener {
-		private IPatternListener next;
+		private final IPatternListener next;
 		
-		public FilteredListener(IPatternListener next) {
+		FilteredListener(IPatternListener next) {
 			this.next = next;
 		}
 
@@ -97,44 +102,5 @@ public class TweakerItemPatternOnly extends TweakerItemPattern {
 				next.onPatternResultRemoved(item);
 			}
 		}
-	}
-	
-	private class FilteredIterator implements Iterator<TweakerItem> {
-		private Iterator<TweakerItem> base;
-		private TweakerItem next;
-		
-		public FilteredIterator(Iterator<TweakerItem> base) {
-			this.base = base;
-			
-			this.next = null;
-			while (base.hasNext()) {
-				TweakerItem maybeNext = base.next();
-				if (matches(maybeNext)) {
-					next = maybeNext;
-					break;
-				}
-			}
-		}
-
-		public boolean hasNext() {
-			return next != null;
-		}
-
-		public TweakerItem next() {
-			TweakerItem result = next;
-			
-			this.next = null;
-			while (base.hasNext()) {
-				TweakerItem maybeNext = base.next();
-				if (matches(maybeNext)) {
-					next = maybeNext;
-					break;
-				}
-			}
-			
-			return result;
-		}
-
-		public void remove() {}
 	}
 }

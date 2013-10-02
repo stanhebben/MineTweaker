@@ -5,9 +5,9 @@
 package stanhebben.minetweaker.base.functions;
 
 //#ifdef MC152
-import net.minecraftforge.liquids.LiquidStack;
+//+import net.minecraftforge.liquids.LiquidStack;
 //#else
-//+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.Fluid;
 //#endif
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -23,19 +23,19 @@ import stanhebben.minetweaker.base.actions.AddFluidContainerAction;
  */
 public class AddFluidContainerFunction extends TweakerFunction {
 	//#ifdef MC152
-	private TweakerItem fluid;
+	//+private TweakerItem fluid;
 	//#else
-	//+private Fluid fluid;
+	private Fluid fluid;
 	//#endif
 	
 	//#ifdef MC152
-	public AddFluidContainerFunction(TweakerItem fluid) {
-		this.fluid = fluid;
-	}
-	//#else
-	//+public AddFluidContainerFunction(Fluid fluid) {
+	//+public AddFluidContainerFunction(TweakerItem fluid) {
 		//+this.fluid = fluid;
 	//+}
+	//#else
+	public AddFluidContainerFunction(Fluid fluid) {
+		this.fluid = fluid;
+	}
 	//#endif
 
 	@Override
@@ -53,9 +53,9 @@ public class AddFluidContainerFunction extends TweakerFunction {
 				notNull(arguments[2], "addContainer filled container cannot be null")
 				.toItem("addContainer filled container must be an item");
 		//#ifdef MC152
-		Tweaker.apply(new AddFluidContainerAction(new LiquidStack(fluid.getItemId(), amount, fluid.getItemSubId()), emptyContainer, fullContainer));
+		//+Tweaker.apply(new AddFluidContainerAction(new LiquidStack(fluid.getItemId(), amount, fluid.getItemSubId()), emptyContainer, fullContainer));
 		//#else
-		//+Tweaker.apply(new AddFluidContainerAction(fluid, amount, emptyContainer, fullContainer));
+		Tweaker.apply(new AddFluidContainerAction(fluid, amount, emptyContainer, fullContainer));
 		//#endif
 		
 		return null;

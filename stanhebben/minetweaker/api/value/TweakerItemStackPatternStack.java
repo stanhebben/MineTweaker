@@ -1,9 +1,11 @@
 package stanhebben.minetweaker.api.value;
 
+import java.util.Collections;
+import java.util.List;
 import net.minecraft.item.ItemStack;
 
-public class TweakerItemStackPatternStack extends TweakerItemStackPattern {
-	private ItemStack value;
+public final class TweakerItemStackPatternStack extends TweakerItemStackPattern {
+	private final ItemStack value;
 	
 	public TweakerItemStackPatternStack(ItemStack value) {
 		this.value = value;
@@ -15,6 +17,16 @@ public class TweakerItemStackPatternStack extends TweakerItemStackPattern {
 		return stack.itemID == value.itemID
 				&& stack.getItemDamage() == value.getItemDamage()
 				&& stack.stackSize == value.stackSize;
+	}
+	
+	@Override
+	public List<TweakerItem> getMatches() {
+		return Collections.singletonList(TweakerItem.get(value));
+	}
+	
+	@Override
+	public int getAmount() {
+		return value.stackSize;
 	}
 	
 	@Override

@@ -4,7 +4,6 @@
  */
 package stanhebben.minetweaker.util;
 
-import java.util.Iterator;
 import stanhebben.minetweaker.IPatternListener;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemPattern;
@@ -21,9 +20,8 @@ public abstract class ItemPatternTransformer implements IPatternListener {
 	}
 	
 	public final void init() {
-		Iterator<TweakerItem> matches = pattern.getMatches();
-		while (matches.hasNext()) {
-			onAdded(matches.next());
+		for (TweakerItem item : pattern.getMatches()) {
+			onAdded(item);
 		}
 		pattern.addListener(this);
 	}

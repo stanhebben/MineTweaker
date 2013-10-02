@@ -5,11 +5,11 @@
 package stanhebben.minetweaker.base.actions;
 
 //#ifdef MC152
-import net.minecraftforge.liquids.LiquidContainerData;
-import net.minecraftforge.liquids.LiquidContainerRegistry;
+//+import net.minecraftforge.liquids.LiquidContainerData;
+//+import net.minecraftforge.liquids.LiquidContainerRegistry;
 //#else
-//+import net.minecraftforge.fluids.FluidContainerRegistry;
-//+import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 //#endif
 import stanhebben.minetweaker.MineTweakerUtil;
 import stanhebben.minetweaker.api.IUndoableAction;
@@ -22,9 +22,9 @@ import stanhebben.minetweaker.api.value.TweakerItem;
 public class RemoveFluidContainerAction implements IUndoableAction {
 	private TweakerItem filled;
 	//#ifdef MC152
-	private LiquidContainerData data;
+	//+private LiquidContainerData data;
 	//#else
-	//+private FluidContainerData data;
+	private FluidContainerData data;
 	//#endif
 	
 	public RemoveFluidContainerAction(TweakerItem filled) {
@@ -42,9 +42,9 @@ public class RemoveFluidContainerAction implements IUndoableAction {
 
 	public void undo() {
 		//#ifdef MC152
-		LiquidContainerRegistry.registerLiquid(data);
+		//+LiquidContainerRegistry.registerLiquid(data);
 		//#else
-		//+FluidContainerRegistry.registerFluidContainer(data);
+		FluidContainerRegistry.registerFluidContainer(data);
 		//#endif
 	}
 

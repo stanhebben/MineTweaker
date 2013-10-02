@@ -1,6 +1,6 @@
 package stanhebben.minetweaker.api.value;
 
-import java.util.Iterator;
+import java.util.List;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.IPatternListener;
 import stanhebben.minetweaker.MineTweakerRegistry;
@@ -46,8 +46,8 @@ public class TweakerItemPatternAny extends TweakerItemPattern {
 	}
 
 	@Override
-	public Iterator<TweakerItem> getMatches() {
-		return MineTweakerRegistry.INSTANCE.getAllItems().iterator();
+	public List<TweakerItem> getMatches() {
+		return MineTweakerRegistry.INSTANCE.getAllItems();
 	}
 
 	@Override

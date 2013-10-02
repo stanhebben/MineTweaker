@@ -15,6 +15,7 @@ import stanhebben.minetweaker.api.value.TweakerString;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.script.TweakerFile;
 import stanhebben.minetweaker.script.TweakerParser;
+import stanhebben.minetweaker.script.parser.ParseException;
 import stanhebben.minetweaker.script.parser.Token;
 import stanhebben.minetweaker.script.statements.TweakerStatement;
 import stanhebben.minetweaker.script.types.TweakerType;
@@ -132,30 +133,37 @@ public abstract class TweakerExpression {
 		
 		switch (parser.peek() == null ? -1 : parser.peek().getType()) {
 			case TweakerParser.T_EQ: {
+				parser.next();
 				TweakerExpression right = readAddExpression(file, parser.peek().getLine(), parser.peek().getLineOffset(), parser);
 				return new TweakerExpressionEq(file, line, offset, left, right);
 			}
 			case TweakerParser.T_NOTEQ: {
+				parser.next();
 				TweakerExpression right = readAddExpression(file, parser.peek().getLine(), parser.peek().getLineOffset(), parser);
 				return new TweakerExpressionNotEq(file, line, offset, left, right);
 			}
 			case TweakerParser.T_LT: {
+				parser.next();
 				TweakerExpression right = readAddExpression(file, parser.peek().getLine(), parser.peek().getLineOffset(), parser);
 				return new TweakerExpressionLt(file, line, offset, left, right);
 			}
 			case TweakerParser.T_LTEQ: {
+				parser.next();
 				TweakerExpression right = readAddExpression(file, parser.peek().getLine(), parser.peek().getLineOffset(), parser);
 				return new TweakerExpressionLtEq(file, line, offset, left, right);
 			}
 			case TweakerParser.T_GT: {
+				parser.next();
 				TweakerExpression right = readAddExpression(file, parser.peek().getLine(), parser.peek().getLineOffset(), parser);
 				return new TweakerExpressionLt(file, line, offset, right, left);
 			}
 			case TweakerParser.T_GTEQ: {
+				parser.next();
 				TweakerExpression right = readAddExpression(file, parser.peek().getLine(), parser.peek().getLineOffset(), parser);
 				return new TweakerExpressionLtEq(file, line, offset, right, left);
 			}
 			case TweakerParser.T_IN: {
+				parser.next();
 				TweakerExpression right = readAddExpression(file, parser.peek().getLine(), parser.peek().getLineOffset(), parser);
 				return new TweakerExpressionIn(file, line, offset, right, left);
 			}
@@ -382,13 +390,14 @@ public abstract class TweakerExpression {
 				parser.required(TweakerParser.T_BRCLOSE, ") expected");
 				return result;
 			default:
-				throw new RuntimeException("Invalid expression");
+				Token last = parser.next();
+				throw new ParseException(last, "Invalid expression, last token: " + last.getValue());
 		}
 	}
 	
-	private TweakerFile file;
-	private int line;
-	private int offset;
+	private final TweakerFile file;
+	private final int line;
+	private final int offset;
 	
 	public TweakerExpression(TweakerFile file, int line, int offset) {
 		this.file = file;

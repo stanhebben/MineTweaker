@@ -1,8 +1,4 @@
-//#fileifndef MC152
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+//#fileifndef OLDLIQUIDS
 package stanhebben.minetweaker.base.actions;
 
 import net.minecraftforge.fluids.Fluid;

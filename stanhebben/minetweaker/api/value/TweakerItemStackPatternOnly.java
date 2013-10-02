@@ -4,6 +4,8 @@
  */
 package stanhebben.minetweaker.api.value;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.api.Tweaker;
 
@@ -11,9 +13,9 @@ import stanhebben.minetweaker.api.Tweaker;
  *
  * @author Stanneke
  */
-public class TweakerItemStackPatternOnly extends TweakerItemStackPattern {
-	private TweakerItemStackPattern base;
-	private TweakerValue test;
+public final class TweakerItemStackPatternOnly extends TweakerItemStackPattern {
+	private final TweakerItemStackPattern base;
+	private final TweakerValue test;
 	
 	public TweakerItemStackPatternOnly(TweakerItemStackPattern base, TweakerValue test) {
 		this.base = base;
@@ -23,6 +25,23 @@ public class TweakerItemStackPatternOnly extends TweakerItemStackPattern {
 	@Override
 	public boolean matches(ItemStack item) {
 		return base.matches(item) && test.call(Tweaker.getGlobalWrapped(), new TweakerItemStack(item)).toBasicBool();
+	}
+	
+	@Override
+	public List<TweakerItem> getMatches() {
+		List<TweakerItem> baseMatches = base.getMatches();
+		List<TweakerItem> result = new ArrayList<TweakerItem>();
+		for (TweakerItem match : baseMatches) {
+			if (test.call(Tweaker.getGlobalWrapped(), match.asItemStack()).toBasicBool()) {
+				result.add(match);
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public int getAmount() {
+		return base.getAmount();
 	}
 
 	@Override

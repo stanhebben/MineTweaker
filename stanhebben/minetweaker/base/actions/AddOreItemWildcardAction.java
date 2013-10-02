@@ -33,10 +33,18 @@ public class AddOreItemWildcardAction implements IUndoableAction {
 	}
 
 	public String describe() {
-		return "Adding " + Item.itemsList[id].getLocalizedName(new ItemStack(id, 1, OreDictionary.WILDCARD_VALUE)) + " to the " + ore + " ore dictionary entry.";
+		//#ifdef MC152
+		//+return "Adding " + Item.itemsList[id].getLocalizedName(new ItemStack(id, 1, OreDictionary.WILDCARD_VALUE)) + " to the " + ore + " ore dictionary entry.";
+		//#else
+		return "Adding " + Item.itemsList[id].getItemDisplayName(new ItemStack(id, 1, OreDictionary.WILDCARD_VALUE)) + " to the " + ore + " ore dictionary entry.";
+		//#endif
 	}
 
 	public String describeUndo() {
-		return "Removing " + Item.itemsList[id].getLocalizedName(new ItemStack(id, 1, OreDictionary.WILDCARD_VALUE)) + " from the " + ore + " ore dictionary entry.";
+		//#ifdef MC152
+		//+return "Removing " + Item.itemsList[id].getLocalizedName(new ItemStack(id, 1, OreDictionary.WILDCARD_VALUE)) + " from the " + ore + " ore dictionary entry.";
+		//#else
+		return "Removing " + Item.itemsList[id].getItemDisplayName(new ItemStack(id, 1, OreDictionary.WILDCARD_VALUE)) + " from the " + ore + " ore dictionary entry.";
+		//#endif
 	}
 }

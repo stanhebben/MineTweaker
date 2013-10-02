@@ -4,6 +4,8 @@
  */
 package stanhebben.minetweaker.mods.buildcraft.values;
 
+import java.util.LinkedList;
+
 import buildcraft.api.fuels.IronEngineFuel;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.value.TweakerField;
@@ -30,17 +32,17 @@ public class FuelsValue extends TweakerValue {
 		} else if (index.asFluid() != null) {
 			TweakerFluid fluid = index.asFluid();
 			//#ifdef MC152
-			for (IronEngineFuel fuel : IronEngineFuel.fuels) {
-				if (fluid.equalsFluid(fuel.liquid)) {
-					return new FuelValue(fuel);
-				}
-			}
-			throw new TweakerExecuteException("No such fuel: " + fluid.getDisplayName());
-			//#else
-			//+if (!IronEngineFuel.fuels.containsKey(fluid.get().getName())) {
-				//+throw new TweakerExecuteException("No such fuel: " + fluid.get().getLocalizedName());
+			//+for (IronEngineFuel fuel : (LinkedList<IronEngineFuel>) IronEngineFuel.fuels) {
+				//+if (fluid.equalsFluid(fuel.liquid)) {
+					//+return new FuelValue(fuel);
+				//+}
 			//+}
-			//+return new FuelValue(IronEngineFuel.fuels.get(fluid.get().getName()));
+			//+throw new TweakerExecuteException("No such fuel: " + fluid.getDisplayName());
+			//#else
+			if (!IronEngineFuel.fuels.containsKey(fluid.get().getName())) {
+				throw new TweakerExecuteException("No such fuel: " + fluid.get().getLocalizedName());
+			}
+			return new FuelValue((IronEngineFuel.Fuel) IronEngineFuel.fuels.get(fluid.get().getName()));
 			//#endif
 		} else {
 			return super.index(index);

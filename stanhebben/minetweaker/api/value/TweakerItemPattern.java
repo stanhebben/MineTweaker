@@ -1,6 +1,7 @@
 package stanhebben.minetweaker.api.value;
 
 import java.util.Iterator;
+import java.util.List;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.IPatternListener;
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -20,7 +21,7 @@ public abstract class TweakerItemPattern extends TweakerValue {
 	
 	public abstract String toPatternString();
 
-	public abstract Iterator<TweakerItem> getMatches();
+	public abstract List<TweakerItem> getMatches();
 	
 	public abstract void addListener(IPatternListener listener);
 	
@@ -48,9 +49,8 @@ public abstract class TweakerItemPattern extends TweakerValue {
 				return new FunctionItemPatternOnly(this);
 			case ITEMS: {
 				TweakerArrayValue result = new TweakerArrayValue();
-				Iterator<TweakerItem> iter = getMatches();
-				while (iter.hasNext()) {
-					result.add(iter.next());
+				for (TweakerValue value : getMatches()) {
+					result.add(value);
 				}
 				return result;
 			}

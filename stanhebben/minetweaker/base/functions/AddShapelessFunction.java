@@ -11,8 +11,10 @@ import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerArray;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
+import stanhebben.minetweaker.api.value.TweakerItemStackPattern;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.base.actions.AddRecipeAction;
+import stanhebben.minetweaker.base.functions.recipes.ShapelessAdvancedRecipe;
 import stanhebben.minetweaker.base.functions.recipes.ShapelessFunctionRecipes;
 import stanhebben.minetweaker.base.functions.recipes.ShapelessOreFunctionRecipe;
 
@@ -35,15 +37,35 @@ public class AddShapelessFunction extends TweakerFunction {
 				notNull(arguments[1], "shapeless recipe must not be null")
 				.toArray("shapeless recipe must be an array of recipe items");
 		
+		boolean hasAdvancedItems = false;
 		boolean hasOreItems = false;
+		
 		for (int i = 0; i < recipe.size(); i++) {
-			if (recipe.get(i) != null
-					&& recipe.get(i).toRecipeItem("shapeless recipe items must be a valid recipe item").getClass() == String.class) {
-				hasOreItems = true;
+			TweakerValue item = recipe.get(i);
+			if (item != null) {
+				if (item.asRecipeItem() != null) {
+					hasOreItems |= item.asRecipeItem().getClass() == String.class;
+				} else if (item.asItemStackPattern() != null) {
+					hasAdvancedItems = true;
+				} else {
+					throw new TweakerExecuteException("shapeless recipe items must be a valid item stack pattern");
+				}
 			}
 		}
 		
-		if (hasOreItems) {
+		if (hasAdvancedItems) {
+			TweakerItemStackPattern[] recipeArray = new TweakerItemStackPattern[recipe.size()];
+			for (int i = 0; i < recipe.size(); i++) {
+				TweakerValue value = recipe.get(i);
+				recipeArray[i] = (value == null ? null : value.asItemStackPattern());
+			}
+			
+			if (arguments.length >= 3) {
+				Tweaker.apply(new AddRecipeAction(new ShapelessAdvancedRecipe(target, recipeArray, arguments[2])));
+			} else {
+				Tweaker.apply(new AddRecipeAction(new ShapelessAdvancedRecipe(target, recipeArray, null)));
+			}
+		} else if (hasOreItems) {
 			Object[] recipeArray = new Object[recipe.size()];
 			for (int i = 0; i < recipeArray.length; i++) {
 				TweakerValue value = recipe.get(i);

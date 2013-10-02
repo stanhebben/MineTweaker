@@ -5,10 +5,10 @@
 package stanhebben.minetweaker.mods.buildcraft.functions;
 
 //#ifdef MC152
-import buildcraft.api.recipes.RefineryRecipe;
-import stanhebben.minetweaker.api.value.TweakerItem;
+//+import buildcraft.api.recipes.RefineryRecipe;
+//+import stanhebben.minetweaker.api.value.TweakerItem;
 //#else
-//+import buildcraft.api.recipes.RefineryRecipes;
+import buildcraft.api.recipes.RefineryRecipes;
 //#endif
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -46,15 +46,15 @@ public class RefineryRemoveFunction extends TweakerFunction {
 			} else {
 				ArrayList<RefineryRemoveRecipeAction> actions = new ArrayList<RefineryRemoveRecipeAction>();
 				//#ifdef MC152
-				for (RefineryRecipe recipe : BuildCraftUtil.getRefineryRecipes()) {
-					if (!output.equalsFluid(TweakerItem.get(recipe.result.asItemStack()))) continue;
-					actions.add(new RefineryRemoveRecipeAction(recipe));
-				}
-				//#else
-				//+for (RefineryRecipes.Recipe recipe : BuildCraftUtil.getRefineryRecipes()) {
-					//+if (!output.equalsFluid(recipe.result.getFluid())) continue;
+				//+for (RefineryRecipe recipe : BuildCraftUtil.getRefineryRecipes()) {
+					//+if (!output.equalsFluid(TweakerItem.get(recipe.result.asItemStack()))) continue;
 					//+actions.add(new RefineryRemoveRecipeAction(recipe));
 				//+}
+				//#else
+				for (RefineryRecipes.Recipe recipe : BuildCraftUtil.getRefineryRecipes()) {
+					if (!output.equalsFluid(recipe.result.getFluid())) continue;
+					actions.add(new RefineryRemoveRecipeAction(recipe));
+				}
 				//#endif
 				for (RefineryRemoveRecipeAction action : actions) {
 					Tweaker.apply(action);
