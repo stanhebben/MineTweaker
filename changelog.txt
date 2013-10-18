@@ -1,3 +1,13 @@
+[Version 2.2.1]
+- Fixed NPE when using a recipe added to the ore washing plant
+- Can now adjust the amount of water used in the ore washing plant
+
+[Version 2.2.0]
+- GregTech machines are now supported
+- Forestry machines are now supported
+- Added the ore washing plant
+- Can now use <id:*> to denote "any meta value" in a recipe. <id> will still have the same meaning.
+
 [Version 2.1.2]
 - IC2 support extended for versions 1.6.2 and 1.6.4
 - 1.6.4 version added

@@ -77,6 +77,10 @@ public class TweakerFluid extends TweakerValue {
 		//+return fluid;
 	//+}
 	
+	//+public LiquidStack make(int amount) {
+		//+return new LiquidStack(fluid.getItemId(), amount, fluid.getItemSubId());
+	//+}
+	
 	//+public boolean equalsFluid(TweakerItem fluid) {
 		//+if (fluid == null) return false;
 		//+return this.fluid.getItemId() == fluid.getItemId() && this.fluid.getItemSubId() == fluid.getItemSubId();
@@ -95,6 +99,10 @@ public class TweakerFluid extends TweakerValue {
 	
 	public Fluid get() {
 		return fluid;
+	}
+	
+	public FluidStack make(int amount) {
+		return new FluidStack(fluid, amount);
 	}
 	
 	public boolean equalsFluid(Fluid fluid) {

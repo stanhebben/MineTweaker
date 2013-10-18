@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import stanhebben.minetweaker.IPatternListener;
 import stanhebben.minetweaker.MineTweakerUtil;
 
@@ -17,6 +18,11 @@ public class TweakerItemPatternAnyMeta extends TweakerItemPattern {
 	
 	public int getId() {
 		return id;
+	}
+	
+	@Override
+	public Object asRecipeItem() {
+		return new ItemStack(id, 1, OreDictionary.WILDCARD_VALUE);
 	}
 	
 	@Override

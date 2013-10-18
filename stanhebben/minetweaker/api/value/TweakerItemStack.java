@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.api.functions.FunctionItemStackPatternOnly;
 
 public class TweakerItemStack extends TweakerValue {
-	private ItemStack value;
+	private final ItemStack value;
 	
 	public TweakerItemStack(ItemStack value) {
 		this.value = value;
@@ -13,6 +13,10 @@ public class TweakerItemStack extends TweakerValue {
 	
 	public ItemStack get() {
 		return value;
+	}
+	
+	public String getDisplayName() {
+		return value.getDisplayName();
 	}
 	
 	@Override

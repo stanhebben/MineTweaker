@@ -30,17 +30,17 @@ import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.value.TweakerItem;
 
 public class MineTweakerUtil {
-	private static Field oreRecipeWidth = null;
-	private static Field anvilFile = null;
+	private final static Field oreRecipeWidth;
+	private final static Field anvilFile;
 	
 	//#ifdef MC152
-	//+static Map<List, LiquidContainerData> mapFilledItemFromLiquid = null;
-	//+static Map<List, LiquidContainerData> mapLiquidFromFilledItem = null;
-	//+static Set<List> setContainerValidation = null;
+	//+private static Map<List, LiquidContainerData> mapFilledItemFromLiquid;
+	//+private static Map<List, LiquidContainerData> mapLiquidFromFilledItem;
+	//+private static Set<List> setContainerValidation;
 	//#else
-	static Map<List, FluidContainerData> containerFluidMap = null; // id + damage + fluid => filled
-	static Map<List, FluidContainerData> filledContainerMap = null; // id + damage => empty
-	static Set<List> emptyContainers = null;
+	private static final Map<List, FluidContainerData> containerFluidMap; // id + damage + fluid => filled
+	private static final Map<List, FluidContainerData> filledContainerMap; // id + damage => empty
+	private static final Set<List> emptyContainers;
 	//#endif
 	
 	static {
@@ -134,9 +134,9 @@ public class MineTweakerUtil {
 		try {
 			return oreRecipeWidth.getInt(recipe);
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			Tweaker.log(Level.WARNING, "Could not get shapedRecipeOreWidth field", e);
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			Tweaker.log(Level.WARNING, "Could not get shapedRecipeOreWidth field", e);
 		}
 		return 1;
 	}
@@ -249,9 +249,9 @@ public class MineTweakerUtil {
 		try {
 			return (File) anvilFile.get(server);
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			Tweaker.log(Level.WARNING, "Could not get anvilFile field", e);
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+			Tweaker.log(Level.WARNING, "Could not get anvilFile field", e);
 		}
 		return null;
 	}

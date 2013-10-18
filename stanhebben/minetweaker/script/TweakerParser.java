@@ -56,6 +56,7 @@ public class TweakerParser extends TokenStream {
 	public static final int T_ASSIGN = 39;
 	public static final int T_NOTEQ = 42;
 	public static final int T_NOT = 43;
+	public static final int T_DOLLAR = 44;
 	
 	public static final int T_BOOL = 100;
 	public static final int T_BYTE = 101;
@@ -127,7 +128,8 @@ public class TweakerParser extends TokenStream {
         "==",
         "=",
         "!=",
-        "!"
+        "!",
+		"$"
 	};
 	private static final int[] FINALS = {
 		-1,
@@ -175,7 +177,8 @@ public class TweakerParser extends TokenStream {
 		T_EQ,
 		T_ASSIGN,
 		T_NOTEQ,
-		T_NOT
+		T_NOT,
+		T_DOLLAR
 	};
 	private static final CompiledDFA DFA = new NFA(REGEXPS, FINALS).toDFA().optimize().compile();
 	

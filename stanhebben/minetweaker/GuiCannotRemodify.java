@@ -11,9 +11,9 @@ import net.minecraft.client.gui.GuiScreen;
  * @author Stan Hebben
  */
 public class GuiCannotRemodify extends GuiScreen {
-	private String message1;
-	private String message2;
-	private String message3;
+	private final String message1;
+	private final String message2;
+	private final String message3;
 	
 	public GuiCannotRemodify(String message1, String message2, String message3) {
 		this.message1 = message1;
@@ -57,9 +57,4 @@ public class GuiCannotRemodify extends GuiScreen {
             System.exit(0);
         }
     }
-	
-	@Override
-	public void onGuiClosed() {
-
-	}
 }

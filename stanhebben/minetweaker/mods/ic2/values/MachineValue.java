@@ -36,7 +36,7 @@ public class MachineValue extends TweakerValue {
 			case REMOVE:
 				return CompressorRemoveFunction.INSTANCE;*/
 		}
-		throw new TweakerExecuteException("No such member in ic2.compressor: " + index);
+		return super.index(index);
 	}
 
 	@Override

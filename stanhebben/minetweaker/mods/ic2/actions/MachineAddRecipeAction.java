@@ -9,8 +9,11 @@ package stanhebben.minetweaker.mods.ic2.actions;
 
 import ic2.api.recipe.IMachineRecipeManager;
 import ic2.api.recipe.IRecipeInput;
+import java.util.logging.Level;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import stanhebben.minetweaker.api.IUndoableAction;
+import stanhebben.minetweaker.api.Tweaker;
 
 /**
  *
@@ -18,19 +21,21 @@ import stanhebben.minetweaker.api.IUndoableAction;
  */
 public class MachineAddRecipeAction implements IUndoableAction {
 	private final IMachineRecipeManager machine;
+	private final NBTTagCompound nbt;
 	private final String machineName;
 	private final IRecipeInput input;
 	private final ItemStack[] output;
 	
-	public MachineAddRecipeAction(IMachineRecipeManager machine, String machineName, IRecipeInput input, ItemStack... output) {
+	public MachineAddRecipeAction(IMachineRecipeManager machine, String machineName, IRecipeInput input, NBTTagCompound nbt, ItemStack... output) {
 		this.machine = machine;
 		this.machineName = machineName;
 		this.input = input;
 		this.output = output;
+		this.nbt = nbt;
 	}
 	
 	public void apply() {
-		machine.addRecipe(input, null, output);
+		machine.addRecipe(input, nbt, output);
 	}
 
 	public boolean canUndo() {

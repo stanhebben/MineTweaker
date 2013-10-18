@@ -399,7 +399,7 @@ public abstract class TweakerValue {
 	}
 	
 	public TweakerValue index(String index) {
-		throw new TweakerExecuteException(toString() + " does not support indexing with strings");
+		throw new TweakerExecuteException("No such member in " + toString() + ": " + index);
 	}
 	
 	public void indexSet(TweakerValue index, TweakerValue value) {

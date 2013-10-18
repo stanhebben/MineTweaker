@@ -56,12 +56,14 @@ public class MachineAddRecipeFunction extends TweakerFunction {
 			Tweaker.apply(new MachineAddRecipeAction(
 					machine, machineName,
 					new StackPatternRecipeInput(input),
+					null,
 					outputArray));
 		} else if (output.asItemStack() != null) {
 			// single output
 			Tweaker.apply(new MachineAddRecipeAction(
 					machine, machineName,
 					new StackPatternRecipeInput(input),
+					null,
 					output.asItemStack().get()));
 		} else {
 			throw new TweakerExecuteException("machine output must be either an item stack, or an array of item stacks");

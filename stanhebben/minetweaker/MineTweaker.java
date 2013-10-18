@@ -1,5 +1,6 @@
 package stanhebben.minetweaker;
 
+import cpw.mods.fml.common.Loader;
 import stanhebben.minetweaker.util.DataArrayInputStream;
 import stanhebben.minetweaker.util.DataArrayOutputStream;
 import stanhebben.minetweaker.util.DefaultUndoStack;
@@ -49,13 +50,15 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 //#endif
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import ic2.api.recipe.RecipeOutput;
+import ic2.api.recipe.Recipes;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.TimerTask;
@@ -69,6 +72,10 @@ import stanhebben.minetweaker.base.functions.PrintFunction;
 import stanhebben.minetweaker.base.functions.RemoveRecipesFunction;
 import stanhebben.minetweaker.base.values.FluidGroupValue;
 import stanhebben.minetweaker.mods.buildcraft.BuildCraftModSupport;
+//#ifndef MC152
+import stanhebben.minetweaker.mods.forestry.ForestrySupport;
+import stanhebben.minetweaker.mods.gregtech.GregTechModSupport;
+//#endif
 import stanhebben.minetweaker.mods.ic2.IC2ModSupport;
 
 /**
@@ -243,20 +250,6 @@ public class MineTweaker {
 							}
 						}
 					}, 1000);
-					
-					/*if (serverAddress != null && address.equals(serverAddress)) {
-						//Minecraft.getMinecraft().shutdown();
-						JOptionPane.showMessageDialog(null, "Minecraft has been tweaked for another server with modifications that cannot be rolled back. Please restart your game.");
-						//Minecraft.getMinecraft().shutdown();
-						//throw new RuntimeException("Minecraft has been tweaked for another server with modifications that cannot be rolled back. Please restart your game.");
-						//Minecraft.getMinecraft().displayGuiScreen(new GuiCannotRemodify("Minecraft has been tweaked for another server with modifications that cannot be rolled back.", "Please restart your game."));
-					} else {
-						//Minecraft.getMinecraft().shutdown();
-						JOptionPane.showMessageDialog(null, "This server's script has changed and the modifications of the old script cannot be rolled back. Please restart your game.");
-						//Minecraft.getMinecraft().shutdown();
-						//throw new RuntimeException("This server's script has changed and the modifications of the old script cannot be rolled back. Please restart your game.");
-						//Minecraft.getMinecraft().displayGuiScreen(new GuiCannotRemodify("This server's script has changed and the modifications of the old script cannot be rolled back.", "Please restart your game."));
-					}*/
 				} else {
 					while (serverMode) {
 						IUndoableAction action = undoStack.pop();
@@ -293,8 +286,6 @@ public class MineTweaker {
 			} catch (ParseException ex) {
 				Tweaker.log(Level.SEVERE, ex.getFile() + ":" + ex.getLine() + " " + ex.getExplanation());
 			}
-		} else {
-			// no modification needed
 		}
 	}
 	
@@ -390,9 +381,9 @@ public class MineTweaker {
 		return global;
 	}
 	
-	// ------------------------------
-	// -- Forge mod implementation --
-	// ------------------------------
+	// ##############################
+	// ## Forge mod implementation ##
+	// ##############################
 
 	//#ifdef OLDEVENTS
 	//+@PreInit
@@ -430,15 +421,6 @@ public class MineTweaker {
 	}
 
 	//#ifdef OLDEVENTS
-	//+@Init
-	//#else
-	@EventHandler
-	//#endif
-	public void load(FMLInitializationEvent event) {
-		// Stub Method
-	}
-
-	//#ifdef OLDEVENTS
 	//+@PostInit
 	//#else
 	@EventHandler
@@ -446,21 +428,40 @@ public class MineTweaker {
 	public void postInit(FMLPostInitializationEvent event) {
 		MineTweakerRegistry.INSTANCE.init();
 		
+		/*for (RecipeOutput output : Recipes.centrifuge.getRecipes().values()) {
+			System.out.println("Centrifuge recipe:");
+			System.out.println("NBT: " + (output.metadata == null ? null : output.metadata.toString()));
+		}*/
+		
 		// Register fuel tweaker
 		FuelTweaker.INSTANCE.register();
 		
+		// Debug: print mod list
+		for (ModContainer mod : Loader.instance().getModList()) {
+			System.out.println("Found mod: " + mod.getModId());
+		}
+		
 		// Load mod support
 		if (ModLoader.isModLoaded("BuildCraft|Core")) {
-			MineTweaker.instance.registerSupportInterface(BuildCraftModSupport.INSTANCE);
+			registerSupportInterface(BuildCraftModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "BuildCraft support loaded");
 		}
 		if (ModLoader.isModLoaded("IC2")) {
-			MineTweaker.instance.registerSupportInterface(IC2ModSupport.INSTANCE);
+			registerSupportInterface(IC2ModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "IC2 support loaded");
 		}
+		//#ifndef MC152
+		if (ModLoader.isModLoaded("gregtech_addon")) {
+			registerSupportInterface(GregTechModSupport.INSTANCE);
+			Tweaker.log(Level.INFO, "GregTech support loaded");
+		}
+		if (ModLoader.isModLoaded("Forestry")) {
+			registerSupportInterface(ForestrySupport.INSTANCE);
+			Tweaker.log(Level.INFO, "Forestry support loaded");
+		}
+		//#endif
 		
 		// Execute boot script
-		
 		try {
 			ScriptEnvironment environment = new ScriptEnvironmentDir(tweakerDir);
 			TweakerFile bootScript = new TweakerFile(environment, "/" + mainFile.getName(), mainFile);
@@ -519,9 +520,9 @@ public class MineTweaker {
 		this.serverScriptBytes = null;
 	}
 	
-	// ---------------------
-	// -- Private methods --
-	// ---------------------
+	// #####################
+	// ## Private methods ##
+	// #####################
 	
 	private void collectServerScripts(File serverDir, HashMap<String, File> files) {
 		collectServerScripts("/", serverDir, files);

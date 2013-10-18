@@ -22,7 +22,7 @@ public class IC2Value extends TweakerValue {
 	private static final MachineValue EXTRACTOR = new MachineValue(Recipes.extractor, "extractor");
 	private static final MachineValue MACERATOR = new MachineValue(Recipes.macerator, "macerator");
 	private static final MachineValue MATTERAMPLIFIER = new MachineValue(Recipes.matterAmplifier, "matterAmplifier");
-	
+	private static final MachineValue OREWASHINGPLANT = new MachineValue(Recipes.oreWashing, "oreWashingPlant");
 	//#endif
 	
 	private IC2Value() {}
@@ -55,7 +55,8 @@ public class IC2Value extends TweakerValue {
 				return MATTERAMPLIFIER;
 			case METALFORMER:
 				return MetalFormer.INSTANCE;
-			//#else
+			case OREWASHINGPLANT:
+				return OreWashingValue.INSTANCE;
 			//#endif
 		}
 		throw new TweakerExecuteException("No such member in ic2: " + index);

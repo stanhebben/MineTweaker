@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker;
 
 import java.util.ArrayList;
@@ -24,29 +20,31 @@ import stanhebben.minetweaker.api.value.TweakerItemSimple;
 import stanhebben.minetweaker.api.value.TweakerItemSub;
 
 /**
- *
- * @author Stanneke
+ * The registry contains a list of all valid block names, item names and all
+ * valid block, item and fluid prefixes.
+ * 
+ * @author Stan Hebben
  */
 public class MineTweakerRegistry {
 	public static final MineTweakerRegistry INSTANCE = new MineTweakerRegistry();
 	
-	private MineTweakerRegistry() {}
-	
-	private HashSet<String> itemPrefixes;
-	private HashMap<String, TweakerItem> itemsByName;
-	private ArrayList<TweakerItem> allItems;
-	private HashSet<String> blockPrefixes;
-	private HashMap<String, TweakerItem> blocksByName;
-	private HashSet<String> fluidPrefixes;
-	
-	public void init() {
+	private MineTweakerRegistry() {
 		blockPrefixes = new HashSet<String>();
 		blocksByName = new HashMap<String, TweakerItem>();
 		itemPrefixes = new HashSet<String>();
 		itemsByName = new HashMap<String, TweakerItem>();
 		allItems = new ArrayList<TweakerItem>();
 		fluidPrefixes = new HashSet<String>();
-		
+	}
+	
+	private final HashSet<String> itemPrefixes;
+	private final HashMap<String, TweakerItem> itemsByName;
+	private final ArrayList<TweakerItem> allItems;
+	private final HashSet<String> blockPrefixes;
+	private final HashMap<String, TweakerItem> blocksByName;
+	private final HashSet<String> fluidPrefixes;
+	
+	public void init() {
 		// load items
 		try {
 			for (Item item : Item.itemsList) {
@@ -141,6 +139,14 @@ public class MineTweakerRegistry {
 	
 	public boolean isItemPrefix(String value) {
 		return itemPrefixes.contains(value);
+	}
+	
+	public TweakerItem getAny(String name) {
+		if (blocksByName.containsKey(name)) {
+			return blocksByName.get(name);
+		} else {
+			return itemsByName.get(name);
+		}
 	}
 	
 	public boolean isFluidPrefix(String value) {

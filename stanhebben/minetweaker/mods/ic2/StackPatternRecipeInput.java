@@ -13,11 +13,17 @@ import stanhebben.minetweaker.api.value.TweakerItemStackPattern;
  *
  * @author Stanneke
  */
-public class StackPatternRecipeInput implements IRecipeInput {
-	private TweakerItemStackPattern pattern;
+public final class StackPatternRecipeInput implements IRecipeInput {
+	private final TweakerItemStackPattern pattern;
+	private final List<ItemStack> matches;
 	
 	public StackPatternRecipeInput(TweakerItemStackPattern pattern) {
 		this.pattern = pattern;
+		
+		matches = new ArrayList<ItemStack>();
+		for (TweakerItem item : pattern.getMatches()) {
+			matches.add(item.make(1));
+		}
 	}
 	
 	public boolean matches(ItemStack subject) {
@@ -29,10 +35,6 @@ public class StackPatternRecipeInput implements IRecipeInput {
 	}
 
 	public List<ItemStack> getInputs() {
-		List<ItemStack> result = new ArrayList<ItemStack>();
-		for (TweakerItem item : pattern.getMatches()) {
-			result.add(item.make(1));
-		}
-		return result;
+		return matches;
 	}
 }

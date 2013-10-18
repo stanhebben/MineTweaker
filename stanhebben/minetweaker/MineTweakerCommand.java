@@ -28,8 +28,28 @@ import net.minecraft.block.Block;
 //#endif
 import net.minecraftforge.oredict.OreDictionary;
 
+/**
+ * Implements the /minetweaker command set.
+ * 
+ * @author Stan Hebben
+ */
 public class MineTweakerCommand implements ICommand {
+	// ###########################
+	// ## Public static methods ##
+	// ###########################
+	public static void sendChatMessage(ICommandSender sender, String message) {
+		//#ifdef MC152
+		//+sender.sendChatToPlayer(message);
+		//#else
+		sender.sendChatToPlayer(ChatMessageComponent.createFromText(message));
+		//#endif
+	}
+	
 	private static final List<String> aliases = Arrays.asList("mt");
+	
+	// #######################################
+	// ## ICommand interface implementation ##
+	// #######################################
 	
 	@Override
 	public int compareTo(Object arg0) {
@@ -236,13 +256,5 @@ public class MineTweakerCommand implements ICommand {
 	@Override
 	public boolean isUsernameIndex(String[] astring, int i) {
 		return false;
-	}
-	
-	public static void sendChatMessage(ICommandSender sender, String message) {
-		//#ifdef MC152
-		//+sender.sendChatToPlayer(message);
-		//#else
-		sender.sendChatToPlayer(ChatMessageComponent.createFromText(message));
-		//#endif
 	}
 }
