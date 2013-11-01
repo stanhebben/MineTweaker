@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 import net.minecraft.nbt.NBTBase;
 
-public class TweakerRange extends TweakerValue {
-	private int from;
-	private int to;
+public final class TweakerRange extends TweakerValue {
+	private final int from;
+	private final int to;
 	
 	public TweakerRange(int from, int to) {
 		this.from = from;
@@ -25,7 +25,7 @@ public class TweakerRange extends TweakerValue {
 
 			@Override
 			public TweakerValue next() {
-				return new TweakerInt(from++);
+				return new TweakerInt(current++);
 			}
 
 			@Override

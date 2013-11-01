@@ -6,8 +6,8 @@ import stanhebben.minetweaker.api.value.TweakerItemPattern;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
 import stanhebben.minetweaker.api.value.TweakerItemStackPattern;
 import stanhebben.minetweaker.api.value.TweakerValue;
-import stanhebben.minetweaker.api.value.TweakerFluid;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 
 public class BlockValue extends TweakerValue {
 	private TweakerItem item;
@@ -46,12 +46,12 @@ public class BlockValue extends TweakerValue {
 	}
 	
 	@Override
-	public TweakerFluid asFluid() {
+	public TweakerLiquid asFluid() {
 		return item.asFluid();
 	}
 	
 	@Override
-	public TweakerFluidStack asFluidStack() {
+	public TweakerLiquidStack asFluidStack() {
 		return item.asFluidStack();
 	}
 	

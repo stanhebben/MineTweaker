@@ -3,7 +3,7 @@ package stanhebben.minetweaker.api.value;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TweakerNBTCompound extends TweakerValue {
+public final class TweakerNBTCompound extends TweakerValue {
 	private final NBTTagCompound value;
 	
 	public TweakerNBTCompound(NBTTagCompound value) {

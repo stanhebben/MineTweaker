@@ -6,20 +6,24 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import stanhebben.minetweaker.api.IUndoableAction;
 
-public class RemoveRecipeAction implements IUndoableAction {
-	private int index;
-	private IRecipe value;
+/**
+ * Implements recipes.removeShaped and recipes.removeShapeless, as well as
+ * recipes.remove and minetweaker.remove when recipes are to be removed.
+ * 
+ * @author Stan Hebben
+ */
+public final class RemoveRecipeAction implements IUndoableAction {
+	private final int index;
+	private final IRecipe value;
 	
 	public RemoveRecipeAction(int index) {
 		this.index = index;
-		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		value = recipes.get(index);
+		value = (IRecipe) CraftingManager.getInstance().getRecipeList().get(index);
 	}
 	
 	@Override
 	public void apply() {
-		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-		value = recipes.remove(index);
+		CraftingManager.getInstance().getRecipeList().remove(index);
 	}
 	
 	@Override
@@ -33,10 +37,12 @@ public class RemoveRecipeAction implements IUndoableAction {
 		recipes.add(index, value);
 	}
 
+	@Override
 	public String describe() {
 		return "Removing a recipe for " + value.getRecipeOutput().getDisplayName();
 	}
 
+	@Override
 	public String describeUndo() {
 		return "Restoring a recipe for " + value.getRecipeOutput().getDisplayName();
 	}

@@ -8,7 +8,7 @@ package stanhebben.minetweaker.api.value;
  *
  * @author Stanneke
  */
-public class TweakerNull extends TweakerValue {
+public final class TweakerNull extends TweakerValue {
 	public static final TweakerNull INSTANCE = new TweakerNull();
 	
 	private TweakerNull() {}

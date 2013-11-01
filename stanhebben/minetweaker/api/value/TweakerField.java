@@ -1,14 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker.api.value;
 
 import java.util.HashMap;
 
 /**
- *
- * @author Stanneke
+ * Field enumerator with all field names used in minetweaker. Used extensively
+ * when selecting members of built-in types.
+ * 
+ * @author Stan Hebben
  */
 public enum TweakerField {
 	ABS,
@@ -16,6 +14,7 @@ public enum TweakerField {
 	ADDCONTAINER,
 	ADDCRATING,
 	ADDFUEL,
+	ADDHARVESTABLE,
 	ADDRAINITEM,
 	ADDRECIPE,
 	ADDRECIPEFUELCAN,
@@ -67,6 +66,7 @@ public enum TweakerField {
 	GASEOUS,
 	GASTURBINE,
 	GRINDER,
+	HARVESTER,
 	ID,
 	IMPLOSIONCOMPRESSOR,
 	INDEXOF,
@@ -106,6 +106,7 @@ public enum TweakerField {
 	REMOVESHAPELESS,
 	ROLLING,
 	SAWMILL,
+	SETADMINS,
 	SETDISPLAYNAME,
 	SETENERGY,
 	SETSOFTBLOCK,
@@ -116,10 +117,12 @@ public enum TweakerField {
 	SUBSTRING,
 	TAG,
 	TEMPERATURE,
+	THERMALCENTRIFUGE,
 	THERMALGENERATOR,
 	TOTALBURNINGTIME,
 	VACUUMFREEZER,
 	WIREMILL,
+	WITHDAMAGE,
 	_INVALID_;
 	
 	private static final HashMap<String, TweakerField> fieldForName;
@@ -131,6 +134,7 @@ public enum TweakerField {
 		fieldForName.put("addContainer", ADDCONTAINER);
 		fieldForName.put("addCrating", ADDCRATING);
 		fieldForName.put("addFuel", ADDFUEL);
+		fieldForName.put("addHarvestable", ADDHARVESTABLE);
 		fieldForName.put("addRainItem", ADDRAINITEM);
 		fieldForName.put("addRecipe", ADDRECIPE);
 		fieldForName.put("addRecipeFuelCan", ADDRECIPEFUELCAN);
@@ -179,6 +183,7 @@ public enum TweakerField {
 		fieldForName.put("gaseous", GASEOUS);
 		fieldForName.put("gasTurbine", GASTURBINE);
 		fieldForName.put("grinder", GRINDER);
+		fieldForName.put("harvester", HARVESTER);
 		fieldForName.put("id", ID);
 		fieldForName.put("indexOf", INDEXOF);
 		fieldForName.put("intArray", INTARRAY);
@@ -214,6 +219,7 @@ public enum TweakerField {
 		fieldForName.put("removeRecipe", REMOVERECIPE);
 		fieldForName.put("removeShaped", REMOVESHAPED);
 		fieldForName.put("removeShapeless", REMOVESHAPELESS);
+		fieldForName.put("setAdmins", SETADMINS);
 		fieldForName.put("setDisplayName", SETDISPLAYNAME);
 		fieldForName.put("setEnergy", SETENERGY);
 		fieldForName.put("setSoftBlock", SETSOFTBLOCK);
@@ -225,10 +231,12 @@ public enum TweakerField {
 		fieldForName.put("sawmill", SAWMILL);
 		fieldForName.put("tag", TAG);
 		fieldForName.put("temperature", TEMPERATURE);
+		fieldForName.put("thermalCentrifuge", THERMALCENTRIFUGE);
 		fieldForName.put("thermalGenerator", THERMALGENERATOR);
 		fieldForName.put("totalBurningTime", TOTALBURNINGTIME);
 		fieldForName.put("vacuumFreezer", VACUUMFREEZER);
 		fieldForName.put("wiremill", WIREMILL);
+		fieldForName.put("withDamage", WITHDAMAGE);
 	}
 	
 	public static TweakerField get(String value) {

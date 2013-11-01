@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker.api.value;
 
 //#ifdef MC152
@@ -22,11 +18,12 @@ import static stanhebben.minetweaker.api.value.TweakerField.NAME;
 import static stanhebben.minetweaker.api.value.TweakerField.TEMPERATURE;
 
 /**
- *
- * @author Stanneke
+ * Represents a liquid amount. Both the liquid amount and type are specified.
+ * 
+ * @author Stan Hebben
  */
-public class TweakerFluidStack extends TweakerValue {
-	public static TweakerFluidStack fromLiquidBlock(TweakerItem block) {
+public final class TweakerLiquidStack extends TweakerValue {
+	public static TweakerLiquidStack fromLiquidBlock(TweakerItem block) {
 		//#ifdef MC152
 		//+if (LiquidContainerRegistry.isLiquid(block.make(1))) {
 			//+return new TweakerFluidStack(new LiquidStack(block.getItemId(), 1, block.getItemSubId()));
@@ -36,14 +33,14 @@ public class TweakerFluidStack extends TweakerValue {
 		//#else
 		for (Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
 			if (fluid.getBlockID() == block.getItemId()) {
-				return new TweakerFluidStack(new FluidStack(fluid, 1));
+				return new TweakerLiquidStack(new FluidStack(fluid, 1));
 			}
 		}
 		return null;
 		//#endif
 	}
 	//#ifdef MC152
-	//+private LiquidStack value;
+	//+private final LiquidStack value;
 	
 	//+public TweakerFluidStack(LiquidStack value) {
 		//+this.value = value;
@@ -53,9 +50,9 @@ public class TweakerFluidStack extends TweakerValue {
 		//+return value;
 	//+}
 	//#else
-	private FluidStack value;
+	private final FluidStack value;
 	
-	public TweakerFluidStack(FluidStack value) {
+	public TweakerLiquidStack(FluidStack value) {
 		this.value = value;
 	}
 	
@@ -138,7 +135,7 @@ public class TweakerFluidStack extends TweakerValue {
 				//+}
 				//+return new TweakerFluid(item);
 				//#else
-				return new TweakerFluid(value.getFluid());
+				return new TweakerLiquid(value.getFluid());
 				//#endif
 			default:
 				throw new TweakerExecuteException("no such field in fluid: " + index);

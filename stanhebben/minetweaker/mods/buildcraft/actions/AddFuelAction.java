@@ -9,7 +9,7 @@ import buildcraft.api.fuels.IronEngineFuel;
 //+import net.minecraftforge.liquids.LiquidStack;
 //#endif
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 
 /**
  *
@@ -19,12 +19,12 @@ public class AddFuelAction implements IUndoableAction {
 	//#ifdef MC152
 	//+private IronEngineFuel fuel;
 	//#else
-	private TweakerFluid fluid;
+	private TweakerLiquid fluid;
 	private float powerPerCycle;
 	private int numTotalCycles;
 	//#endif
 	
-	public AddFuelAction(TweakerFluid fluid, float powerPerCycle, int numTotalCycles) {
+	public AddFuelAction(TweakerLiquid fluid, float powerPerCycle, int numTotalCycles) {
 		//#ifdef MC152
 		//+fuel = new IronEngineFuel(
 				//+new LiquidStack(fluid.get().getItemId(), 1, fluid.get().getItemSubId()),

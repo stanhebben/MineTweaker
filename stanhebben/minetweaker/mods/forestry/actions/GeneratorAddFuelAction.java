@@ -8,17 +8,17 @@ package stanhebben.minetweaker.mods.forestry.actions;
 
 import forestry.api.fuels.GeneratorFuel;
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 
 /**
  *
  * @author Stanneke
  */
 public class GeneratorAddFuelAction implements IUndoableAction {
-	private final TweakerFluidStack fluid;
+	private final TweakerLiquidStack fluid;
 	private final GeneratorFuel fuel;
 	
-	public GeneratorAddFuelAction(TweakerFluidStack fluidPerCycle, int euPerTick, int numTicks) {
+	public GeneratorAddFuelAction(TweakerLiquidStack fluidPerCycle, int euPerTick, int numTicks) {
 		fluid = fluidPerCycle;
 		fuel = new GeneratorFuel(fluidPerCycle.get(), euPerTick, numTicks);
 	}

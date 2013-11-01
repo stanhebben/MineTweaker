@@ -15,7 +15,7 @@ import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerValue;
-import stanhebben.minetweaker.base.actions.AddFluidContainerAction;
+import stanhebben.minetweaker.base.actions.AddLiquidContainerAction;
 
 /**
  *
@@ -55,7 +55,7 @@ public class AddFluidContainerFunction extends TweakerFunction {
 		//#ifdef MC152
 		//+Tweaker.apply(new AddFluidContainerAction(new LiquidStack(fluid.getItemId(), amount, fluid.getItemSubId()), emptyContainer, fullContainer));
 		//#else
-		Tweaker.apply(new AddFluidContainerAction(fluid, amount, emptyContainer, fullContainer));
+		Tweaker.apply(new AddLiquidContainerAction(fluid, amount, emptyContainer, fullContainer));
 		//#endif
 		
 		return null;

@@ -8,6 +8,7 @@ import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.base.functions.BreakUndoFunction;
 import stanhebben.minetweaker.base.functions.ClearFunction;
 import stanhebben.minetweaker.base.functions.RemoveFunction;
+import stanhebben.minetweaker.base.functions.SetAdminsFunction;
 
 public class MineTweakerValue extends TweakerValue {
 	public static final MineTweakerValue INSTANCE = new MineTweakerValue();
@@ -25,6 +26,8 @@ public class MineTweakerValue extends TweakerValue {
 				return TweakerBool.get(MineTweaker.instance.canClear());
 			case BREAKUNDO:
 				return BreakUndoFunction.INSTANCE;
+			case SETADMINS:
+				return SetAdminsFunction.INSTANCE;
 		}
 		throw new TweakerExecuteException("no member " + index + " in minetweaker");
 	}

@@ -7,9 +7,14 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 
 import stanhebben.minetweaker.api.IUndoableAction;
 
-public class FurnaceRemoveMetaRecipeAction implements IUndoableAction {
-	private List<Integer> key;
-	private ItemStack value;
+/**
+ * Implements furnace.removeRecipe with subitems.
+ * 
+ * @author Stan Hebben
+ */
+public final class FurnaceRemoveMetaRecipeAction implements IUndoableAction {
+	private final List<Integer> key;
+	private final ItemStack value;
 	
 	public FurnaceRemoveMetaRecipeAction(List<Integer> key) {
 		this.key = key;
@@ -18,7 +23,7 @@ public class FurnaceRemoveMetaRecipeAction implements IUndoableAction {
 
 	@Override
 	public void apply() {
-		value = FurnaceRecipes.smelting().getMetaSmeltingList().remove(key);
+		FurnaceRecipes.smelting().getMetaSmeltingList().remove(key);
 	}
 	
 	@Override

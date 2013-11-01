@@ -7,9 +7,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import stanhebben.minetweaker.api.IUndoableAction;
 
-public class AddOreItemWildcardAction implements IUndoableAction {
-	private String ore;
-	private int id;
+/**
+ * Implements oreDict.xxx.add(<yyy:*>).
+ * 
+ * @author Stan Hebben
+ */
+public final class AddOreItemWildcardAction implements IUndoableAction {
+	private final String ore;
+	private final int id;
 	
 	public AddOreItemWildcardAction(String ore, int id) {
 		this.ore = ore;

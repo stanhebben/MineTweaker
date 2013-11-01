@@ -9,7 +9,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagString;
 
 public final class TweakerString extends TweakerValue {
-	private String value;
+	private final String value;
 
 	public TweakerString(String value) {
 		this.value = value;

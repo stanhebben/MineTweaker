@@ -19,8 +19,8 @@ import java.util.logging.Level;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
-import stanhebben.minetweaker.api.value.TweakerFluid;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.mods.buildcraft.actions.AddLiquidCoolantAction;
@@ -43,7 +43,7 @@ public class AddCoolantFunction extends TweakerFunction {
 		TweakerValue coolant = notNull(arguments[0], "coolants.add coolant cannot be null");
 		if (coolant.asFluid() != null) {
 			// fluid coolant
-			TweakerFluid coolantFluid = coolant.asFluid();
+			TweakerLiquid coolantFluid = coolant.asFluid();
 			//#ifdef MC152
 			//+for (IronEngineCoolant ieCoolant : (LinkedList<IronEngineCoolant>) IronEngineCoolant.coolants) {
 				//+if (coolantFluid.equalsFluid(ieCoolant.liquid)) {
@@ -71,7 +71,7 @@ public class AddCoolantFunction extends TweakerFunction {
 			} else if (FluidContainerRegistry.isContainer(item.make(1))) {
 				Tweaker.log(Level.INFO, item.getDisplayName() + " is already registered as fluid");
 			} else {
-				TweakerFluidStack cooling =
+				TweakerLiquidStack cooling =
 						notNull(arguments[1], "coolants.add cooling value must not be null")
 						.toFluidStack("coolants.add cooling value must be a fluid stack");
 				if (IronEngineCoolant.liquidCoolants.containsKey(cooling.get().getFluid().getName())) {

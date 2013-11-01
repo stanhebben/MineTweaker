@@ -224,24 +224,24 @@ public abstract class TweakerValue {
 		return result;
 	}
 	
-	public TweakerFluid asFluid() {
+	public TweakerLiquid asFluid() {
 		return null;
 	}
 	
-	public TweakerFluid toFluid(String error) {
-		TweakerFluid result = asFluid();
+	public TweakerLiquid toFluid(String error) {
+		TweakerLiquid result = asFluid();
 		if (result == null) {
 			throw new TweakerExecuteException(error);
 		}
 		return result;
 	}
 	
-	public TweakerFluidStack asFluidStack() {
+	public TweakerLiquidStack asFluidStack() {
 		return null;
 	}
 	
-	public TweakerFluidStack toFluidStack(String error) {
-		TweakerFluidStack result = asFluidStack();
+	public TweakerLiquidStack toFluidStack(String error) {
+		TweakerLiquidStack result = asFluidStack();
 		if (result == null) {
 			throw new TweakerExecuteException(error);
 		}

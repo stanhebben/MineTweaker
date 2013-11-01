@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import buildcraft.api.fuels.IronEngineFuel;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.value.TweakerField;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 import stanhebben.minetweaker.api.value.TweakerString;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.mods.buildcraft.functions.AddFuelFunction;
@@ -30,7 +30,7 @@ public class FuelsValue extends TweakerValue {
 		if (index.getClass() == TweakerString.class) {
 			return index(index.toBasicString());
 		} else if (index.asFluid() != null) {
-			TweakerFluid fluid = index.asFluid();
+			TweakerLiquid fluid = index.asFluid();
 			//#ifdef MC152
 			//+for (IronEngineFuel fuel : (LinkedList<IronEngineFuel>) IronEngineFuel.fuels) {
 				//+if (fluid.equalsFluid(fuel.liquid)) {

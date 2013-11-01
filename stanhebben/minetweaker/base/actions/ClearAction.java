@@ -4,6 +4,11 @@ import stanhebben.minetweaker.MineTweaker;
 import stanhebben.minetweaker.util.DefaultUndoStack;
 import stanhebben.minetweaker.api.IUndoableAction;
 
+/**
+ * Implements minetweaker.clear().
+ * 
+ * @author Stan Hebben
+ */
 public class ClearAction implements IUndoableAction {
 	private DefaultUndoStack old;
 	

@@ -4,9 +4,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import stanhebben.minetweaker.api.IUndoableAction;
 
-public class FurnaceRemoveRecipeAction implements IUndoableAction {
-	private Integer id;
-	private Object value;
+/**
+ * Implements furnace.removeRecipe with simple items.
+ * 
+ * @author Stan Hebben
+ */
+public final class FurnaceRemoveRecipeAction implements IUndoableAction {
+	private final Integer id;
+	private final Object value;
 	
 	public FurnaceRemoveRecipeAction(Integer id) {
 		this.id = id;
@@ -15,7 +20,7 @@ public class FurnaceRemoveRecipeAction implements IUndoableAction {
 
 	@Override
 	public void apply() {
-		value = FurnaceRecipes.smelting().getSmeltingList().remove(id);
+		FurnaceRecipes.smelting().getSmeltingList().remove(id);
 	}
 	
 	@Override

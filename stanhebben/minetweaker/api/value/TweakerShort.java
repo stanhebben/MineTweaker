@@ -4,8 +4,8 @@ import stanhebben.minetweaker.api.TweakerExecuteException;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagShort;
 
-public class TweakerShort extends TweakerValue {
-	private short value;
+public final class TweakerShort extends TweakerValue {
+	private final short value;
 	
 	public TweakerShort(short value) {
 		this.value = value;

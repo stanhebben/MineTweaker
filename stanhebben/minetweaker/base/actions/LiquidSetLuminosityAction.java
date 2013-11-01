@@ -5,36 +5,42 @@ import net.minecraftforge.fluids.Fluid;
 import stanhebben.minetweaker.api.IUndoableAction;
 
 /**
- *
- * @author Stanneke
+ * Implements liquid.setLuminosity.
+ * 
+ * @author Stan Hebben
  */
-public class FluidSetLuminosityAction implements IUndoableAction {
-	private Fluid fluid;
-	private int newValue;
-	private int oldValue;
+public final class LiquidSetLuminosityAction implements IUndoableAction {
+	private final Fluid fluid;
+	private final int newValue;
+	private final int oldValue;
 	
-	public FluidSetLuminosityAction(Fluid fluid, int newValue) {
+	public LiquidSetLuminosityAction(Fluid fluid, int newValue) {
 		this.fluid = fluid;
 		this.newValue = newValue;
 		this.oldValue = fluid.getLuminosity();
 	}
 
+	@Override
 	public void apply() {
 		fluid.setLuminosity(newValue);
 	}
 
+	@Override
 	public boolean canUndo() {
 		return true;
 	}
 
+	@Override
 	public void undo() {
 		fluid.setLuminosity(oldValue);
 	}
 
+	@Override
 	public String describe() {
 		return "Setting " + fluid.getLocalizedName() + " luminosity to " + newValue;
 	}
 
+	@Override
 	public String describeUndo() {
 		return "Restoring " + fluid.getLocalizedName() + " luminosity to " + oldValue;
 	}

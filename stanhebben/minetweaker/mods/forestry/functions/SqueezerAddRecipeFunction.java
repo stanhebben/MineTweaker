@@ -10,7 +10,7 @@ import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerArray;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
@@ -29,7 +29,7 @@ public class SqueezerAddRecipeFunction extends TweakerFunction {
 	@Override
 	public TweakerValue call(TweakerNameSpace namespace, TweakerValue... arguments) {
 		if (arguments.length < 3 || arguments.length > 5) throw new TweakerExecuteException("squeezer.addRecipe requires 3-5 inputs");
-		TweakerFluidStack output =
+		TweakerLiquidStack output =
 				notNull(arguments[0], "output cannot be null")
 				.toFluidStack("output must be a liquid stack");
 		TweakerItemStack[] input;

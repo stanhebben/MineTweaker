@@ -20,7 +20,7 @@ public class WiremillAddRecipeAction implements IUndoableAction {
 	private final int duration;
 	private final int euPerTick;
 	
-	public WiremillAddRecipeAction(TweakerItemStack input, TweakerItemStack output, int duration, int euPerTick) {
+	public WiremillAddRecipeAction(TweakerItemStack output, TweakerItemStack input, int duration, int euPerTick) {
 		this.input = input;
 		this.output = output;
 		this.duration = duration;

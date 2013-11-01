@@ -13,7 +13,7 @@ import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.value.TweakerField;
 import stanhebben.minetweaker.api.value.TweakerFloat;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 import stanhebben.minetweaker.api.value.TweakerInt;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.mods.buildcraft.actions.SetFuelAction;
@@ -41,7 +41,7 @@ public class FuelValue extends TweakerValue {
 	public TweakerValue index(String index) {
 		switch (TweakerField.get(index)) {
 			case LIQUID:
-				return new TweakerFluid(fuel.liquid);
+				return new TweakerLiquid(fuel.liquid);
 			case POWERPERCYCLE:
 				return new TweakerFloat(fuel.powerPerCycle);
 			case TOTALBURNINGTIME:

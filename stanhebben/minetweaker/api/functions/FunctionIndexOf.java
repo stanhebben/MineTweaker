@@ -10,8 +10,8 @@ import stanhebben.minetweaker.api.value.TweakerValue;
  * 
  * @author Stan Hebben
  */
-public class FunctionIndexOf extends TweakerFunction {
-	private String value;
+public final class FunctionIndexOf extends TweakerFunction {
+	private final String value;
 	
 	public FunctionIndexOf(String value) {
 		this.value = value;

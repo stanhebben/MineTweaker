@@ -7,7 +7,7 @@ package stanhebben.minetweaker.mods.buildcraft.functions;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.mods.buildcraft.actions.AddFuelAction;
@@ -27,7 +27,7 @@ public class AddFuelFunction extends TweakerFunction {
 			throw new TweakerExecuteException("fuels.add requires 3 arguments");
 		}
 		
-		TweakerFluid fluid =
+		TweakerLiquid fluid =
 				notNull(arguments[0], "fuels.add fuel cannot be null")
 				.toFluid("fuels.add fuel must be a fluid");
 		float powerPerCycle =

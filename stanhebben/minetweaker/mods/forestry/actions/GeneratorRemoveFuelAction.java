@@ -10,17 +10,17 @@ import forestry.api.fuels.GeneratorFuel;
 import java.util.logging.Level;
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.Tweaker;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 
 /**
  *
  * @author Stanneke
  */
 public class GeneratorRemoveFuelAction implements IUndoableAction {
-	private final TweakerFluid fluid;
+	private final TweakerLiquid fluid;
 	private GeneratorFuel fuel;
 	
-	public GeneratorRemoveFuelAction(TweakerFluid fluid) {
+	public GeneratorRemoveFuelAction(TweakerLiquid fluid) {
 		this.fluid = fluid;
 	}
 

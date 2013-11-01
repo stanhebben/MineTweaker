@@ -14,10 +14,10 @@ import stanhebben.minetweaker.api.value.TweakerValue;
  * 
  * @author Stan Hebben
  */
-public class TweakerNameSpace {
-	private HashMap<String, TweakerValue> values;
-	private TweakerNameSpace parent;
-	private boolean fence;
+public final class TweakerNameSpace {
+	private final HashMap<String, TweakerValue> values;
+	private final TweakerNameSpace parent;
+	private final boolean fence;
 	
 	/**
 	 * Creates a new namespace with the specified parent namespace. If an item

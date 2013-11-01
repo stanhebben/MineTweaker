@@ -17,12 +17,9 @@ public class IC2Value extends TweakerValue {
 	public static final IC2Value INSTANCE = new IC2Value();
 	
 	//#ifndef MC152
-	private static final MachineValue CENTRIFUGE = new MachineValue(Recipes.centrifuge, "centrifuge");
 	private static final MachineValue COMPRESSOR = new MachineValue(Recipes.compressor, "compressor");
 	private static final MachineValue EXTRACTOR = new MachineValue(Recipes.extractor, "extractor");
 	private static final MachineValue MACERATOR = new MachineValue(Recipes.macerator, "macerator");
-	private static final MachineValue MATTERAMPLIFIER = new MachineValue(Recipes.matterAmplifier, "matterAmplifier");
-	private static final MachineValue OREWASHINGPLANT = new MachineValue(Recipes.oreWashing, "oreWashingPlant");
 	//#endif
 	
 	private IC2Value() {}
@@ -49,10 +46,8 @@ public class IC2Value extends TweakerValue {
 				return COMPRESSOR;
 				//#endif
 			//#ifndef MC152
-			case CENTRIFUGE:
-				return CENTRIFUGE;
-			case MATTERAMPLIFIER:
-				return MATTERAMPLIFIER;
+			case THERMALCENTRIFUGE:
+				return CentrifugeValue.INSTANCE;
 			case METALFORMER:
 				return MetalFormer.INSTANCE;
 			case OREWASHINGPLANT:

@@ -9,8 +9,8 @@ import java.util.List;
  * 
  * @author Stan Hebben
  */
-public class TweakerArrayValue extends TweakerArray {
-	private ArrayList<TweakerValue> contents;
+public final class TweakerArrayValue extends TweakerArray {
+	private final ArrayList<TweakerValue> contents;
 	
 	public TweakerArrayValue() {
 		contents = new ArrayList<TweakerValue>();

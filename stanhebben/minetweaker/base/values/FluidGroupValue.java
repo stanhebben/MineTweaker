@@ -11,8 +11,8 @@ import net.minecraftforge.fluids.FluidStack;
 import stanhebben.minetweaker.MineTweakerRegistry;
 
 import stanhebben.minetweaker.api.TweakerExecuteException;
-import stanhebben.minetweaker.api.value.TweakerFluid;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerValue;
 
 public class FluidGroupValue extends TweakerValue {
@@ -34,22 +34,22 @@ public class FluidGroupValue extends TweakerValue {
 		Fluid fluid = FluidRegistry.getFluid(name);
 		//#endif
 		if (fluid == null) return super.mul(value);
-		return new TweakerFluid(fluid).mul(value);
+		return new TweakerLiquid(fluid).mul(value);
 	}
 	
 	@Override
-	public TweakerFluid asFluid() {
+	public TweakerLiquid asFluid() {
 		//#ifdef MC152
 		//+LiquidStack fluid = LiquidDictionary.getCanonicalLiquid(name);
 		//#else
 		Fluid fluid = FluidRegistry.getFluid(name);
 		//#endif
 		if (fluid == null) return null;
-		return new TweakerFluid(fluid);
+		return new TweakerLiquid(fluid);
 	}
 	
 	@Override
-	public TweakerFluidStack asFluidStack() {
+	public TweakerLiquidStack asFluidStack() {
 		//#ifdef MC152
 		//+LiquidStack fluid = LiquidDictionary.getCanonicalLiquid(name);
 		//+if (fluid == null) return null;
@@ -57,7 +57,7 @@ public class FluidGroupValue extends TweakerValue {
 		//#else
 		Fluid fluid = FluidRegistry.getFluid(name);
 		if (fluid == null) return null;
-		return new TweakerFluidStack(new FluidStack(fluid, 1));
+		return new TweakerLiquidStack(new FluidStack(fluid, 1));
 		//#endif
 	}
 	
@@ -79,9 +79,9 @@ public class FluidGroupValue extends TweakerValue {
 		if (MineTweakerRegistry.INSTANCE.isFluidPrefix(newName)) {
 			return new FluidGroupValue(newName);
 		} else if (FluidRegistry.getFluid(newName) != null) {
-			return new TweakerFluid(FluidRegistry.getFluid(newName));
+			return new TweakerLiquid(FluidRegistry.getFluid(newName));
 		} else if (FluidRegistry.getFluid(name) != null) {
-			return new TweakerFluid(FluidRegistry.getFluid(name)).index(index);
+			return new TweakerLiquid(FluidRegistry.getFluid(name)).index(index);
 		} else {
 			throw new TweakerExecuteException("no such fluid: " + newName);
 		}
@@ -98,7 +98,7 @@ public class FluidGroupValue extends TweakerValue {
 		if (fluid == null) {
 			super.indexSet(index, value);
 		} else {
-			new TweakerFluid(fluid).indexSet(index, value);
+			new TweakerLiquid(fluid).indexSet(index, value);
 		}
 	}
 

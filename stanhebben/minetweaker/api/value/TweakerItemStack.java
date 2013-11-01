@@ -4,7 +4,12 @@ import stanhebben.minetweaker.api.TweakerExecuteException;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.api.functions.FunctionItemStackPatternOnly;
 
-public class TweakerItemStack extends TweakerValue {
+/**
+ * Represents an item stack.
+ * 
+ * @author Stan Hebben
+ */
+public final class TweakerItemStack extends TweakerValue {
 	private final ItemStack value;
 	
 	public TweakerItemStack(ItemStack value) {

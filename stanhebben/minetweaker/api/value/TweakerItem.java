@@ -4,7 +4,13 @@ import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.functions.FunctionSetItemDisplayName;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.api.functions.FunctionItemPatternOnly;
+import stanhebben.minetweaker.api.functions.FunctionItemWithDamage;
 
+/**
+ * Abstract superclass for items. Must always be convertible to an ItemStack.
+ * 
+ * @author Stan Hebben
+ */
 public abstract class TweakerItem extends TweakerValue {
 	public static TweakerItem get(ItemStack stack) {
 		if (stack.getHasSubtypes()) {
@@ -29,28 +35,97 @@ public abstract class TweakerItem extends TweakerValue {
 		}
 	}
 	
+	/**
+	 * Returns the item id. Must be a valid index to Item.itemList.
+	 * 
+	 * @return the item id
+	 */
 	public abstract int getItemId();
 	
+	/**
+	 * Returns the subitem id. Should return 0 if there is none, or OreDictionary.WILDCARD
+	 * if it represents "any" subitem.
+	 * 
+	 * @return item subid
+	 */
 	public abstract int getItemSubId();
 	
+	/**
+	 * Checks if this item represents a sub-item.
+	 * 
+	 * @return true if this item instance is a subitem
+	 */
 	public abstract boolean isSubItem();
 	
+	/**
+	 * Converts this item to an item stack with the specified amount.
+	 * 
+	 * @param amount amount of items in the stack
+	 * @return corresponding item stack
+	 */
 	public abstract ItemStack make(int amount);
 	
+	/**
+	 * Retrieves the unlocalized item name. That item name should resolve to
+	 * this item instance, if possible; or to a similar item.
+	 * 
+	 * @return unlocalized item name
+	 */
 	public abstract String getName();
 	
+	/**
+	 * Retrieves the localized item name. Used in log messages.
+	 * 
+	 * @return localized item name
+	 */
 	public abstract String getDisplayName();
 	
+	/**
+	 * Sets the item name. Implementations must apply to a tweaker action.
+	 * 
+	 * @param value new item name
+	 */
 	public abstract void setDisplayName(String value);
 	
+	/**
+	 * Sets the display name for the specified language. Implementations must apply
+	 * to a tweaker action.
+	 * 
+	 * @param lang language code (ex. nl_NL, en_UK, ...)
+	 * @param value new item name
+	 */
 	public abstract void setDisplayName(String lang, String value);
 	
+	/**
+	 * Returns the maximum damage for this item. Should return null if the item
+	 * is not damagable.
+	 * 
+	 * @return maximum damage
+	 */
 	public abstract int getMaxDamage();
 	
+	/**
+	 * Returns the amount of ticks this item will burn in a furnace. Returns zero
+	 * if this item cannot be burned in a furnace.
+	 * 
+	 * @return the furnace fuel value of this item
+	 */
 	public abstract int getFuelValue();
 	
-	public abstract void setFuelValue(int value) throws TweakerExecuteException;
+	/**
+	 * Sets the amount of ticks this item will burn in a furnace. Setting it to
+	 * zero will make this item no longer burnable.
+	 * 
+	 * @param value new fuel value
+	 * @throws TweakerExecuteException 
+	 */
+	public abstract void setFuelValue(int value);
 	
+	/**
+	 * Converts this item to its corresponding ID string.
+	 * 
+	 * @return item ID string
+	 */
 	public abstract String toIdString();
 	
 	@Override
@@ -74,13 +149,13 @@ public abstract class TweakerItem extends TweakerValue {
 	}
 	
 	@Override
-	public TweakerFluid asFluid() {
-		return TweakerFluid.fromLiquidBlock(this);
+	public TweakerLiquid asFluid() {
+		return TweakerLiquid.fromLiquidBlock(this);
 	}
 	
 	@Override
-	public TweakerFluidStack asFluidStack() {
-		return TweakerFluidStack.fromLiquidBlock(this);
+	public TweakerLiquidStack asFluidStack() {
+		return TweakerLiquidStack.fromLiquidBlock(this);
 	}
 	
 	@Override
@@ -112,6 +187,9 @@ public abstract class TweakerItem extends TweakerValue {
 				return new TweakerInt(getFuelValue());
 			case SETDISPLAYNAME:
 				return new FunctionSetItemDisplayName(this);
+			case WITHDAMAGE:
+				if (isSubItem()) throw new TweakerExecuteException("Cannot create a damage subitem");
+				return new FunctionItemWithDamage(getItemId());
 			case DAMAGED:
 				if (isSubItem()) {
 					return this;
@@ -119,7 +197,7 @@ public abstract class TweakerItem extends TweakerValue {
 					return new TweakerItemDamaged(getItemId());
 				}
 			case LIQUID:
-				TweakerFluid liquid = TweakerFluid.fromLiquidContainer(this);
+				TweakerLiquid liquid = TweakerLiquid.fromLiquidContainer(this);
 				if (liquid == null) throw new TweakerExecuteException(getDisplayName() + " is not a liquid container");
 				return liquid;
 			case ONLY:

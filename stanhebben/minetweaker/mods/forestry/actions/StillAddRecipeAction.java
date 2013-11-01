@@ -8,18 +8,18 @@ package stanhebben.minetweaker.mods.forestry.actions;
 
 import forestry.api.recipes.RecipeManagers;
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 
 /**
  *
  * @author Stanneke
  */
 public class StillAddRecipeAction implements IUndoableAction {
-	private final TweakerFluid input;
-	private final TweakerFluid output;
+	private final TweakerLiquid input;
+	private final TweakerLiquid output;
 	private final int cyclesPerUnit;
 	
-	public StillAddRecipeAction(TweakerFluid output, TweakerFluid input, int cyclesPerUnit) {
+	public StillAddRecipeAction(TweakerLiquid output, TweakerLiquid input, int cyclesPerUnit) {
 		this.input = input;
 		this.output = output;
 		this.cyclesPerUnit = cyclesPerUnit;

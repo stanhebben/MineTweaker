@@ -4,10 +4,10 @@ import stanhebben.minetweaker.api.TweakerExecuteException;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagInt;
 
-public class TweakerInt extends TweakerValue {
+public final class TweakerInt extends TweakerValue {
 	public static final TweakerInt ZERO = new TweakerInt(0);
 	
-	private int value;
+	private final int value;
 	
 	public TweakerInt(int value) {
 		this.value = value;

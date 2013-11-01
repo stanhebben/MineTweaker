@@ -8,8 +8,8 @@ package stanhebben.minetweaker.mods.forestry.actions;
 
 import forestry.api.recipes.RecipeManagers;
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluid;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerItem;
 
 /**
@@ -17,13 +17,13 @@ import stanhebben.minetweaker.api.value.TweakerItem;
  * @author Stanneke
  */
 public class FermenterAddRecipeAction implements IUndoableAction {
-	private final TweakerFluid output;
+	private final TweakerLiquid output;
 	private final float modifier;
 	private final int fermentationValue;
 	private final TweakerItem input;
-	private final TweakerFluidStack inputLiquid;
+	private final TweakerLiquidStack inputLiquid;
 	
-	public FermenterAddRecipeAction(TweakerFluid output, TweakerItem input, int fermentationValue, float modifier, TweakerFluidStack inputLiquid) {
+	public FermenterAddRecipeAction(TweakerLiquid output, TweakerItem input, int fermentationValue, float modifier, TweakerLiquidStack inputLiquid) {
 		this.output = output;
 		this.input = input;
 		this.modifier = modifier;

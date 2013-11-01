@@ -9,7 +9,7 @@ package stanhebben.minetweaker.mods.forestry.functions;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.mods.forestry.actions.StillAddRecipeAction;
@@ -26,10 +26,10 @@ public class StillAddRecipeFunction extends TweakerFunction {
 	@Override
 	public TweakerValue call(TweakerNameSpace namespace, TweakerValue... arguments) {
 		if (arguments.length != 3) throw new TweakerExecuteException("still.addRecipe requires 3 arguments");
-		TweakerFluid output =
+		TweakerLiquid output =
 				notNull(arguments[0], "output cannot be null")
 				.toFluid("output must be a liquid");
-		TweakerFluid input =
+		TweakerLiquid input =
 				notNull(arguments[1], "input cannot be null")
 				.toFluid("input must be a liquid");
 		int cyclesPerUnit =

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker.api.functions;
 
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -12,11 +8,13 @@ import stanhebben.minetweaker.api.value.TweakerItemStackPatternOnly;
 import stanhebben.minetweaker.api.value.TweakerValue;
 
 /**
- *
- * @author Stanneke
+ * Function instanced of itemstack.only. Creates an item stack pattern that
+ * only matches when the corresponding match function returns true.
+ * 
+ * @author Stan Hebben
  */
-public class FunctionItemStackPatternOnly extends TweakerFunction {
-	private TweakerItemStackPattern pattern;
+public final class FunctionItemStackPatternOnly extends TweakerFunction {
+	private final TweakerItemStackPattern pattern;
 	
 	public FunctionItemStackPatternOnly(TweakerItemStackPattern pattern) {
 		this.pattern = pattern;

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker.base.actions;
 
 //#ifdef MC152
@@ -16,30 +12,34 @@ import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 
 /**
- *
- * @author Stanneke
+ * Implements liquid.removeContainer.
+ * 
+ * @author Stan Hebben
  */
-public class RemoveFluidContainerAction implements IUndoableAction {
-	private TweakerItem filled;
+public final class RemoveLiquidContainerAction implements IUndoableAction {
+	private final TweakerItem filled;
 	//#ifdef MC152
-	//+private LiquidContainerData data;
+	//+private final LiquidContainerData data;
 	//#else
-	private FluidContainerData data;
+	private final FluidContainerData data;
 	//#endif
 	
-	public RemoveFluidContainerAction(TweakerItem filled) {
+	public RemoveLiquidContainerAction(TweakerItem filled) {
 		this.filled = filled;
 		data = MineTweakerUtil.getContainerData(filled);
 	}
 
+	@Override
 	public void apply() {
 		MineTweakerUtil.removeContainer(filled);
 	}
 
+	@Override
 	public boolean canUndo() {
 		return true;
 	}
 
+	@Override
 	public void undo() {
 		//#ifdef MC152
 		//+LiquidContainerRegistry.registerLiquid(data);
@@ -48,10 +48,12 @@ public class RemoveFluidContainerAction implements IUndoableAction {
 		//#endif
 	}
 
+	@Override
 	public String describe() {
 		return "Removing fluid container " + filled.getDisplayName();
 	}
 
+	@Override
 	public String describeUndo() {
 		return "Restoring fluid container " + filled.getDisplayName();
 	}

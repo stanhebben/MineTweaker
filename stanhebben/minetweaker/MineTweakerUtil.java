@@ -28,6 +28,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.value.TweakerItem;
+import stanhebben.minetweaker.util.Arrays2;
 
 public class MineTweakerUtil {
 	private final static Field oreRecipeWidth;
@@ -307,6 +308,33 @@ public class MineTweakerUtil {
 		} else {
 			Item.itemsList[id].getSubItems(id, null, output);
 		}
+	}
+	public static String formatItemName(String itemName) {
+		String[] components = Arrays2.split(itemName, '.');
+		StringBuilder result = new StringBuilder();
+		if (!itemName.startsWith("item.") && !itemName.startsWith("tile.")) {
+			result.append("items.");
+		}
+		boolean first = true;
+		for (String s : components) {
+			if (first) { first = false; } else {
+				result.append('.');
+			}
+			if (isIdentifier(s)) {
+				result.append(s);
+			} else {
+				result.append('"').append(s).append('"');
+			}
+		}
+		return result.toString();
+	}
+	
+	private static boolean isIdentifier(String id) {
+		if (!Character.isJavaIdentifierStart(id.charAt(0))) return false;
+		for (char c : id.toCharArray()) {
+			if (!Character.isJavaIdentifierPart(c)) return false;
+		}
+		return true;
 	}
 	
 	public static boolean canRemoveContainer() {

@@ -20,7 +20,7 @@ import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerValue;
-import stanhebben.minetweaker.base.actions.RemoveFluidContainerAction;
+import stanhebben.minetweaker.base.actions.RemoveLiquidContainerAction;
 
 /**
  *
@@ -73,7 +73,7 @@ public class RemoveFluidContainerFunction extends TweakerFunction {
 		} else if (!MineTweakerUtil.canRemoveContainer()) {
 			Tweaker.log(Level.WARNING, "Container removal is unavailable. Action skipped.");
 		} else {
-			Tweaker.apply(new RemoveFluidContainerAction(container));
+			Tweaker.apply(new RemoveLiquidContainerAction(container));
 		}
 		//#endif
 		

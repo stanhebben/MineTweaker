@@ -8,7 +8,7 @@ package stanhebben.minetweaker.mods.forestry.actions;
 
 import forestry.api.recipes.RecipeManagers;
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
 
@@ -21,9 +21,9 @@ public class CarpenterAddRecipeAction implements IUndoableAction {
 	private final Object[] input;
 	private final TweakerItem box;
 	private final int packagingTime;
-	private final TweakerFluidStack liquid;
+	private final TweakerLiquidStack liquid;
 	
-	public CarpenterAddRecipeAction(TweakerItemStack output, Object[] input, TweakerItem box, int packagingTime, TweakerFluidStack liquid) {
+	public CarpenterAddRecipeAction(TweakerItemStack output, Object[] input, TweakerItem box, int packagingTime, TweakerLiquidStack liquid) {
 		this.output = output;
 		this.input = input;
 		this.box = box;

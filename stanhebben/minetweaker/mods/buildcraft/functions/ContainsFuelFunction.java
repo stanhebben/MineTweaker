@@ -10,7 +10,7 @@ import buildcraft.api.fuels.IronEngineFuel;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerBool;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerValue;
 
@@ -29,7 +29,7 @@ public class ContainsFuelFunction extends TweakerFunction {
 			throw new TweakerExecuteException("fuels.contains requires one argument");
 		}
 		
-		TweakerFluid fluid =
+		TweakerLiquid fluid =
 				notNull(arguments[0], "fuels.contains argument cannot be null")
 				.toFluid("fuels.contains argument must be a fluid");
 		

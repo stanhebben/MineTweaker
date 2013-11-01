@@ -12,8 +12,8 @@ import stanhebben.minetweaker.api.TweakerExecuteException;
  * 
  * @author Stan Hebben
  */
-public class TweakerArrayNBT extends TweakerArray {
-	private NBTTagList data;
+public final class TweakerArrayNBT extends TweakerArray {
+	private final NBTTagList data;
 	
 	public TweakerArrayNBT(NBTTagList data) {
 		this.data = data;

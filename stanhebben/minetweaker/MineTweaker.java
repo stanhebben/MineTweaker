@@ -57,14 +57,21 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import ic2.api.recipe.RecipeOutput;
-import ic2.api.recipe.Recipes;
+import cpw.mods.fml.common.network.PacketDispatcher;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.Map;
 import java.util.TimerTask;
 import java.util.zip.CRC32;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.NetHandler;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.network.packet.Packet3Chat;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ModLoader;
+import net.minecraft.util.ChatMessageComponent;
 import stanhebben.minetweaker.api.value.TweakerItemPattern;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.base.functions.FurnaceRemove;
@@ -74,9 +81,10 @@ import stanhebben.minetweaker.base.values.FluidGroupValue;
 import stanhebben.minetweaker.mods.buildcraft.BuildCraftModSupport;
 //#ifndef MC152
 import stanhebben.minetweaker.mods.forestry.ForestrySupport;
-import stanhebben.minetweaker.mods.gregtech.GregTechModSupport;
 //#endif
+import stanhebben.minetweaker.mods.gregtech.GregTechModSupport;
 import stanhebben.minetweaker.mods.ic2.IC2ModSupport;
+import stanhebben.minetweaker.mods.mfr.MFRModSupport;
 
 /**
  * MineTweaker mod class. Includes the functionality needed for Forge mods,
@@ -119,6 +127,11 @@ public class MineTweaker {
 	private int serverClearLevel = 0;
 	private SocketAddress serverAddress = null;
 	private long serverScriptHash = 0;
+	private byte[] serverScript = null;
+	
+	private String[] admins = new String[0];
+	private final List<String> errorMessages = new ArrayList<String>();
+	private final Map<INetworkManager, NetHandler> adminHandlers = new HashMap<INetworkManager, NetHandler>();
 	
 	public MineTweaker() {
 		undoStack = new DefaultUndoStack();
@@ -143,6 +156,34 @@ public class MineTweaker {
 		global.put("fluid", new FluidGroupValue("fluid"));
 		global.put("fluids", new FluidGroupValue());
 	}
+	
+	// #########################################
+	// ### Admin functionality and reporting ###
+	// #########################################
+	
+	public String[] getAdmins() {
+		return admins;
+	}
+	
+	public void setAdmins(String[] admins) {
+		this.admins = admins;
+	}
+	
+	public List<String> getErrorMessages() {
+		return errorMessages;
+	}
+	
+	public void onAdminLogin(INetworkManager mgr, NetHandler handler) {
+		adminHandlers.put(mgr, handler);
+	}
+	
+	public void onLogout(INetworkManager mgr) {
+		adminHandlers.remove(mgr);
+	}
+	
+	// #########################
+	// ### General Functions ###
+	// #########################
 	
 	/**
 	 * Internal method to execute a certain action. Should not be called directly,
@@ -213,6 +254,28 @@ public class MineTweaker {
 	}
 	
 	/**
+	 * Reloads the server scripts.
+	 */
+	public void reloadScripts() {
+		MinecraftServer server = MinecraftServer.getServer();
+		serverScriptBytes = getServerScripts(server);
+		signalServerStart(serverAddress, serverScriptBytes);
+		errorMessages.clear();
+		
+		Packet packet;
+		if (MineTweaker.instance.getServerScript() != null) {
+			packet = new Packet250CustomPayload(
+					TweakerPacketHandler.CHANNEL_SERVERSCRIPT,
+					MineTweaker.instance.getServerScript());
+		} else {
+			packet = new Packet250CustomPayload(
+					TweakerPacketHandler.CHANNEL_SERVERSCRIPT,
+					new byte[0]);
+		}
+		PacketDispatcher.sendPacketToAllPlayers(packet);
+	}
+	
+	/**
 	 * Signals the start of a server. Called when the start server action is
 	 * executed.
 	 * 
@@ -263,6 +326,7 @@ public class MineTweaker {
 				serverMode = true;
 				serverAddress = address;
 				serverScriptHash = crc;
+				this.serverScript = serverScripts;
 				
 				if (serverScripts != null) {
 					DataArrayInputStream input = new DataArrayInputStream(serverScripts);
@@ -282,9 +346,9 @@ public class MineTweaker {
 					Tweaker.log(Level.INFO, "Server script executed: " + (undoStack.size() - numActionsBefore) + " alterations");
 				}
 			} catch (TweakerException ex) {
-				Tweaker.log(Level.SEVERE, ex.getFile().getName() + ":" + ex.getLine() + " " + ex.getExplanation());
+				onError(ex.getFile().getName() + ":" + ex.getLine() + " " + ex.getExplanation());
 			} catch (ParseException ex) {
-				Tweaker.log(Level.SEVERE, ex.getFile() + ":" + ex.getLine() + " " + ex.getExplanation());
+				onError(ex.getFile() + ":" + ex.getLine() + " " + ex.getExplanation());
 			}
 		}
 	}
@@ -368,6 +432,16 @@ public class MineTweaker {
 	}
 	
 	/**
+	 * Returns true if the server scripts can be rolled back. Will return false
+	 * if the undo stack for the server contains permanent actions.
+	 * 
+	 * @return true if the server script can be rolled back
+	 */
+	public boolean canRollback() {
+		return canRollback;
+	}
+	
+	/**
 	 * Returns the global namespace. The global namespace contains symbols such
 	 * as minetweaker, furnace, recipes, mods, modSupport, item, items, tile,
 	 * blocks, ...
@@ -411,7 +485,7 @@ public class MineTweaker {
 					w.write("# Add your commands here\r\n");
 					w.close();
 				} catch (IOException ex) {
-					Tweaker.log(Level.SEVERE, "Could not create script file", ex);
+					onError("Could not create script file", ex);
 				}
 			}
 			
@@ -450,16 +524,24 @@ public class MineTweaker {
 			registerSupportInterface(IC2ModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "IC2 support loaded");
 		}
-		//#ifndef MC152
+		//#ifdef MC152
+		//+if (ModLoader.isModLoaded("GregTech_Addon")) {
+		//#else
 		if (ModLoader.isModLoaded("gregtech_addon")) {
+		//#endif
 			registerSupportInterface(GregTechModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "GregTech support loaded");
 		}
+		//#ifndef MC152
 		if (ModLoader.isModLoaded("Forestry")) {
 			registerSupportInterface(ForestrySupport.INSTANCE);
 			Tweaker.log(Level.INFO, "Forestry support loaded");
 		}
 		//#endif
+		if (ModLoader.isModLoaded("MineFactoryReloaded")) {
+			registerSupportInterface(MFRModSupport.INSTANCE);
+			Tweaker.log(Level.INFO, "MineFactory Reloaded support loaded");
+		}
 		
 		// Execute boot script
 		try {
@@ -467,13 +549,13 @@ public class MineTweaker {
 			TweakerFile bootScript = new TweakerFile(environment, "/" + mainFile.getName(), mainFile);
 			bootScript.execute(new TweakerNameSpace(global));
 		} catch (IOException ex) {
-			Tweaker.log(Level.SEVERE, "Could not read script file", ex);
+			onError("Could not read script file: " + ex.getMessage(), ex);
 		} catch (ParseException ex) {
-			Tweaker.log(Level.SEVERE, ex.getFile() + ":" + ex.getLine() + " " + ex.getExplanation());
+			onError(ex.getFile() + ":" + ex.getLine() + " " + ex.getExplanation());
 		} catch (TweakerException ex) {
-			Tweaker.log(Level.SEVERE, ex.getFile().getName() + ":" + ex.getLine() + ex.getExplanation());
+			onError(ex.getFile().getName() + ":" + ex.getLine() + ex.getExplanation());
 		} catch (Exception ex) {
-			Tweaker.log(Level.SEVERE, "Could not process scipts", ex);
+			onError("Could not process scipts", ex);
 		}
 	}
 	
@@ -485,27 +567,7 @@ public class MineTweaker {
 	public void serverLoad(FMLServerStartingEvent event) {
 		event.registerServerCommand(new MineTweakerCommand());
 	    
-	    File saveDir = MineTweakerUtil.getWorldDirectory(event.getServer());
-	    Tweaker.log(Level.FINE, "World dir: " + saveDir.getAbsolutePath());
-	    File serverScriptDir = new File(saveDir, "minetweaker");
-	    if (serverScriptDir.exists() && new File(serverScriptDir, "main.cfg").exists()) {
-	    	HashMap<String, File> serverScripts = new HashMap<String, File>();
-	    	collectServerScripts(serverScriptDir, serverScripts);
-	    	
-	    	DataArrayOutputStream output = new DataArrayOutputStream();
-	    	output.writeInt(serverScripts.size());
-	    	for (String name : serverScripts.keySet()) {
-	    		String contents = IOUtil.readFileAsString(serverScripts.get(name));
-	    		
-	    		if (contents != null) {
-	    			output.writeUTF(name);
-	    			output.writeUTF(contents);
-	    		}
-	    	}
-	    	
-	    	this.serverScriptBytes = output.toByteArray();
-	    }
-
+		serverScriptBytes = getServerScripts(event.getServer());
 		iAmTheServer = true;
 		Tweaker.apply(new ServerAction(new InetSocketAddress("myself", 0), serverScriptBytes));
 	}
@@ -535,6 +597,48 @@ public class MineTweaker {
 			} else if (f.isFile()) {
 				files.put(dir + f.getName(), f);
 			}
+		}
+	}
+	
+	private byte[] getServerScripts(MinecraftServer server) {
+		File saveDir = MineTweakerUtil.getWorldDirectory(server);
+	    Tweaker.log(Level.FINE, "World dir: " + saveDir.getAbsolutePath());
+	    File serverScriptDir = new File(saveDir, "minetweaker");
+	    if (serverScriptDir.exists() && new File(serverScriptDir, "main.cfg").exists()) {
+	    	HashMap<String, File> serverScripts = new HashMap<String, File>();
+	    	collectServerScripts(serverScriptDir, serverScripts);
+	    	
+	    	DataArrayOutputStream output = new DataArrayOutputStream();
+	    	output.writeInt(serverScripts.size());
+	    	for (String name : serverScripts.keySet()) {
+	    		String contents = IOUtil.readFileAsString(serverScripts.get(name));
+	    		
+	    		if (contents != null) {
+	    			output.writeUTF(name);
+	    			output.writeUTF(contents);
+	    		}
+	    	}
+	    	
+	    	return output.toByteArray();
+	    } else {
+			return null;
+		}
+	}
+	
+	private void onError(String message) {
+		onError(message, null);
+	}
+	
+	private void onError(String message, Exception ex) {
+		Tweaker.log(Level.SEVERE, message, ex);
+		errorMessages.add(message);
+		
+		for (Map.Entry<INetworkManager, NetHandler> entry : adminHandlers.entrySet()) {
+			//#ifdef MC152
+			//+entry.getValue().handleChat(new Packet3Chat(message));
+			//#else
+			entry.getValue().handleChat(new Packet3Chat(ChatMessageComponent.createFromText(message)));
+			//#endif
 		}
 	}
 }

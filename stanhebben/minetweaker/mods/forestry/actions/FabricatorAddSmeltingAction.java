@@ -8,7 +8,7 @@ package stanhebben.minetweaker.mods.forestry.actions;
 
 import forestry.api.recipes.RecipeManagers;
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerItem;
 
 /**
@@ -17,10 +17,10 @@ import stanhebben.minetweaker.api.value.TweakerItem;
  */
 public class FabricatorAddSmeltingAction implements IUndoableAction {
 	private final TweakerItem item;
-	private final TweakerFluidStack liquid;
+	private final TweakerLiquidStack liquid;
 	private final int meltingPoint;
 	
-	public FabricatorAddSmeltingAction(TweakerFluidStack liquid, TweakerItem item, int meltingPoint) {
+	public FabricatorAddSmeltingAction(TweakerLiquidStack liquid, TweakerItem item, int meltingPoint) {
 		this.item = item;
 		this.liquid = liquid;
 		this.meltingPoint = meltingPoint;

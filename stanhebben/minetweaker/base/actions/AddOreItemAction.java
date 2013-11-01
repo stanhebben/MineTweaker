@@ -6,9 +6,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import stanhebben.minetweaker.api.IUndoableAction;
 
-public class AddOreItemAction implements IUndoableAction {
-	private String ore;
-	private ItemStack item;
+/**
+ * Implements oreDict.xxx.add .
+ * 
+ * @author Stan Hebben
+ */
+public final class AddOreItemAction implements IUndoableAction {
+	private final String ore;
+	private final ItemStack item;
 	
 	public AddOreItemAction(String ore, ItemStack item) {
 		this.ore = ore;

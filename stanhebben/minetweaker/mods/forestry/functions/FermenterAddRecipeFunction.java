@@ -9,8 +9,8 @@ package stanhebben.minetweaker.mods.forestry.functions;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
-import stanhebben.minetweaker.api.value.TweakerFluid;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerValue;
@@ -28,7 +28,7 @@ public class FermenterAddRecipeFunction extends TweakerFunction {
 	@Override
 	public TweakerValue call(TweakerNameSpace namespace, TweakerValue... arguments) {
 		if (arguments.length < 3 || arguments.length > 5) throw new TweakerExecuteException("fermenter.addRecipe requires 4-5 arguments");
-		TweakerFluid output =
+		TweakerLiquid output =
 				notNull(arguments[0], "output cannot be null")
 				.toFluid("output must be a liquid");
 		TweakerItem input =
@@ -39,7 +39,7 @@ public class FermenterAddRecipeFunction extends TweakerFunction {
 				.toInt("output quantity must be an item").get();
 		float modifier = arguments.length < 4 || arguments[3] == null ? 1.0f :
 				arguments[3].toFloat("multiplier must be a float value").get();
-		TweakerFluidStack inputFluid = arguments.length < 5 || arguments[4] == null ? null :
+		TweakerLiquidStack inputFluid = arguments.length < 5 || arguments[4] == null ? null :
 				arguments[4].toFluidStack("input liquid must be a liquid stack");
 		
 		Tweaker.apply(new FermenterAddRecipeAction(output, input, outputValue, modifier, inputFluid));

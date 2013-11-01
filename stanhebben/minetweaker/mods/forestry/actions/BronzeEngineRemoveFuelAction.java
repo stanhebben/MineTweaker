@@ -11,17 +11,17 @@ import forestry.api.fuels.FuelManager;
 import java.util.logging.Level;
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.Tweaker;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 
 /**
  *
  * @author Stanneke
  */
 public class BronzeEngineRemoveFuelAction implements IUndoableAction {
-	private final TweakerFluid liquid;
+	private final TweakerLiquid liquid;
 	private EngineBronzeFuel fuel;
 	
-	public BronzeEngineRemoveFuelAction(TweakerFluid liquid) {
+	public BronzeEngineRemoveFuelAction(TweakerLiquid liquid) {
 		this.liquid = liquid;
 	}
 

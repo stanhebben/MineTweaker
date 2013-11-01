@@ -10,7 +10,7 @@ import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerArray;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
@@ -39,7 +39,7 @@ public class CarpenterAddRecipeFunction extends TweakerFunction {
 				arguments[2].toItem("box must be an item");
 		int time = arguments.length < 4 || arguments[3] == null ? 0 :
 				arguments[3].toInt("time must be an int").get();
-		TweakerFluidStack liquid = arguments.length < 5 || arguments[4] == null ? null :
+		TweakerLiquidStack liquid = arguments.length < 5 || arguments[4] == null ? null :
 				arguments[4].toFluidStack("liquid must be a liquid stack");
 		
 		Object[] recipeArray = new Object[recipe.size()];

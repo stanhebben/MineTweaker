@@ -7,8 +7,8 @@ import stanhebben.minetweaker.api.TweakerExecuteException;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TweakerTable extends TweakerValue {
-	private HashMap<String, TweakerValue> contents;
+public final class TweakerTable extends TweakerValue {
+	private final HashMap<String, TweakerValue> contents;
 	
 	public TweakerTable() {
 		contents = new HashMap<String, TweakerValue>();

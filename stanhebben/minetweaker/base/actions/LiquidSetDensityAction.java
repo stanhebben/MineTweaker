@@ -5,15 +5,16 @@ import net.minecraftforge.fluids.Fluid;
 import stanhebben.minetweaker.api.IUndoableAction;
 
 /**
- *
- * @author Stanneke
+ * Implements liquid.setDensity.
+ * 
+ * @author Stan Hebben
  */
-public class FluidSetDensityAction implements IUndoableAction {
-	private Fluid fluid;
-	private int newValue;
-	private int oldValue;
+public final class LiquidSetDensityAction implements IUndoableAction {
+	private final Fluid fluid;
+	private final int newValue;
+	private final int oldValue;
 	
-	public FluidSetDensityAction(Fluid fluid, int newValue) {
+	public LiquidSetDensityAction(Fluid fluid, int newValue) {
 		this.fluid = fluid;
 		this.newValue = newValue;
 		this.oldValue = fluid.getDensity();

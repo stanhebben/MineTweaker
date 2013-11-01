@@ -104,6 +104,11 @@ recipes.remove(<35:4>); # will remove yellow wool crafting recipe
 [/CODE]
 Likewise, using tile.cloth as recipe ingredient will allow any color of wool to be used. Using tile.cloth.white, for instance, would only allow white wool to be used.
 
+Since version 2.2.2, it is also possible to craft damaged items:
+[CODE]
+recipes.addShaped(item.pickaxeWood.withDamage(1), ...recipe...);
+[/CODE]
+
 Now you are able to make your own recipes. But what if your output items should have their damage or NBT tags set? Now this is possible with crafting functions. Consider the following statement:
 [CODE]
 recipes.addShapeless(item.pickaxeWood, [item.pickaxeWood.damaged, item.axeWood.damage], function(output, input) {
@@ -349,7 +354,7 @@ The new machines are also available:
 modSupport.ic2.metalFormer.cutting.addRecipe(output, input);
 modSupport.ic2.metalFormer.rolling.addRecipe(output, input);
 modSupport.ic2.metalFormer.extruding.addRecipe(output, input);
-modSupport.ic2.centrifuge.addRecipe([output1, output2, output3], input);
+modSupport.ic2.centrifuge.addRecipe([output1, output2, output3], input, minHeat);
 modSupport.ic2.oreWashingPlant.addRecipe([output1, output2, output3], input);
 modSupport.ic2.oreWashingPlant.addRecipe([output1, output2, output3], input, millibucketsOfWater);
 [/CODE]
@@ -604,6 +609,16 @@ PM me if you are a mod developer and need further help with this. Only make use 
 [/spoiler]
 
 [spoiler="Changelog"]
+[size=4]Version 2.2.3[/size][list]
+[*]Fixed the wiremill recipes switching input and output
+[*]Fixed removing items from the ore dictionary
+[/list]
+[size=4]Version 2.2.2[/size][list]
+[*]added withDamage function for items, providing a craftable damaged item that works anywhere
+[*]printed item names are now printed exactly as they have to be formatted in code
+[*]fixed GregTech support in 1.5.2 not loading properly
+[*]fixed IC2 centrifuge; can now set the minimum heat required
+[/list]
 [size=4]Version 2.2.1[/size][list]
 [*]Fixed NPE when using a recipe added to the ore washing plant
 [*]Can now adjust the amount of water used in the ore washing plant
@@ -694,9 +709,9 @@ Version 1.0.0[list]
 [/spoiler]
 
 Downloads:[list]
-[*]Version 2.2.1 for minecraft 1.5.2 can be downloaded here: [url="https://www.dropbox.com/s/2pstmc45zzdbhqc/zMineTweaker-1.5.2-2.2.1.zip"]dropbox link[/url]
-[*]Version 2.2.1 for minecraft 1.6.2 can be downloaded here: [url="https://www.dropbox.com/s/cwzfby7av4qgpbu/zMineTweaker-1.6.2-2.2.1.zip"]dropbox link[/url]
-[*]Version 2.2.1 for minecraft 1.6.4 can be downloaded here: [url="https://www.dropbox.com/s/te68mvkah6iss0i/zMineTweaker-1.6.4-2.2.1.zip"]dropbox link[/url]
+[*]Version 2.2.3 for minecraft 1.5.2 can be downloaded here: [url="https://www.dropbox.com/s/w4fmijsuhwolu59/zMineTweaker-1.5.2-2.2.3.zip"]dropbox link[/url]
+[*]Version 2.2.3 for minecraft 1.6.2 can be downloaded here: [url="https://www.dropbox.com/s/n9of10j2kna33jp/zMineTweaker-1.6.2-2.2.3.zip"]dropbox link[/url]
+[*]Version 2.2.3 for minecraft 1.6.4 can be downloaded here: [url="https://www.dropbox.com/s/kie4ad15mwge2fg/zMineTweaker-1.6.4-2.2.3.zip"]dropbox link[/url]
 [/list]
 [spoiler="Copyright and permissions"]
 This document is the intellectual property of the author, Stan Hebben. It may be not be reproduced under any circumstances except for personal, private use as long as it remains in its unaltered, unedited form. It may not be placed on any web site or otherwise distributed publicly without advance written permission. Use of this mod on any other website or as a part of any public display is strictly prohibited, and a violation of copyright.
@@ -710,17 +725,19 @@ Known bugs:[list]
 [*]Assembly table recipes added by server scripts don't show up in NEI. This seems a NEI problem.
 [*]In 1.6.2 and 1.6.4, server scripts can't alter item names.
 [/list]
-Planned features:[list]
-[*]Fixing server script item name changing in 1.6.2 and 1.6.4
-[*]Recipe ingredients requiring specific NBT tags (almost done now!)
-[*]Recipes with reusable items, when I find out how
-[*]A replace functionality, replacing items with other (possibly ore) items
-[*]Improving the scripting language and releasing a full explanation of all the features
-[*]Ability to use ore recipes even in machines where ore recipes are not natively supported
-[*]Creating a wiki for MineTweaker with all the explanations
-[*]Thermal Expansion support
+Planned features: (in order of priority)[list]
+[*]Minefactory Reloaded support (being worked on now)
+[*]Railcraft support
 [*]ThaumCraft 3 support in 1.5.2
 [*]ThaumCraft 4 support in 1.6.2 and 1.6.4, as soon as ThaumCraft 4 is released
+[*]Thermal Expansion support (hope they have a 1.6 version up at some point)
+[*]Recipe ingredients requiring specific NBT tags (almost done now!)
+[*]Ability to use ore recipes even in machines where ore recipes are not natively supported
+[*]Recipes with reusable items, when I find out how (will be possible with function recipes)
+[*]Fixing server script item name changing in 1.6.2 and 1.6.4
+[*]Creating a wiki for MineTweaker with all the explanations
+[*]Improving the scripting language and releasing a full explanation of all the features
+[*]A replace functionality, replacing items with other (possibly ore) items
 [/list]
 [/spoiler]
 

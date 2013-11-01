@@ -10,7 +10,7 @@ package stanhebben.minetweaker.mods.buildcraft.actions;
 import buildcraft.api.recipes.RefineryRecipes;
 //#endif
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.mods.buildcraft.BuildCraftUtil;
 
 /**
@@ -18,18 +18,18 @@ import stanhebben.minetweaker.mods.buildcraft.BuildCraftUtil;
  * @author Stanneke
  */
 public class RefineryAddRecipeAction implements IUndoableAction {
-	private TweakerFluidStack output;
+	private TweakerLiquidStack output;
 	private int energy;
 	private int delay;
-	private TweakerFluidStack input1;
-	private TweakerFluidStack input2;
+	private TweakerLiquidStack input1;
+	private TweakerLiquidStack input2;
 	
 	public RefineryAddRecipeAction(
-			TweakerFluidStack output,
+			TweakerLiquidStack output,
 			int energy,
 			int delay,
-			TweakerFluidStack input1,
-			TweakerFluidStack input2) {
+			TweakerLiquidStack input1,
+			TweakerLiquidStack input2) {
 		this.output = output;
 		this.energy = energy;
 		this.delay = delay;

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker.base.actions;
 
 //#ifdef MC152
@@ -18,19 +14,20 @@ import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 
 /**
- *
- * @author Stanneke
+ * Executes liquid.addContainer.
+ * 
+ * @author Stan Hebben
  */
-public class AddFluidContainerAction implements IUndoableAction {
+public final class AddLiquidContainerAction implements IUndoableAction {
 	//#ifdef MC152
 	//+private LiquidContainerData data;
 	//#else
-	private Fluid fluid;
-	private int amount;
-	private TweakerItem emptyContainer;
-	private TweakerItem fullContainer;
+	private final Fluid fluid;
+	private final int amount;
+	private final TweakerItem emptyContainer;
+	private final TweakerItem fullContainer;
 	//#endif
-	private boolean isNewEmpty;
+	private final boolean isNewEmpty;
 	
 	//#ifdef MC152
 	//+public AddFluidContainerAction(LiquidStack stack, TweakerItem emptyContainer, TweakerItem fullContainer) {
@@ -38,7 +35,7 @@ public class AddFluidContainerAction implements IUndoableAction {
 		//+isNewEmpty = LiquidContainerRegistry.isEmptyContainer(emptyContainer.make(1));
 	//+}
 	//#else
-	public AddFluidContainerAction(Fluid fluid, int amount, TweakerItem emptyContainer, TweakerItem fullContainer) {
+	public AddLiquidContainerAction(Fluid fluid, int amount, TweakerItem emptyContainer, TweakerItem fullContainer) {
 		this.fluid = fluid;
 		this.amount = amount;
 		this.emptyContainer = emptyContainer;

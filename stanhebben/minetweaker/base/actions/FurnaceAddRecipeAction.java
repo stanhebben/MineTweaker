@@ -8,10 +8,15 @@ import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
 
-public class FurnaceAddRecipeAction implements IUndoableAction {
-	private ItemStack output;
-	private TweakerItem input;
-	private float xp;
+/**
+ * Implements furnace.addRecipe .
+ * 
+ * @author Stan Hebben
+ */
+public final class FurnaceAddRecipeAction implements IUndoableAction {
+	private final ItemStack output;
+	private final TweakerItem input;
+	private final float xp;
 	
 	public FurnaceAddRecipeAction(TweakerItemStack output, TweakerItem input, float xp) {
 		this.output = output.get();
@@ -36,10 +41,12 @@ public class FurnaceAddRecipeAction implements IUndoableAction {
 			.remove(Arrays.asList(input.getItemId(), input.getItemSubId()));
 	}
 
+	@Override
 	public String describe() {
 		return "Adding a furnace recipe turning " + input.getDisplayName() + " into " + output.getDisplayName();
 	}
 
+	@Override
 	public String describeUndo() {
 		return "Removing a furnace recipe turning " + input.getDisplayName() + " into " + output.getDisplayName();
 	}

@@ -9,7 +9,7 @@ package stanhebben.minetweaker.mods.forestry.functions;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerValue;
@@ -27,7 +27,7 @@ public class FabricatorAddSmeltingFunction extends TweakerFunction {
 	@Override
 	public TweakerValue call(TweakerNameSpace namespace, TweakerValue... arguments) {
 		if (arguments.length != 3) throw new TweakerExecuteException("fabricator.addSmelting must have 3 arguments");
-		TweakerFluidStack liquid =
+		TweakerLiquidStack liquid =
 				notNull(arguments[0], "liquid cannot be null")
 				.toFluidStack("liquid must be a liquid stack");
 		TweakerItem item =

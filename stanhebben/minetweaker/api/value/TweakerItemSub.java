@@ -8,16 +8,18 @@ import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.base.actions.SetFuelItemAction;
 import stanhebben.minetweaker.base.actions.SetLocalizedStringAction;
 
-public class TweakerItemSub extends TweakerItem {
-	private int id;
-	private int meta;
-	private Item item;
-	private ItemStack stack;
+public final class TweakerItemSub extends TweakerItem {
+	private final int id;
+	private final int meta;
+	private final Item item;
+	private final ItemStack stack;
 	
 	public TweakerItemSub(int id, int meta) throws TweakerExecuteException {
 		this.id = id;
 		this.meta = meta;
 		if (Item.itemsList[id] == null) {
+			item = null;
+			stack = null;
 			throw new TweakerExecuteException("No item with id " + id);
 		}
 		item = Item.itemsList[id];

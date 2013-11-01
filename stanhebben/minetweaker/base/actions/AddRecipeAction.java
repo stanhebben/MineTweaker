@@ -4,18 +4,23 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import stanhebben.minetweaker.api.IUndoableAction;
 
-public class AddRecipeAction implements IUndoableAction {
-	private IRecipe recipe;
-	private int recipeIndex;
+/**
+ * Implements recipes.addShaped and recipes.addShapeless.
+ * 
+ * @author Stan Hebben
+ */
+public final class AddRecipeAction implements IUndoableAction {
+	private final IRecipe recipe;
+	private final int recipeIndex;
 	
 	public AddRecipeAction(IRecipe recipe) {
 		this.recipe = recipe;
+		recipeIndex = CraftingManager.getInstance().getRecipeList().size();
 	}
 	
 	@Override
 	public void apply() {
-		recipeIndex = CraftingManager.getInstance().getRecipeList().size();
-		CraftingManager.getInstance().getRecipeList().add(recipe);
+		CraftingManager.getInstance().getRecipeList().add(recipeIndex, recipe);
 	}
 	
 	@Override

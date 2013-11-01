@@ -1,9 +1,9 @@
 package stanhebben.minetweaker.base.values;
 
 import stanhebben.minetweaker.MineTweakerRegistry;
-import stanhebben.minetweaker.api.TweakerException;
 
 import stanhebben.minetweaker.api.TweakerExecuteException;
+import stanhebben.minetweaker.api.value.TweakerInt;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemPattern;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
@@ -59,6 +59,15 @@ public class ItemGroupValue extends TweakerValue {
 		TweakerItem item = MineTweakerRegistry.INSTANCE.getItem(name);
 		if (item == null) return null;
 		return item.asRecipeItem();
+	}
+	
+	@Override
+	public TweakerValue index(TweakerValue index) {
+		if (index.getClass() == TweakerInt.class) {
+			return index(Integer.toString(index.toBasicInt()));
+		} else {
+			return index(index.toBasicString());
+		}
 	}
 	
 	@Override

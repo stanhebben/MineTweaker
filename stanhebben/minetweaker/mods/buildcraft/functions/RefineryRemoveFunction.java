@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import static stanhebben.minetweaker.api.value.TweakerValue.notNull;
@@ -36,7 +36,7 @@ public class RefineryRemoveFunction extends TweakerFunction {
 		if (arguments.length == 0) {
 			throw new TweakerExecuteException("refinery.removeRecipe requires at least one argument");
 		} else {
-			TweakerFluid output =
+			TweakerLiquid output =
 					notNull(arguments[0], "the refinery.remove output cannot be null")
 					.toFluid("the refinery.remove output must be a fluid");
 			

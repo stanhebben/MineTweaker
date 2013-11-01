@@ -9,19 +9,19 @@ package stanhebben.minetweaker.mods.forestry.actions;
 import forestry.api.fuels.EngineBronzeFuel;
 import forestry.api.fuels.FuelManager;
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 
 /**
  *
  * @author Stanneke
  */
 public class BronzeEngineAddFuelAction implements IUndoableAction {
-	private final TweakerFluid fluid;
+	private final TweakerLiquid fluid;
 	private final int powerPerCycle;
 	private final int burnDuration;
 	private final int dissipationMultiplier;
 	
-	public BronzeEngineAddFuelAction(TweakerFluid fluid, int powerPerCycle, int burnDuration, int dissipationMultiplier) {
+	public BronzeEngineAddFuelAction(TweakerLiquid fluid, int powerPerCycle, int burnDuration, int dissipationMultiplier) {
 		this.fluid = fluid;
 		this.powerPerCycle = powerPerCycle;
 		this.burnDuration = burnDuration;

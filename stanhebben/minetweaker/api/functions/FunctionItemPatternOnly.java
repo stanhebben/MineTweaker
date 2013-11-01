@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker.api.functions;
 
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -12,11 +8,13 @@ import stanhebben.minetweaker.api.value.TweakerItemPatternOnly;
 import stanhebben.minetweaker.api.value.TweakerValue;
 
 /**
- *
- * @author Stanneke
+ * Function instanced on item.only. Indicated thas only items matches a certain
+ * function should be matched.
+ * 
+ * @author Stan Hebben
  */
-public class FunctionItemPatternOnly extends TweakerFunction {
-	private TweakerItemPattern pattern;
+public final class FunctionItemPatternOnly extends TweakerFunction {
+	private final TweakerItemPattern pattern;
 	
 	public FunctionItemPatternOnly(TweakerItemPattern pattern) {
 		this.pattern = pattern;

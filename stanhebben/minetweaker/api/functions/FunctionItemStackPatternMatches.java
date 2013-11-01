@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker.api.functions;
 
 import stanhebben.minetweaker.api.TweakerExecuteException;
@@ -12,11 +8,13 @@ import stanhebben.minetweaker.api.value.TweakerItemStackPattern;
 import stanhebben.minetweaker.api.value.TweakerValue;
 
 /**
- *
- * @author Stanneke
+ * Function instanced on ItemStackPattern.matches. Checks if an item stack 
+ * matches this pattern.
+ * 
+ * @author Stan Hebben
  */
-public class FunctionItemStackPatternMatches extends TweakerFunction {
-	private TweakerItemStackPattern pattern;
+public final class FunctionItemStackPatternMatches extends TweakerFunction {
+	private final TweakerItemStackPattern pattern;
 	
 	public FunctionItemStackPatternMatches(TweakerItemStackPattern pattern) {
 		this.pattern = pattern;

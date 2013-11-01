@@ -2,7 +2,7 @@ package stanhebben.minetweaker.mods.forestry.actions;
 
 import forestry.api.recipes.RecipeManagers;
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
 
@@ -13,10 +13,10 @@ import stanhebben.minetweaker.api.value.TweakerItemStack;
 public class FabricatorAddRecipeAction implements IUndoableAction {
 	private final TweakerItemStack output;
 	private final Object[] input;
-	private final TweakerFluidStack fluid;
+	private final TweakerLiquidStack fluid;
 	private final TweakerItem cast;
 	
-	public FabricatorAddRecipeAction(TweakerItemStack output, Object[] input, TweakerFluidStack fluid, TweakerItem cast) {
+	public FabricatorAddRecipeAction(TweakerItemStack output, Object[] input, TweakerLiquidStack fluid, TweakerItem cast) {
 		this.output = output;
 		this.input = input;
 		this.fluid = fluid;

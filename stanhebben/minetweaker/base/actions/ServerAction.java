@@ -4,9 +4,14 @@ import java.net.SocketAddress;
 import stanhebben.minetweaker.MineTweaker;
 import stanhebben.minetweaker.api.IUndoableAction;
 
+/**
+ * Implements the execution of a server script.
+ * 
+ * @author Stan Hebben
+ */
 public class ServerAction implements IUndoableAction {
-	private SocketAddress address;
-	private byte[] scripts;
+	private final SocketAddress address;
+	private final byte[] scripts;
 	
 	public ServerAction(SocketAddress address, byte[] scripts) {
 		this.address = address;

@@ -6,8 +6,8 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import stanhebben.minetweaker.api.TweakerNameSpace;
 
-public class TweakerTuple extends TweakerValue {
-	private TweakerValue[] values;
+public final class TweakerTuple extends TweakerValue {
+	private final TweakerValue[] values;
 	
 	public TweakerTuple(TweakerValue[] values) {
 		this.values = values;

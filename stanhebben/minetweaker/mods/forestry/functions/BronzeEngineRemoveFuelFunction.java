@@ -9,7 +9,7 @@ package stanhebben.minetweaker.mods.forestry.functions;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
-import stanhebben.minetweaker.api.value.TweakerFluid;
+import stanhebben.minetweaker.api.value.TweakerLiquid;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.mods.forestry.actions.BronzeEngineRemoveFuelAction;
@@ -26,7 +26,7 @@ public class BronzeEngineRemoveFuelFunction extends TweakerFunction {
 	@Override
 	public TweakerValue call(TweakerNameSpace namespace, TweakerValue... arguments) {
 		if (arguments.length != 1) throw new TweakerExecuteException("biogasEngine.removeFuel requires 1 argument");
-		TweakerFluid liquid =
+		TweakerLiquid liquid =
 				notNull(arguments[0], "fuel cannot be null")
 				.toFluid("fuel must be a liquid");
 		

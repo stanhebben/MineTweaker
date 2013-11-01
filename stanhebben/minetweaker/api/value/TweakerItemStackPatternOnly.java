@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package stanhebben.minetweaker.api.value;
 
 import java.util.ArrayList;
@@ -10,8 +6,9 @@ import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.api.Tweaker;
 
 /**
- *
- * @author Stanneke
+ * Implements itemstack.only values.
+ * 
+ * @author Stan Hebben
  */
 public final class TweakerItemStackPatternOnly extends TweakerItemStackPattern {
 	private final TweakerItemStackPattern base;

@@ -101,7 +101,7 @@ public class MineTweakerCommand implements ICommand {
 			} else {
 				try {
 					TweakerItem item = TweakerItem.parse(arguments[1]);
-					sendChatMessage(icommandsender, "Name for " + item.toIdString() + ": " + item.getName());
+					sendChatMessage(icommandsender, "Name for " + item.toIdString() + ": " + MineTweakerUtil.formatItemName(item.getName()));
 				} catch (TweakerExecuteException ex) {
 					sendChatMessage(icommandsender, ex.getMessage());
 				} catch (TweakerException ex) {
@@ -152,11 +152,11 @@ public class MineTweakerCommand implements ICommand {
 						//#ifdef MC152
 						//+sendChatMessage(icommandsender, 
 								//+"  " + MineTweakerUtil.getItemString(stack) + " - " +
-								//+(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItemName()));
+								//+MineTweakerUtil.formatItemName(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItemName()));
 						//#else
 						sendChatMessage(icommandsender, 
 								"  " + MineTweakerUtil.getItemString(stack) + " - " +
-								(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getUnlocalizedName()));
+								MineTweakerUtil.formatItemName(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getUnlocalizedName()));
 						//#endif
 					}
 				}
@@ -177,11 +177,11 @@ public class MineTweakerCommand implements ICommand {
 							//#ifdef MC152
 							//+sendChatMessage(icommandsender, 
 									//+"  " + MineTweakerUtil.getItemString(stack) + " - " +
-									//+(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItemName()));
+									//+MineTweakerUtil.formatItemName(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getItemName()));
 							//#else
 							sendChatMessage(icommandsender, 
 									"  " + MineTweakerUtil.getItemString(stack) + " - " +
-									(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getUnlocalizedName()));
+									MineTweakerUtil.formatItemName(stack.getItemDamage() == OreDictionary.WILDCARD_VALUE ? stack.getItem().getUnlocalizedName() : stack.getUnlocalizedName()));
 							//#endif
 						}
 					}
@@ -234,6 +234,13 @@ public class MineTweakerCommand implements ICommand {
 				sendChatMessage(icommandsender, "Invalid item id");
 			} catch (TweakerException ex) {
 				sendChatMessage(icommandsender, "Invalid item id");
+			}
+		} else if (arguments[0].equals("reload")) {
+			if (!MineTweaker.instance.canRollback()) {
+				sendChatMessage(icommandsender, "Previous server script contained permanent actions, cannot reload. A restart is required to reload scripts.");
+			} else {
+				MineTweaker.instance.reloadScripts();
+				sendChatMessage(icommandsender, "Script reloaded, updating all players");
 			}
 		} else {
 			sendChatMessage(icommandsender, "Unrecognized minetweaker command");

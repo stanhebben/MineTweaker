@@ -2,7 +2,7 @@ package stanhebben.minetweaker.api.value;
 
 import net.minecraft.nbt.NBTBase;
 
-public class TweakerBool extends TweakerValue {
+public final class TweakerBool extends TweakerValue {
 	public static final TweakerBool TRUE = new TweakerBool(true);
 	public static final TweakerBool FALSE = new TweakerBool(false);
 	
@@ -10,7 +10,7 @@ public class TweakerBool extends TweakerValue {
 		return value ? TRUE : FALSE;
 	}
 	
-	private boolean value;
+	private final boolean value;
 	
 	private TweakerBool(boolean value) {
 		this.value = value;

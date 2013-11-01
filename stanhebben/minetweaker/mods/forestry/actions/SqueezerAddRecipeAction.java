@@ -9,7 +9,7 @@ package stanhebben.minetweaker.mods.forestry.actions;
 import forestry.api.recipes.RecipeManagers;
 import net.minecraft.item.ItemStack;
 import stanhebben.minetweaker.api.IUndoableAction;
-import stanhebben.minetweaker.api.value.TweakerFluidStack;
+import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
 
@@ -18,14 +18,14 @@ import stanhebben.minetweaker.api.value.TweakerItemStack;
  * @author Stanneke
  */
 public class SqueezerAddRecipeAction implements IUndoableAction {
-	private final TweakerFluidStack output;
+	private final TweakerLiquidStack output;
 	private final TweakerItemStack[] input;
 	private final int time;
 	private final TweakerItem remnant;
 	private final int remnantChance;
 	
 	public SqueezerAddRecipeAction(
-			TweakerFluidStack output,
+			TweakerLiquidStack output,
 			TweakerItemStack[] input,
 			int time,
 			TweakerItem remnant, int remnantChance) {
