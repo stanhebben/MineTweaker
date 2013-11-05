@@ -17,8 +17,8 @@ import stanhebben.minetweaker.api.IUndoableAction;
  */
 public class RemoveSolidCoolantAction implements IUndoableAction {
 	//#ifndef MC152
-	private StackWrapper stack;
-	private FluidStack fluid;
+	private final StackWrapper stack;
+	private final FluidStack fluid;
 	
 	public RemoveSolidCoolantAction(StackWrapper stack) {
 		this.stack = stack;

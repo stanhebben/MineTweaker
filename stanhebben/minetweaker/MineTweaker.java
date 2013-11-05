@@ -41,7 +41,6 @@ import stanhebben.minetweaker.tweaker.FuelTweaker;
 
 import cpw.mods.fml.common.Mod;
 //#ifdef OLDEVENTS
-//+import cpw.mods.fml.common.Mod.Init;
 //+import cpw.mods.fml.common.Mod.PreInit;
 //+import cpw.mods.fml.common.Mod.PostInit;
 //+import cpw.mods.fml.common.Mod.ServerStarting;
@@ -68,10 +67,11 @@ import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.network.packet.Packet3Chat;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ModLoader;
+//#ifndef MC152
 import net.minecraft.util.ChatMessageComponent;
+//#endif
 import stanhebben.minetweaker.api.value.TweakerItemPattern;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.base.functions.FurnaceRemove;
@@ -79,9 +79,7 @@ import stanhebben.minetweaker.base.functions.PrintFunction;
 import stanhebben.minetweaker.base.functions.RemoveRecipesFunction;
 import stanhebben.minetweaker.base.values.FluidGroupValue;
 import stanhebben.minetweaker.mods.buildcraft.BuildCraftModSupport;
-//#ifndef MC152
 import stanhebben.minetweaker.mods.forestry.ForestrySupport;
-//#endif
 import stanhebben.minetweaker.mods.gregtech.GregTechModSupport;
 import stanhebben.minetweaker.mods.ic2.IC2ModSupport;
 import stanhebben.minetweaker.mods.mfr.MFRModSupport;
@@ -482,6 +480,11 @@ public class MineTweaker {
 					w.write("# See the forum post for example and documentation.\r\n");
 					w.write("version 2;\r\n");
 					w.write("\r\n");
+					w.write("# set your list of server admin usernames here\r\n");
+					w.write("# admins are privileged users and will receive\r\n");
+					w.write("# any error messages that might occur.\r\n");
+					w.write("minetweaker.setAdmins(\"Myself\", \"MyAdminBuddy\");\r\n");
+					w.write("\r\n");
 					w.write("# Add your commands here\r\n");
 					w.close();
 				} catch (IOException ex) {
@@ -532,12 +535,10 @@ public class MineTweaker {
 			registerSupportInterface(GregTechModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "GregTech support loaded");
 		}
-		//#ifndef MC152
 		if (ModLoader.isModLoaded("Forestry")) {
 			registerSupportInterface(ForestrySupport.INSTANCE);
 			Tweaker.log(Level.INFO, "Forestry support loaded");
 		}
-		//#endif
 		if (ModLoader.isModLoaded("MineFactoryReloaded")) {
 			registerSupportInterface(MFRModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "MineFactory Reloaded support loaded");
@@ -635,9 +636,9 @@ public class MineTweaker {
 		
 		for (Map.Entry<INetworkManager, NetHandler> entry : adminHandlers.entrySet()) {
 			//#ifdef MC152
-			//+entry.getValue().handleChat(new Packet3Chat(message));
+			//+entry.getValue().getPlayer().sendChatToPlayer(message);
 			//#else
-			entry.getValue().handleChat(new Packet3Chat(ChatMessageComponent.createFromText(message)));
+			entry.getValue().getPlayer().sendChatToPlayer(ChatMessageComponent.createFromText(message));
 			//#endif
 		}
 	}

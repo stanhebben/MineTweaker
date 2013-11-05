@@ -8,31 +8,31 @@ package stanhebben.minetweaker.mods.mfr.values;
 
 import stanhebben.minetweaker.api.value.TweakerField;
 import stanhebben.minetweaker.api.value.TweakerValue;
-import stanhebben.minetweaker.mods.mfr.function.HarvesterAddHarvestableFunction;
-import stanhebben.minetweaker.mods.mfr.function.HarvesterRemoveHarvestableFunction;
+import stanhebben.minetweaker.mods.mfr.function.RancherAddRanchableFunction;
+import stanhebben.minetweaker.mods.mfr.function.RancherRemoveRanchableFunction;
 
 /**
  *
  * @author Stanneke
  */
-public class HarvesterValue extends TweakerValue {
-	public static final HarvesterValue INSTANCE = new HarvesterValue();
+public class RancherValue extends TweakerValue {
+	public static final RancherValue INSTANCE = new RancherValue();
 	
-	private HarvesterValue() {}
+	private RancherValue() {}
 	
 	@Override
 	public TweakerValue index(String index) {
 		switch (TweakerField.get(index)) {
-			case ADDHARVESTABLE:
-				return HarvesterAddHarvestableFunction.INSTANCE;
-			case REMOVEHARVESTABLE:
-				return HarvesterRemoveHarvestableFunction.INSTANCE;
+			case ADDRANCHABLE:
+				return RancherAddRanchableFunction.INSTANCE;
+			case REMOVERANCHABLE:
+				return RancherRemoveRanchableFunction.INSTANCE;
 		}
 		return super.index(index);
 	}
 
 	@Override
 	public String toString() {
-		return "mfr.harvester";
+		return "mfr.rancher";
 	}
 }

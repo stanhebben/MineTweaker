@@ -18,11 +18,11 @@ import stanhebben.minetweaker.mods.buildcraft.BuildCraftUtil;
  * @author Stanneke
  */
 public class RefineryAddRecipeAction implements IUndoableAction {
-	private TweakerLiquidStack output;
-	private int energy;
-	private int delay;
-	private TweakerLiquidStack input1;
-	private TweakerLiquidStack input2;
+	private final TweakerLiquidStack output;
+	private final int energy;
+	private final int delay;
+	private final TweakerLiquidStack input1;
+	private final TweakerLiquidStack input2;
 	
 	public RefineryAddRecipeAction(
 			TweakerLiquidStack output,

@@ -21,8 +21,8 @@ public class AddLiquidCoolantAction implements IUndoableAction {
 	//#ifdef MC152
 	//+private IronEngineCoolant coolant;
 	//#else
-	private Fluid fluid;
-	private float coolingPerMB;
+	private final Fluid fluid;
+	private final float coolingPerMB;
 	//#endif
 	
 	//#ifdef MC152

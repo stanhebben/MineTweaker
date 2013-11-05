@@ -5,7 +5,10 @@ package stanhebben.minetweaker.api.value;
 //+import net.minecraftforge.liquids.LiquidContainerRegistry;
 //+import net.minecraftforge.liquids.LiquidStack;
 //#else
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 //#endif
@@ -26,7 +29,7 @@ public final class TweakerLiquidStack extends TweakerValue {
 	public static TweakerLiquidStack fromLiquidBlock(TweakerItem block) {
 		//#ifdef MC152
 		//+if (LiquidContainerRegistry.isLiquid(block.make(1))) {
-			//+return new TweakerFluidStack(new LiquidStack(block.getItemId(), 1, block.getItemSubId()));
+			//+return new TweakerLiquidStack(new LiquidStack(block.getItemId(), 1, block.getItemSubId()));
 		//+} else {
 			//+return null;
 		//+}
@@ -42,7 +45,7 @@ public final class TweakerLiquidStack extends TweakerValue {
 	//#ifdef MC152
 	//+private final LiquidStack value;
 	
-	//+public TweakerFluidStack(LiquidStack value) {
+	//+public TweakerLiquidStack(LiquidStack value) {
 		//+this.value = value;
 	//+}
 	
@@ -75,6 +78,56 @@ public final class TweakerLiquidStack extends TweakerValue {
 		//#else
 		return value.getFluid().getLocalizedName();
 		//#endif
+	}
+	
+	public TweakerLiquidStack fill(IInventory inventory, TweakerItem[] containers) {
+		FluidStack remaining = new FluidStack(value.fluidID, value.amount);
+		int size = inventory.getSizeInventory();
+		for (int i = 0; i < size; i++) {
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack != null) {
+				for (TweakerItem container : containers) {
+					if (container.matches(stack)) {
+						if (FluidContainerRegistry.containsFluid(stack, value)) {
+							while (stack.stackSize > 0) {
+								ItemStack filled = FluidContainerRegistry.fillFluidContainer(remaining, stack);
+								if (filled == null) break;
+								
+								boolean stored = false;
+								int empty = -1;
+								for (int j = 0; j < size; j++) {
+									ItemStack stack2 = inventory.getStackInSlot(j);
+									if (stack2 != null) {
+										if (filled.itemID == stack2.itemID
+											&& filled.getItemDamage() == stack2.getItemDamage()
+											&& stack2.stackSize < stack2.getMaxStackSize()) {
+											stack2.stackSize++;
+											stored = true;
+										}
+									} else {
+										if (empty < 0) empty = j;
+									}
+								}
+								if (!stored) {
+									if (stack.stackSize == 1) empty = i;
+									if (empty >= 0) {
+										inventory.setInventorySlotContents(empty, stack);
+										stored = true;
+									}
+								}
+								
+								if (stored) {
+									remaining.amount -= FluidContainerRegistry.getFluidForFilledItem(filled).amount;
+								} else {
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return new TweakerLiquidStack(remaining);
 	}
 	
 	@Override
@@ -133,13 +186,18 @@ public final class TweakerLiquidStack extends TweakerValue {
 				//+} else {
 					//+item = new TweakerItemSimple(asStack.itemID);
 				//+}
-				//+return new TweakerFluid(item);
+				//+return new TweakerLiquid(item);
 				//#else
 				return new TweakerLiquid(value.getFluid());
 				//#endif
 			default:
 				throw new TweakerExecuteException("no such field in fluid: " + index);
 		}
+	}
+	
+	@Override
+	public TweakerLiquidStack asFluidStack() {
+		return this;
 	}
 
 	@Override

@@ -4,10 +4,9 @@
  */
 package stanhebben.minetweaker.mods.buildcraft.actions;
 
-import java.util.LinkedList;
-
 import buildcraft.api.fuels.IronEngineFuel;
 //#ifdef MC152
+//+import java.util.LinkedList;
 //+import net.minecraftforge.liquids.LiquidStack;
 //#else
 import buildcraft.api.fuels.IronEngineFuel.Fuel;
@@ -28,10 +27,10 @@ public class SetFuelAction implements IUndoableAction {
 		//+newFuel = new IronEngineFuel(liquid, powerPerCycle, numTotalCycles);
 	//+}
 	//#else
-	private Fluid fluid;
-	private float powerPerCycle;
-	private int numTotalCycles;
-	private Fuel old;
+	private final Fluid fluid;
+	private final float powerPerCycle;
+	private final int numTotalCycles;
+	private final Fuel old;
 	
 	public SetFuelAction(Fluid fluid, float powerPerCycle, int numTotalCycles) {
 		this.fluid = fluid;

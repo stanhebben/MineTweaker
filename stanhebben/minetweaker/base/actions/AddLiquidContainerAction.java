@@ -20,7 +20,7 @@ import stanhebben.minetweaker.api.value.TweakerItem;
  */
 public final class AddLiquidContainerAction implements IUndoableAction {
 	//#ifdef MC152
-	//+private LiquidContainerData data;
+	//+private final LiquidContainerData data;
 	//#else
 	private final Fluid fluid;
 	private final int amount;
@@ -30,7 +30,7 @@ public final class AddLiquidContainerAction implements IUndoableAction {
 	private final boolean isNewEmpty;
 	
 	//#ifdef MC152
-	//+public AddFluidContainerAction(LiquidStack stack, TweakerItem emptyContainer, TweakerItem fullContainer) {
+	//+public AddLiquidContainerAction(LiquidStack stack, TweakerItem emptyContainer, TweakerItem fullContainer) {
 		//+data = new LiquidContainerData(stack, fullContainer.make(1), emptyContainer.make(1));
 		//+isNewEmpty = LiquidContainerRegistry.isEmptyContainer(emptyContainer.make(1));
 	//+}

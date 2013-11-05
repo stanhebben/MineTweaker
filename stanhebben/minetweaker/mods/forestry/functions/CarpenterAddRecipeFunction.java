@@ -6,6 +6,8 @@
 
 package stanhebben.minetweaker.mods.forestry.functions;
 
+import java.util.ArrayList;
+import java.util.List;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
@@ -42,11 +44,28 @@ public class CarpenterAddRecipeFunction extends TweakerFunction {
 		TweakerLiquidStack liquid = arguments.length < 5 || arguments[4] == null ? null :
 				arguments[4].toFluidStack("liquid must be a liquid stack");
 		
-		Object[] recipeArray = new Object[recipe.size()];
-		for (int i = 0; i < recipeArray.length; i++) {
-			recipeArray[i] = recipe.get(i).toRecipeItem("recipe contents must all be valid recipe items");
+		char[] pattern = "         ".toCharArray();
+		int counter = 0;
+		List<Object> contents = new ArrayList<Object>();
+		
+		if (recipe.size() > 3) throw new TweakerExecuteException("Carpenter recipe cannot contain more than 3 rows");
+		for (int i = 0; i < recipe.size(); i++) {
+			TweakerArray row =
+					notNull(recipe.get(i), "recipe row cannot be null")
+					.toArray("recipe row must be an item array");
+			if (row.size() > 3) throw new TweakerExecuteException("Carpenter recipe row cannot contain more than 3 items");
+			for (int j = 0; j < row.size(); j++) {
+				if (row.get(j) != null) {
+					contents.add(Character.valueOf((char) ('A' + counter)));
+					contents.add(row.get(j).toRecipeItem("Carpenter recipe can only contain recipe items"));
+					pattern[3 * i + j] = (char) ('A' + counter);
+					counter++;
+				}
+			}
 		}
-		Tweaker.apply(new CarpenterAddRecipeAction(output, recipeArray, box, time, liquid));
+		
+		contents.add(0, new String[] { new String(pattern, 0, 3), new String(pattern, 3, 3), new String(pattern, 6, 3) });
+		Tweaker.apply(new CarpenterAddRecipeAction(output, contents.toArray(), box, time, liquid));
 		return null;
 	}
 

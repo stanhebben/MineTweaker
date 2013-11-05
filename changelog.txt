@@ -1,7 +1,13 @@
+[Version ?]
+- New reload function: /minetweaker reload, which will reload server scripts immediately (provided that no permanent actions have been performed).
+
 [Version 2.2.4]
-- Reload command implemented: /minetweaker reload, which will reload server scripts immediately (provided that no permanent actions have been performed)
 - There is a new function minetweaker.setAdmins(admin1, admin2, ...) which accepts any number of admins (usernames, case-sensitive).
 - If any admins have been set, any errors in scripts will be messaged to them as soon as they login. If there are no admins set, everybody will receive the error messages.
+- Changed the way the print function works, so anything can be printed now. Handy to debug scripts.
+- Forestry support extended to 1.5.2
+- Fixed liquid stacks not working
+- Fixed the forestry carpenter support
 
 [Version 2.2.3]
 - Fixed the wiremill recipes switching input and output

@@ -24,8 +24,8 @@ public class RemoveLiquidCoolantAction implements IUndoableAction {
 		//+this.coolant = coolant;
 	//+}
 	//#else
-	private Fluid fluid;
-	private Coolant coolant;
+	private final Fluid fluid;
+	private final Coolant coolant;
 	
 	public RemoveLiquidCoolantAction(Fluid fluid) {
 		this.fluid = fluid;

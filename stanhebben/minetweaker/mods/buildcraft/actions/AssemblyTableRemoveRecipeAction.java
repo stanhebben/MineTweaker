@@ -12,8 +12,8 @@ import stanhebben.minetweaker.api.IUndoableAction;
  * @author Stanneke
  */
 public class AssemblyTableRemoveRecipeAction implements IUndoableAction {
-	private int index;
-	private AssemblyRecipe value;
+	private final int index;
+	private final AssemblyRecipe value;
 	
 	public AssemblyTableRemoveRecipeAction(int index) {
 		this.index = index;

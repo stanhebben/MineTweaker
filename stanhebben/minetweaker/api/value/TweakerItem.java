@@ -3,6 +3,7 @@ package stanhebben.minetweaker.api.value;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.functions.FunctionSetItemDisplayName;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 import stanhebben.minetweaker.api.functions.FunctionItemPatternOnly;
 import stanhebben.minetweaker.api.functions.FunctionItemWithDamage;
 
@@ -127,6 +128,17 @@ public abstract class TweakerItem extends TweakerValue {
 	 * @return item ID string
 	 */
 	public abstract String toIdString();
+	
+	/**
+	 * Checks if this item is equal to the item in the specified stack.
+	 * 
+	 * @param stack item stack to compare to
+	 * @return true if the stack matches, false otherwise
+	 */
+	public boolean matches(ItemStack stack) {
+		return stack.itemID == getItemId() 
+				&& (!isSubItem() || getItemSubId() == OreDictionary.WILDCARD_VALUE || getItemSubId() == stack.getItemDamage());
+	}
 	
 	@Override
 	public TweakerItem asItem() {

@@ -19,9 +19,9 @@ public class AddFuelAction implements IUndoableAction {
 	//#ifdef MC152
 	//+private IronEngineFuel fuel;
 	//#else
-	private TweakerLiquid fluid;
-	private float powerPerCycle;
-	private int numTotalCycles;
+	private final TweakerLiquid fluid;
+	private final float powerPerCycle;
+	private final int numTotalCycles;
 	//#endif
 	
 	public AddFuelAction(TweakerLiquid fluid, float powerPerCycle, int numTotalCycles) {

@@ -14,6 +14,7 @@ import powercrystals.minefactoryreloaded.api.FactoryRegistry;
 import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.value.TweakerItem;
+import stanhebben.minetweaker.mods.mfr.MFRHacks;
 
 /**
  *
@@ -22,10 +23,13 @@ import stanhebben.minetweaker.api.value.TweakerItem;
 public class HarvesterAddHarvestableAction implements IUndoableAction {
 	private final TweakerItem item;
 	private final IFactoryHarvestable harvestable;
+	private final IFactoryHarvestable old;
 	
 	public HarvesterAddHarvestableAction(TweakerItem item, IFactoryHarvestable harvestable) {
 		this.item = item;
 		this.harvestable = harvestable;
+		
+		old = MFRHacks.harvestables == null ? null : MFRHacks.harvestables.get(item.getItemId());
 	}
 
 	public void apply() {
@@ -37,11 +41,15 @@ public class HarvesterAddHarvestableAction implements IUndoableAction {
 	}
 
 	public boolean canUndo() {
-		return false;
+		return MFRHacks.harvestables != null;
 	}
 
 	public void undo() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (old == null) {
+			MFRHacks.harvestables.remove(item.getItemId());
+		} else {
+			FactoryRegistry.registerHarvestable(harvestable);
+		}
 	}
 
 	public String describe() {
@@ -49,6 +57,10 @@ public class HarvesterAddHarvestableAction implements IUndoableAction {
 	}
 
 	public String describeUndo() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (old == null) {
+			return "Removing harvestable " + item.getDisplayName();
+		} else {
+			return "Restoring harvestable " + item.getDisplayName();
+		}
 	}
 }

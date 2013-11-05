@@ -28,7 +28,7 @@ import stanhebben.minetweaker.base.actions.RemoveLiquidContainerAction;
  */
 public class RemoveFluidContainerFunction extends TweakerFunction {
 	//#ifdef MC152
-	//+private TweakerItem fluid;
+	//+private final TweakerItem fluid;
 	//#else
 	private Fluid fluid;
 	//#endif
@@ -62,7 +62,7 @@ public class RemoveFluidContainerFunction extends TweakerFunction {
 		//+} else if (!MineTweakerUtil.canRemoveContainer()) {
 			//+Tweaker.log(Level.WARNING, "Container removal is unavailable. Action skipped.");
 		//+} else {
-			//+Tweaker.apply(new RemoveFluidContainerAction(container));
+			//+Tweaker.apply(new RemoveLiquidContainerAction(container));
 		//+}
 		//#else
 		FluidStack registered = FluidContainerRegistry.getFluidForFilledItem(container.make(1));

@@ -16,7 +16,7 @@ import stanhebben.minetweaker.api.value.TweakerLiquidStack;
 import stanhebben.minetweaker.api.value.TweakerValue;
 
 public class FluidGroupValue extends TweakerValue {
-	private String name;
+	private final String name;
 	
 	public FluidGroupValue() {
 		this.name = null;
@@ -53,7 +53,7 @@ public class FluidGroupValue extends TweakerValue {
 		//#ifdef MC152
 		//+LiquidStack fluid = LiquidDictionary.getCanonicalLiquid(name);
 		//+if (fluid == null) return null;
-		//+return new TweakerFluidStack(new LiquidStack(fluid.itemID, 1, fluid.itemMeta));
+		//+return new TweakerLiquidStack(new LiquidStack(fluid.itemID, 1, fluid.itemMeta));
 		//#else
 		Fluid fluid = FluidRegistry.getFluid(name);
 		if (fluid == null) return null;
@@ -69,9 +69,9 @@ public class FluidGroupValue extends TweakerValue {
 		//+if (MineTweakerRegistry.INSTANCE.isFluidPrefix(newName)) {
 			//+return new FluidGroupValue(newName);
 		//+} else if (LiquidDictionary.getCanonicalLiquid(newName) != null) {
-			//+return new TweakerFluid(LiquidDictionary.getCanonicalLiquid(newName));
+			//+return new TweakerLiquid(LiquidDictionary.getCanonicalLiquid(newName));
 		//+} else if (LiquidDictionary.getCanonicalLiquid(name) != null) {
-			//+return new TweakerFluid(LiquidDictionary.getCanonicalLiquid(name)).index(index);
+			//+return new TweakerLiquid(LiquidDictionary.getCanonicalLiquid(name)).index(index);
 		//+} else {
 			//+throw new TweakerExecuteException("no such fluid: " + newName);
 		//+}

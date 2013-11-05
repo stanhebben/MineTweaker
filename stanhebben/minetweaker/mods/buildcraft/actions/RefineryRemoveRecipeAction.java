@@ -24,7 +24,7 @@ public class RefineryRemoveRecipeAction implements IUndoableAction {
 		//+this.recipe = recipe;
 	//+}
 	//#else
-	private Recipe recipe;
+	private final Recipe recipe;
 	
 	public RefineryRemoveRecipeAction(Recipe recipe) {
 		this.recipe = recipe;

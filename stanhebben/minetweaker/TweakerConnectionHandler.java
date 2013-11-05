@@ -8,8 +8,9 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
 import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.Player;
-import net.minecraft.network.packet.Packet3Chat;
+//#ifndef MC152
 import net.minecraft.util.ChatMessageComponent;
+//#endif
 
 public class TweakerConnectionHandler implements IConnectionHandler {
 	@Override
@@ -27,9 +28,9 @@ public class TweakerConnectionHandler implements IConnectionHandler {
 		if (canSendErrors) {
 			for (String s : MineTweaker.instance.getErrorMessages()) {
 				//#ifdef MC152
-				//+netHandler.handleChat(new Packet3Chat(s));
+				//+netHandler.getPlayer().sendChatToPlayer(s);
 				//#else
-				netHandler.handleChat(new Packet3Chat(ChatMessageComponent.createFromText(s), false));
+				netHandler.getPlayer().sendChatToPlayer(ChatMessageComponent.createFromText(s));
 				//#endif
 			}
 			MineTweaker.instance.onAdminLogin(manager, netHandler);

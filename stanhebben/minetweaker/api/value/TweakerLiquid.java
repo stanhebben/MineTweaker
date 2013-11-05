@@ -29,7 +29,7 @@ public final class TweakerLiquid extends TweakerValue {
 	public static TweakerLiquid fromLiquidBlock(TweakerItem block) {
 		//#ifdef MC152
 		//+if (LiquidContainerRegistry.isLiquid(block.make(1))) {
-			//+return new TweakerFluid(block);
+			//+return new TweakerLiquid(block);
 		//+} else {
 			//+return null;
 		//+}
@@ -46,7 +46,7 @@ public final class TweakerLiquid extends TweakerValue {
 	public static TweakerLiquid fromLiquidContainer(TweakerItem container) {
 		//#ifdef MC152
 		//+if (LiquidContainerRegistry.isFilledContainer(container.make(1))) {
-			//+return new TweakerFluid(LiquidContainerRegistry.getLiquidForFilledItem(container.make(1)));
+			//+return new TweakerLiquid(LiquidContainerRegistry.getLiquidForFilledItem(container.make(1)));
 		//+} else {
 			//+throw new TweakerExecuteException(container.getDisplayName() + " is not a liquid container");
 		//+}
@@ -62,11 +62,11 @@ public final class TweakerLiquid extends TweakerValue {
 	//#ifdef MC152
 	//+private final TweakerItem fluid; // equals the still liquid block
 	
-	//+public TweakerFluid(LiquidStack fluid) {
+	//+public TweakerLiquid(LiquidStack fluid) {
 		//+this.fluid = TweakerItem.get(fluid.asItemStack());
 	//+}
 	
-	//+public TweakerFluid(TweakerItem fluid) {
+	//+public TweakerLiquid(TweakerItem fluid) {
 		//+this.fluid = fluid;
 	//+}
 	
@@ -128,7 +128,7 @@ public final class TweakerLiquid extends TweakerValue {
 	@Override
 	public TweakerLiquidStack asFluidStack() {
 		//#ifdef MC152
-		//+return new TweakerFluidStack(new LiquidStack(fluid.getItemId(), 1, fluid.getItemSubId()));
+		//+return new TweakerLiquidStack(new LiquidStack(fluid.getItemId(), 1, fluid.getItemSubId()));
 		//#else
 		return new TweakerLiquidStack(new FluidStack(fluid, 1));
 		//#endif
@@ -141,7 +141,7 @@ public final class TweakerLiquid extends TweakerValue {
 				.toInt("can only multiply a fluid by an int value")
 				.get();
 		//#ifdef MC152
-		//+return new TweakerFluidStack(new LiquidStack(fluid.getItemId(), amount, fluid.getItemSubId()));
+		//+return new TweakerLiquidStack(new LiquidStack(fluid.getItemId(), amount, fluid.getItemSubId()));
 		//#else
 		return new TweakerLiquidStack(new FluidStack(fluid, amount));
 		//#endif

@@ -4,6 +4,8 @@
  */
 package stanhebben.minetweaker.base.functions;
 
+import java.util.logging.Level;
+import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerFunction;
@@ -25,13 +27,13 @@ public class PrintFunction extends TweakerFunction {
 			throw new TweakerExecuteException("Print should receive at least one argument");
 		} else if (arguments.length == 1) {
 			if (arguments[0] == null) {
-				System.out.println("[MineTweaker] " + arguments[0]);
+				Tweaker.log(Level.INFO, "null");
 			} else {
 				TweakerString asString = arguments[0].asString();
 				if (asString == null) {
-					System.out.println("[MineTweaker] [cannot convert print argument to string]");
+					Tweaker.log(Level.INFO, arguments[0].toString());
 				} else {
-					System.out.println("[MineTweaker] " + asString.get());
+					Tweaker.log(Level.INFO, asString.get());
 				}
 			}
 		} else {

@@ -18,8 +18,8 @@ import stanhebben.minetweaker.api.IUndoableAction;
  */
 public class AddSolidCoolantAction implements IUndoableAction {
 	//#ifndef MC152
-	private ItemStack item;
-	private FluidStack fluidPerItem;
+	private final ItemStack item;
+	private final FluidStack fluidPerItem;
 	
 	public AddSolidCoolantAction(ItemStack item, FluidStack fluidPerItem) {
 		this.item = item;

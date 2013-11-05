@@ -13,9 +13,9 @@ import stanhebben.minetweaker.api.IUndoableAction;
  * @author Stanneke
  */
 public class SetSoftBlockAction implements IUndoableAction {
-	private int id;
-	private boolean newValue;
-	private boolean oldValue;
+	private final int id;
+	private final boolean newValue;
+	private final boolean oldValue;
 	
 	public SetSoftBlockAction(int id, boolean newValue) {
 		this.id = id;

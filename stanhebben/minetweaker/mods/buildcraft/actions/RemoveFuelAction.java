@@ -23,8 +23,8 @@ public class RemoveFuelAction implements IUndoableAction {
 		//+this.fuel = fuel;
 	//+}
 	//#else
-	private Fluid fluid;
-	private Fuel fuel;
+	private final Fluid fluid;
+	private final Fuel fuel;
 	
 	public RemoveFuelAction(Fluid fluid) {
 		this.fluid = fluid;

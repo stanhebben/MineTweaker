@@ -53,7 +53,7 @@ public class AddFluidContainerFunction extends TweakerFunction {
 				notNull(arguments[2], "addContainer filled container cannot be null")
 				.toItem("addContainer filled container must be an item");
 		//#ifdef MC152
-		//+Tweaker.apply(new AddFluidContainerAction(new LiquidStack(fluid.getItemId(), amount, fluid.getItemSubId()), emptyContainer, fullContainer));
+		//+Tweaker.apply(new AddLiquidContainerAction(new LiquidStack(fluid.getItemId(), amount, fluid.getItemSubId()), emptyContainer, fullContainer));
 		//#else
 		Tweaker.apply(new AddLiquidContainerAction(fluid, amount, emptyContainer, fullContainer));
 		//#endif

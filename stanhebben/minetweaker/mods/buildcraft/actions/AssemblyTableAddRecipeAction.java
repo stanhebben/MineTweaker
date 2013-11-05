@@ -12,7 +12,7 @@ import stanhebben.minetweaker.api.IUndoableAction;
  * @author Stanneke
  */
 public class AssemblyTableAddRecipeAction implements IUndoableAction {
-	private AssemblyRecipe recipe;
+	private final AssemblyRecipe recipe;
 	
 	public AssemblyTableAddRecipeAction(AssemblyRecipe recipe) {
 		this.recipe = recipe;
