@@ -37,7 +37,7 @@ public class RemoveShapelessFunction extends TweakerFunction {
 			
 			List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
 			List<RemoveRecipeAction> actions = new ArrayList<RemoveRecipeAction>();
-			for (int i = recipes.size(); i >= 0; i--) {
+			for (int i = recipes.size() - 1; i >= 0; i--) {
 				if (output.matches(recipes.get(i).getRecipeOutput())) {
 					actions.add(new RemoveRecipeAction(i));
 				}
