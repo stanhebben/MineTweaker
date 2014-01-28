@@ -7,6 +7,7 @@ import stanhebben.minetweaker.api.value.TweakerField;
 import stanhebben.minetweaker.api.value.TweakerValue;
 import stanhebben.minetweaker.base.functions.BreakUndoFunction;
 import stanhebben.minetweaker.base.functions.ClearFunction;
+import stanhebben.minetweaker.base.functions.ModifyArmorDamageFunction;
 import stanhebben.minetweaker.base.functions.RemoveFunction;
 import stanhebben.minetweaker.base.functions.SetAdminsFunction;
 
@@ -28,6 +29,8 @@ public class MineTweakerValue extends TweakerValue {
 				return BreakUndoFunction.INSTANCE;
 			case SETADMINS:
 				return SetAdminsFunction.INSTANCE;
+			case MODIFYARMORDAMAGE:
+				return ModifyArmorDamageFunction.INSTANCE;
 		}
 		throw new TweakerExecuteException("no member " + index + " in minetweaker");
 	}

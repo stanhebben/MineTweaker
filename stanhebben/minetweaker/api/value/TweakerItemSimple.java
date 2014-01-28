@@ -1,15 +1,19 @@
 package stanhebben.minetweaker.api.value;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
+import stanhebben.minetweaker.base.actions.ItemAddToolAction;
+import stanhebben.minetweaker.base.actions.ItemRemoveToolAction;
+import stanhebben.minetweaker.base.actions.ItemSetToolClassAction;
 import stanhebben.minetweaker.base.actions.SetFuelItemAction;
 import stanhebben.minetweaker.base.actions.SetLocalizedStringAction;
 
 public class TweakerItemSimple extends TweakerItem {
-	private int id;
+	private final int id;
 	private Item item;
 	private ItemStack stack;
 	
@@ -93,5 +97,26 @@ public class TweakerItemSimple extends TweakerItem {
 	@Override
 	public String toString() {
 		return "<" + id + ">";
+	}
+
+	@Override
+	public void addTool(String cls, int level) {
+		if (id >= Block.blocksList.length || Block.blocksList[id] == null) {
+			throw new TweakerExecuteException("Item " + id + " not not a block");
+		}
+		Tweaker.apply(new ItemAddToolAction(Block.blocksList[id], 0, cls, level));
+	}
+
+	@Override
+	public void removeTool(String cls) {
+		if (id >= Block.blocksList.length || Block.blocksList[id] == null) {
+			throw new TweakerExecuteException("Item " + id + " not not a block");
+		}
+		Tweaker.apply(new ItemRemoveToolAction(Block.blocksList[id], 0, cls));
+	}
+
+	@Override
+	public void setToolClass(String cls, int level) {
+		Tweaker.apply(new ItemSetToolClassAction(item, cls, level));
 	}
 }

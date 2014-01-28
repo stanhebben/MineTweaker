@@ -8,7 +8,11 @@ package stanhebben.minetweaker.mods.mfr.function;
 
 import java.util.ArrayList;
 import java.util.List;
+//#ifdef MC152
+//+import net.minecraft.entity.EntityLiving;
+//#else
 import net.minecraft.entity.EntityLivingBase;
+//#endif
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
@@ -35,8 +39,14 @@ public class RancherAddRanchableFunction extends TweakerFunction {
 	public TweakerValue call(TweakerNameSpace namespace, TweakerValue... arguments) {
 		if (arguments.length < 2 || arguments.length > 6) throw new TweakerExecuteException("rancher.addRanchable requires 1-4 arguments");
 		try {
-			Class<?> clazz = Class.forName(notNull(arguments[0], "class name cannot be null").toBasicString());
-			if (!EntityLivingBase.class.isAssignableFrom(clazz)) throw new TweakerExecuteException("The class does not extend EntityLivingBase");
+			Class<?> entityClass = Class.forName(notNull(arguments[0], "class name cannot be null").toBasicString());
+			//#ifdef MC152
+			//+if (!EntityLiving.class.isAssignableFrom(entityClass)) {
+			//#else
+			if (!EntityLivingBase.class.isAssignableFrom(entityClass)) {
+			//#endif
+				throw new TweakerExecuteException("The class does not extend EntityLivingBase");
+			}
 			
 			List<TweakerItemStack> items = new ArrayList<TweakerItemStack>();
 			List<Float> itemChances = new ArrayList<Float>();
@@ -102,7 +112,7 @@ public class RancherAddRanchableFunction extends TweakerFunction {
 				liquidChances2[i] = liquidChances.get(i);
 			}
 			
-			Tweaker.apply(new RancherAddRanchableAction(clazz, items2, itemChances2, liquids2, liquidChances2, validContainers));
+			Tweaker.apply(new RancherAddRanchableAction(entityClass, items2, itemChances2, liquids2, liquidChances2, validContainers));
 			return null;
 		} catch (ClassNotFoundException ex) {
 			throw new TweakerExecuteException("class not found: " + arguments[0].toBasicString());

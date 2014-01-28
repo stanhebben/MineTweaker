@@ -16,6 +16,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.ForgeHooks;
 //#ifdef MC152
 //+import net.minecraftforge.liquids.LiquidContainerData;
 //+import net.minecraftforge.liquids.LiquidContainerRegistry;
@@ -33,6 +34,10 @@ import stanhebben.minetweaker.util.Arrays2;
 public class MineTweakerUtil {
 	private final static Field oreRecipeWidth;
 	private final static Field anvilFile;
+	
+	private static final Map<Item, List> toolClasses;
+	private static final Map<List, Integer> toolHarvestLevels;
+	private static final Set<List> toolHarvestEffective;
 	
 	//#ifdef MC152
 	//+private static Map<List, LiquidContainerData> mapFilledItemFromLiquid;
@@ -54,6 +59,10 @@ public class MineTweakerUtil {
 		if (anvilFile == null) {
 			Tweaker.log(Level.SEVERE, "Could not get MinecraftServer anvilFile field. Cannot use server scripts.");
 		}
+		
+		toolClasses = getPrivateStaticObject(ForgeHooks.class, "toolClasses");
+		toolHarvestLevels = getPrivateStaticObject(ForgeHooks.class, "toolHarvestLevels");
+		toolHarvestEffective = getPrivateStaticObject(ForgeHooks.class, "toolEffectiveness");
 		
 		//#ifdef MC152
 		//+mapFilledItemFromLiquid = getPrivateStaticObject(LiquidContainerRegistry.class, "mapFilledItemFromLiquid");
@@ -398,4 +407,31 @@ public class MineTweakerUtil {
 		return filledContainerMap.get(Arrays.asList(filled.getItemId(), filled.getItemSubId()));
 	}
 	//#endif
+	
+	public static Integer getBlockHarvestLevel(Block block, int meta, String tool) {
+		if (toolHarvestLevels == null) return -1;
+		return toolHarvestLevels.get(Arrays.asList(block, meta, tool));
+	}
+	
+	public static boolean isHarvestEffective(Block block, int meta, String tool) {
+		if (toolHarvestEffective == null) return false;
+		return toolHarvestEffective.contains(Arrays.asList(block, meta, tool));
+	}
+	
+	public static void removeBlockTool(Block block, int meta, String tool) {
+		if (toolHarvestLevels == null) return;
+		if (toolHarvestEffective == null) return;
+		toolHarvestLevels.remove(Arrays.asList(block, meta, tool));
+		toolHarvestEffective.remove(Arrays.asList(block, meta, tool));
+	}
+	
+	public static List getToolClass(Item item) {
+		if (toolClasses == null) return null;
+		return toolClasses.get(item);
+	}
+	
+	public static void setToolClass(Item item, List value) {
+		if (toolClasses == null) return;
+		toolClasses.put(item, value);
+	}
 }

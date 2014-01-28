@@ -9,10 +9,15 @@ package stanhebben.minetweaker.mods.mfr.action;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+//#ifdef MC152
+//+import net.minecraft.entity.EntityLiving;
+//+import powercrystals.minefactoryreloaded.api.FarmingRegistry;
+//#else
 import net.minecraft.entity.EntityLivingBase;
+import powercrystals.minefactoryreloaded.api.FactoryRegistry;
+//#endif
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import powercrystals.minefactoryreloaded.api.FactoryRegistry;
 import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
 import powercrystals.minefactoryreloaded.api.MobDrop;
 import stanhebben.minetweaker.api.IUndoableAction;
@@ -24,8 +29,6 @@ import stanhebben.minetweaker.mods.mfr.MFRHacks;
  * @author Stanneke
  */
 public class GrinderAddGrindableAction implements IUndoableAction {
-	private static final Random random = new Random();
-	
 	private final Class<?> entityClass;
 	private final TweakerItemStack[] drops;
 	private final float[] dropChances;
@@ -41,7 +44,11 @@ public class GrinderAddGrindableAction implements IUndoableAction {
 	}
 
 	public void apply() {
+		//#ifdef MC152
+		//+FarmingRegistry.registerGrindable(new SimpleGrindable(entityClass, drops, dropChances));
+		//#else
 		FactoryRegistry.registerGrindable(new SimpleGrindable(entityClass, drops, dropChances));
+		//#endif
 	}
 
 	public boolean canUndo() {
@@ -52,7 +59,11 @@ public class GrinderAddGrindableAction implements IUndoableAction {
 		if (old == null) {
 			MFRHacks.grindables.remove(entityClass);
 		} else {
+			//#ifdef MC152
+			//+FarmingRegistry.registerGrindable(old);
+			//#else
 			FactoryRegistry.registerGrindable(old);
+			//#endif
 		}
 	}
 
@@ -83,7 +94,11 @@ public class GrinderAddGrindableAction implements IUndoableAction {
 			return entityClass;
 		}
 
+		//#ifdef MC152
+		//+public List<MobDrop> grind(World world, EntityLiving entity, Random random) {
+		//#else
 		public List<MobDrop> grind(World world, EntityLivingBase entity, Random random) {
+		//#endif
 			List<MobDrop> dropList = new ArrayList<MobDrop>();
 			for (int i = 0; i < drops.length; i++) {
 				if (i >= dropChances.length || random.nextFloat() <= dropChances[i]) {
@@ -93,7 +108,11 @@ public class GrinderAddGrindableAction implements IUndoableAction {
 			return dropList;
 		}
 
+		//#ifdef MC152
+		//+public boolean processEntity(EntityLiving entity) {
+		//#else
 		public boolean processEntity(EntityLivingBase entity) {
+		//#endif
 			entity.attackEntityFrom(DamageSource.generic, entity.getMaxHealth() * 20);
 			return entity.isDead;
 		}

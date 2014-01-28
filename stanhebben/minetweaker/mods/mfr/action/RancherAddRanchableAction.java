@@ -9,12 +9,18 @@ package stanhebben.minetweaker.mods.mfr.action;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.world.World;
+//#ifdef MC152
+//+import net.minecraft.entity.EntityLiving;
+//+import net.minecraft.item.ItemStack;
+//+import powercrystals.minefactoryreloaded.api.FarmingRegistry;
+//#else
+import net.minecraft.entity.EntityLivingBase;
 import powercrystals.minefactoryreloaded.api.FactoryRegistry;
-import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
 import powercrystals.minefactoryreloaded.api.RanchedItem;
+//#endif
+import powercrystals.minefactoryreloaded.api.IFactoryRanchable;
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerItemStack;
@@ -53,7 +59,11 @@ public class RancherAddRanchableAction implements IUndoableAction {
 	}
 
 	public void apply() {
+		//#ifdef MC152
+		//+FarmingRegistry.registerRanchable(new SimpleRanchable(clazz, items, itemChances, liquids, liquidChances, validContainers));
+		//#else
 		FactoryRegistry.registerRanchable(new SimpleRanchable(clazz, items, itemChances, liquids, liquidChances, validContainers));
+		//#endif
 	}
 
 	public boolean canUndo() {
@@ -64,7 +74,11 @@ public class RancherAddRanchableAction implements IUndoableAction {
 		if (old == null) {
 			MFRHacks.ranchables.remove(clazz);
 		} else {
+			//#ifdef MC152
+			//+FarmingRegistry.registerRanchable(old);
+			//#else
 			FactoryRegistry.registerRanchable(old);
+			//#endif
 		}
 	}
 
@@ -101,12 +115,21 @@ public class RancherAddRanchableAction implements IUndoableAction {
 			return clazz;
 		}
 
+		//#ifdef MC152
+		//+public List<ItemStack> ranch(World world, EntityLiving entity, IInventory rancher) {
+			//+List<ItemStack> result = new ArrayList<ItemStack>();
+		//#else
 		public List<RanchedItem> ranch(World world, EntityLivingBase entity, IInventory rancher) {
 			List<RanchedItem> result = new ArrayList<RanchedItem>();
+		//#endif
 			if (clazz.isAssignableFrom(entity.getClass())) {
 				for (int i = 0; i < items.length; i++) {
 					if (random.nextFloat() <= itemChances[i]) {
+						//#ifdef MC152
+						//+result.add(items[i].get());
+						//#else
 						result.add(new RanchedItem(items[i].get()));
+						//#endif
 					}
 				}
 				for (int i = 0; i < liquids.length; i++) {

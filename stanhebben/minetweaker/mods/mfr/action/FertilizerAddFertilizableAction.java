@@ -12,7 +12,11 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+//#ifdef MC152
+//+import powercrystals.minefactoryreloaded.api.FarmingRegistry;
+//#else
 import powercrystals.minefactoryreloaded.api.FactoryRegistry;
+//#endif
 import powercrystals.minefactoryreloaded.api.FertilizerType;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizable;
 import stanhebben.minetweaker.api.IUndoableAction;
@@ -39,7 +43,11 @@ public class FertilizerAddFertilizableAction implements IUndoableAction {
 	}
 	
 	public void apply() {
+		//#ifdef MC152
+		//+FarmingRegistry.registerFertilizable(new SimpleFertilizable(block, plant, type));
+		//#else
 		FactoryRegistry.registerFertilizable(new SimpleFertilizable(block, plant, type));
+		//#endif
 	}
 
 	public boolean canUndo() {
@@ -50,7 +58,11 @@ public class FertilizerAddFertilizableAction implements IUndoableAction {
 		if (old == null) {
 			MFRHacks.fertilizables.remove(block.getItemId());
 		} else {
+			//#ifdef MC152
+			//+FarmingRegistry.registerFertilizable(old);
+			//#else
 			FactoryRegistry.registerFertilizable(old);
+			//#endif
 		}
 	}
 

@@ -27,6 +27,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraft.block.Block;
 //#endif
 import net.minecraftforge.oredict.OreDictionary;
+import stanhebben.minetweaker.damage.DamageTweaker;
 
 /**
  * Implements the /minetweaker command set.
@@ -80,7 +81,12 @@ public class MineTweakerCommand implements ICommand {
 		    "minetweaker recipes <id>[:<meta>]",
 		    "    Prints all recipes for the specified item",
 		    "minetweaker fuel <id>[:<meta>]",
-		    "    Retrieves the fuel value for the specified item"
+		    "    Retrieves the fuel value for the specified item",
+			"minetweaker reload",
+			"    Reloads the server-side script (experimental)",
+			"minetweaker logdamage=on",
+			"    Enables damage logging",
+			"minetweaker logdamage=off"
 		}, "\n");
 	}
 
@@ -242,6 +248,13 @@ public class MineTweakerCommand implements ICommand {
 				MineTweaker.instance.reloadScripts();
 				sendChatMessage(icommandsender, "Script reloaded, updating all players");
 			}
+		} else if (arguments[0].equals("logdamage=on")) {
+			DamageTweaker.logDamage = true;
+			sendChatMessage(icommandsender, "Damage logging turned on");
+			sendChatMessage(icommandsender, "Info: logging is sent to the development console");
+		} else if (arguments[0].equals("logdamage=off")) {
+			DamageTweaker.logDamage = false;
+			sendChatMessage(icommandsender, "Damage logging turned off");
 		} else {
 			sendChatMessage(icommandsender, "Unrecognized minetweaker command");
 		}

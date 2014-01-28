@@ -10,12 +10,16 @@ import stanhebben.minetweaker.script.TweakerFile;
 import stanhebben.minetweaker.script.expressions.TweakerExpression;
 
 public class StatementForeach extends TweakerStatement {
-	private String varname;
-	private TweakerExpression list;
-	private TweakerStatement body;
+	private final String varname;
+	private final TweakerExpression list;
+	private final TweakerStatement body;
 	
 	public StatementForeach(TweakerFile file, int line, int offset, String varname, TweakerExpression list, TweakerStatement body) {
 		super(file, line, offset);
+		
+		this.varname = varname;
+		this.list = list;
+		this.body = body;
 	}
 
 	@Override

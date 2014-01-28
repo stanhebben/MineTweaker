@@ -57,7 +57,7 @@ public class CentrifugeAddRecipeFunction extends TweakerFunction {
 			}
 		} else {
 			TweakerArray chancesArray =
-					notNull(arguments[4], "chances cannot be null")
+					notNull(arguments[3], "chances cannot be null")
 					.toArray("chances must be an array");
 			for (int i = 0; i < chancesArray.size(); i++) {
 				chances[i] =

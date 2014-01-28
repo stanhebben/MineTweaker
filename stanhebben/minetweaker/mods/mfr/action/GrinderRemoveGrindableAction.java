@@ -6,7 +6,11 @@
 
 package stanhebben.minetweaker.mods.mfr.action;
 
+//#ifdef MC152
+//+import powercrystals.minefactoryreloaded.api.FarmingRegistry;
+//#else
 import powercrystals.minefactoryreloaded.api.FactoryRegistry;
+//#endif
 import powercrystals.minefactoryreloaded.api.IFactoryGrindable;
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.mods.mfr.MFRHacks;
@@ -33,7 +37,11 @@ public class GrinderRemoveGrindableAction implements IUndoableAction {
 	}
 
 	public void undo() {
+		//#ifdef MC152
+		//+FarmingRegistry.registerGrindable(old);
+		//#else
 		FactoryRegistry.registerGrindable(old);
+		//#endif
 	}
 
 	public String describe() {

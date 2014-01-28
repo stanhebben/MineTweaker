@@ -6,7 +6,11 @@
 
 package stanhebben.minetweaker.mods.mfr.action;
 
+//#ifdef MC152
+//+import powercrystals.minefactoryreloaded.api.FarmingRegistry;
+//#else
 import powercrystals.minefactoryreloaded.api.FactoryRegistry;
+//#endif
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.mods.mfr.MFRHacks;
 
@@ -25,7 +29,9 @@ public class GrinderAddBlacklistAction implements IUndoableAction {
 
 	public void apply() {
 		if (!alreadyBlacklisted) {
+			//#ifndef MC152
 			FactoryRegistry.registerGrinderBlacklist(entityClass);
+			//#endif
 		}
 	}
 

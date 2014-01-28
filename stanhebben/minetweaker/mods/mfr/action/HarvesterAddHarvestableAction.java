@@ -48,7 +48,11 @@ public class HarvesterAddHarvestableAction implements IUndoableAction {
 		if (old == null) {
 			MFRHacks.harvestables.remove(item.getItemId());
 		} else {
-			FactoryRegistry.registerHarvestable(harvestable);
+			//#ifdef MC152
+			//+FarmingRegistry.registerHarvestable(old);
+			//#else
+			FactoryRegistry.registerHarvestable(old);
+			//#endif
 		}
 	}
 

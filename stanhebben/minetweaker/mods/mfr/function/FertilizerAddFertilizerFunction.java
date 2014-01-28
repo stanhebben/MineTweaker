@@ -13,7 +13,7 @@ import stanhebben.minetweaker.api.TweakerNameSpace;
 import stanhebben.minetweaker.api.value.TweakerFunction;
 import stanhebben.minetweaker.api.value.TweakerItem;
 import stanhebben.minetweaker.api.value.TweakerValue;
-import stanhebben.minetweaker.mods.mfr.action.FertilizerAddFertilizer;
+import stanhebben.minetweaker.mods.mfr.action.FertilizerAddFertilizerAction;
 
 /**
  *
@@ -45,7 +45,7 @@ public class FertilizerAddFertilizerFunction extends TweakerFunction {
 			throw new TweakerExecuteException("Unknown fertilizer type: " + type);
 		}
 		
-		Tweaker.apply(new FertilizerAddFertilizer(item, fertilizerType));
+		Tweaker.apply(new FertilizerAddFertilizerAction(item, fertilizerType));
 		return null;
 	}
 

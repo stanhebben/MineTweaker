@@ -11,13 +11,21 @@ import java.util.HashMap;
 public enum TweakerField {
 	ABS,
 	ADD,
+	ADDBLACKLIST,
 	ADDCONTAINER,
 	ADDCRATING,
+	ADDDROP,
 	ADDFERTILIZABLE,
 	ADDFERTILIZER,
+	ADDFOOD,
+	ADDFRUIT,
 	ADDFUEL,
+	ADDGRINDABLE,
 	ADDHARVESTABLE,
+	ADDLOG,
+	ADDORE,
 	ADDPLANTABLE,
+	ADDPREFERREDORE,
 	ADDRAINITEM,
 	ADDRANCHABLE,
 	ADDRECIPE,
@@ -26,6 +34,7 @@ public enum TweakerField {
 	ADDSHAPELESS,
 	ADDSMELTING,
 	ADDSTOPITEM,
+	ADDTOOL,
 	ALLOYSMELTER,
 	AMOUNT,
 	ANY,
@@ -47,6 +56,7 @@ public enum TweakerField {
 	CENTRIFUGE,
 	CHEMICAL,
 	CLEAR,
+	COKEOVEN,
 	COMPRESSOR,
 	CONTAINS,
 	COOLANTS,
@@ -86,6 +96,7 @@ public enum TweakerField {
 	LATHE,
 	LENGTH,
 	LIQUID,
+	LISTDROPS,
 	LUMINOSITY,
 	MACERATOR,
 	MAGICGENERATOR,
@@ -95,6 +106,7 @@ public enum TweakerField {
 	META,
 	METALFORMER,
 	MININGLASER,
+	MODIFYARMORDAMAGE,
 	MOISTENER,
 	NAME,
 	ONLY,
@@ -109,18 +121,29 @@ public enum TweakerField {
 	RANCHER,
 	REFINERY,
 	REMOVE,
+	REMOVEBLACKLIST,
 	REMOVECONTAINER,
+	REMOVEDROP,
 	REMOVEFERTILIZABLE,
 	REMOVEFERTILIZER,
+	REMOVEFOOD,
+	REMOVEFRUIT,
 	REMOVEFUEL,
+	REMOVEGRINDABLE,
 	REMOVEHARVESTABLE,
 	REMOVEITEM,
+	REMOVELOG,
+	REMOVEORE,
 	REMOVEPLANTABLE,
+	REMOVEPREFERREDORE,
 	REMOVERANCHABLE,
 	REMOVERECIPE,
 	REMOVESHAPED,
 	REMOVESHAPELESS,
+	REMOVETOOL,
 	ROLLING,
+	ROCKCRUSHER,
+	ROLLINGMACHINE,
 	RUBBERTREE,
 	SAFARINET,
 	SAWMILL,
@@ -128,6 +151,7 @@ public enum TweakerField {
 	SETDISPLAYNAME,
 	SETENERGY,
 	SETSOFTBLOCK,
+	SETTOOLCLASS,
 	SLUDGEBOILER,
 	SPLIT,
 	SQUEEZER,
@@ -150,13 +174,21 @@ public enum TweakerField {
 		fieldForName = new HashMap<String, TweakerField>();
 		fieldForName.put("abs", ABS);
 		fieldForName.put("add", ADD);
+		fieldForName.put("addBlacklist", ADDBLACKLIST);
 		fieldForName.put("addContainer", ADDCONTAINER);
 		fieldForName.put("addCrating", ADDCRATING);
+		fieldForName.put("addDrop", ADDDROP);
 		fieldForName.put("addFertilizable", ADDFERTILIZABLE);
 		fieldForName.put("addFertilizer", ADDFERTILIZER);
+		fieldForName.put("addFood", ADDFOOD);
+		fieldForName.put("addFruit", ADDFRUIT);
 		fieldForName.put("addFuel", ADDFUEL);
+		fieldForName.put("addGrindable", ADDGRINDABLE);
 		fieldForName.put("addHarvestable", ADDHARVESTABLE);
+		fieldForName.put("addLog", ADDLOG);
+		fieldForName.put("addOre", ADDORE);
 		fieldForName.put("addPlantable", ADDPLANTABLE);
+		fieldForName.put("addPreferredOre", ADDPREFERREDORE);
 		fieldForName.put("addRainItem", ADDRAINITEM);
 		fieldForName.put("addRanchable", ADDRANCHABLE);
 		fieldForName.put("addRecipe", ADDRECIPE);
@@ -165,6 +197,7 @@ public enum TweakerField {
 		fieldForName.put("addShapeless", ADDSHAPELESS);
 		fieldForName.put("addSmelting", ADDSMELTING);
 		fieldForName.put("addStopItem", ADDSTOPITEM);
+		fieldForName.put("addTool", ADDTOOL);
 		fieldForName.put("alloySmelter", ALLOYSMELTER);
 		fieldForName.put("amount", AMOUNT);
 		fieldForName.put("any", ANY);
@@ -185,6 +218,7 @@ public enum TweakerField {
 		fieldForName.put("centrifuge", CENTRIFUGE);
 		fieldForName.put("chemical", CHEMICAL);
 		fieldForName.put("clear", CLEAR);
+		fieldForName.put("cokeOven", COKEOVEN);
 		fieldForName.put("compressor", COMPRESSOR);
 		fieldForName.put("contains", CONTAINS);
 		fieldForName.put("coolants", COOLANTS);
@@ -221,6 +255,7 @@ public enum TweakerField {
 		fieldForName.put("lathe", LATHE);
 		fieldForName.put("length", LENGTH);
 		fieldForName.put("liquid", LIQUID);
+		fieldForName.put("listDrops", LISTDROPS);
 		fieldForName.put("luminosity", LUMINOSITY);
 		fieldForName.put("macerator", MACERATOR);
 		fieldForName.put("magicGenerator", MAGICGENERATOR);
@@ -229,6 +264,7 @@ public enum TweakerField {
 		fieldForName.put("maxDamage", MAXDAMAGE);
 		fieldForName.put("meta", META);
 		fieldForName.put("miningLaser", MININGLASER);
+		fieldForName.put("modifyArmorDamage", MODIFYARMORDAMAGE);
 		fieldForName.put("moistener", MOISTENER);
 		fieldForName.put("name", NAME);
 		fieldForName.put("only", ONLY);
@@ -243,23 +279,35 @@ public enum TweakerField {
 		fieldForName.put("rancher", RANCHER);
 		fieldForName.put("refinery", REFINERY);
 		fieldForName.put("remove", REMOVE);
+		fieldForName.put("removeBlacklist", REMOVEBLACKLIST);
 		fieldForName.put("removeContainer", REMOVECONTAINER);
+		fieldForName.put("removeDrop", REMOVEDROP);
 		fieldForName.put("removeFertilizable", REMOVEFERTILIZABLE);
 		fieldForName.put("removeFertilizer", REMOVEFERTILIZER);
+		fieldForName.put("removeFood", REMOVEFOOD);
+		fieldForName.put("removeFruit", REMOVEFRUIT);
 		fieldForName.put("removeFuel", REMOVEFUEL);
+		fieldForName.put("removeGrindable", REMOVEGRINDABLE);
 		fieldForName.put("removeHarvestable", REMOVEHARVESTABLE);
 		fieldForName.put("removeItem", REMOVEITEM);
+		fieldForName.put("removeLog", REMOVELOG);
+		fieldForName.put("removeOre", REMOVEORE);
 		fieldForName.put("removePlantable", REMOVEPLANTABLE);
+		fieldForName.put("removePreferredOre", REMOVEPREFERREDORE);
 		fieldForName.put("removeRanchable", REMOVERANCHABLE);
 		fieldForName.put("removeRecipe", REMOVERECIPE);
 		fieldForName.put("removeShaped", REMOVESHAPED);
 		fieldForName.put("removeShapeless", REMOVESHAPELESS);
+		fieldForName.put("removeTool", REMOVETOOL);
+		fieldForName.put("rockCrusher", ROCKCRUSHER);
+		fieldForName.put("rollingMachine", ROLLINGMACHINE);
 		fieldForName.put("rubberTree", RUBBERTREE);
 		fieldForName.put("safariNet", SAFARINET);
 		fieldForName.put("setAdmins", SETADMINS);
 		fieldForName.put("setDisplayName", SETDISPLAYNAME);
 		fieldForName.put("setEnergy", SETENERGY);
 		fieldForName.put("setSoftBlock", SETSOFTBLOCK);
+		fieldForName.put("setToolClass", SETTOOLCLASS);
 		fieldForName.put("sludgeBoiler", SLUDGEBOILER);
 		fieldForName.put("split", SPLIT);
 		fieldForName.put("squeezer", SQUEEZER);

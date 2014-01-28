@@ -26,7 +26,7 @@ public class PlanterAddPlantableFunction extends TweakerFunction {
 
 	@Override
 	public TweakerValue call(TweakerNameSpace namespace, TweakerValue... arguments) {
-		if (arguments.length < 1 || arguments.length > 2) throw new TweakerExecuteException("planter.addPlantable accepts 1-2 arguments");
+		if (arguments.length < 1 || arguments.length > 3) throw new TweakerExecuteException("planter.addPlantable accepts 1-3 arguments");
 		TweakerItem seed =
 				notNull(arguments[0], "seed cannot be null")
 				.toItem("seed must be an item");

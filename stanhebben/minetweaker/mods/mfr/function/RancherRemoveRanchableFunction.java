@@ -7,7 +7,11 @@
 package stanhebben.minetweaker.mods.mfr.function;
 
 import java.util.logging.Level;
+//#ifdef MC152
+//+import net.minecraft.entity.EntityLiving;
+//#else
 import net.minecraft.entity.EntityLivingBase;
+//#endif
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
@@ -29,17 +33,21 @@ public class RancherRemoveRanchableFunction extends TweakerFunction {
 	public TweakerValue call(TweakerNameSpace namespace, TweakerValue... arguments) {
 		try {
 			if (arguments.length != 1) throw new TweakerExecuteException("rancher.removeRanchable requires 1 argument");
-			Class<?> cls = Class.forName(notNull(arguments[0], "class cannot be null").toBasicString());
-			if (!EntityLivingBase.class.isAssignableFrom(cls)) {
+			Class<?> entityClass = Class.forName(notNull(arguments[0], "class cannot be null").toBasicString());
+			//#ifdef MC152
+			//+if (!EntityLiving.class.isAssignableFrom(entityClass)) {
+			//#else
+			if (!EntityLivingBase.class.isAssignableFrom(entityClass)) {
+			//#endif
 				throw new TweakerExecuteException("class is not a living entity class");
 			}
 			
 			if (MFRHacks.ranchables == null) {
 				Tweaker.log(Level.WARNING, "rancher.removeRanchable is unavailable");
-			} else if (!MFRHacks.ranchables.containsKey(cls)) {
-				Tweaker.log(Level.WARNING, "no such ranchable: " + cls.getCanonicalName());
+			} else if (!MFRHacks.ranchables.containsKey(entityClass)) {
+				Tweaker.log(Level.WARNING, "no such ranchable: " + entityClass.getCanonicalName());
 			} else {
-				Tweaker.apply(new RancherRemoveRanchableAction(cls));
+				Tweaker.apply(new RancherRemoveRanchableAction(entityClass));
 			}
 			return null;
 		} catch (ClassNotFoundException ex) {

@@ -7,7 +7,11 @@
 package stanhebben.minetweaker.mods.mfr.action;
 
 import net.minecraft.item.ItemStack;
+//#ifdef MC152
+//+import powercrystals.minefactoryreloaded.api.FarmingRegistry;
+//#else
 import powercrystals.minefactoryreloaded.api.FactoryRegistry;
+//#endif
 import powercrystals.minefactoryreloaded.api.FertilizerType;
 import powercrystals.minefactoryreloaded.api.IFactoryFertilizer;
 import stanhebben.minetweaker.api.IUndoableAction;
@@ -18,13 +22,13 @@ import stanhebben.minetweaker.mods.mfr.MFRHacks;
  *
  * @author Stanneke
  */
-public class FertilizerAddFertilizer implements IUndoableAction {
+public class FertilizerAddFertilizerAction implements IUndoableAction {
 	private final TweakerItem item;
 	private final FertilizerType type;
 	
 	private final IFactoryFertilizer old;
 	
-	public FertilizerAddFertilizer(TweakerItem item, FertilizerType type) {
+	public FertilizerAddFertilizerAction(TweakerItem item, FertilizerType type) {
 		this.item = item;
 		this.type = type;
 		
@@ -32,7 +36,11 @@ public class FertilizerAddFertilizer implements IUndoableAction {
 	}
 
 	public void apply() {
+		//#ifdef MC152
+		//+FarmingRegistry.registerFertilizer(new SimpleFertilizer(item, type));
+		//#else
 		FactoryRegistry.registerFertilizer(new SimpleFertilizer(item, type));
+		//#endif
 	}
 
 	public boolean canUndo() {
@@ -43,7 +51,11 @@ public class FertilizerAddFertilizer implements IUndoableAction {
 		if (old == null) {
 			MFRHacks.fertilizers.remove(item.getItemId());
 		} else {
+			//#ifdef MC152
+			//+FarmingRegistry.registerFertilizer(old);
+			//#else
 			FactoryRegistry.registerFertilizer(old);
+			//#endif
 		}
 	}
 

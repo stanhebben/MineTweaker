@@ -1,11 +1,11 @@
 package stanhebben.minetweaker.api.value;
 
+import net.minecraft.inventory.IInventory;
 //#ifdef MC152
 //+import net.minecraft.item.ItemStack;
 //+import net.minecraftforge.liquids.LiquidContainerRegistry;
 //+import net.minecraftforge.liquids.LiquidStack;
 //#else
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -13,12 +13,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 //#endif
 import stanhebben.minetweaker.api.TweakerExecuteException;
-import static stanhebben.minetweaker.api.value.TweakerField.DENSITY;
-import static stanhebben.minetweaker.api.value.TweakerField.DISPLAYNAME;
-import static stanhebben.minetweaker.api.value.TweakerField.GASEOUS;
-import static stanhebben.minetweaker.api.value.TweakerField.LUMINOSITY;
-import static stanhebben.minetweaker.api.value.TweakerField.NAME;
-import static stanhebben.minetweaker.api.value.TweakerField.TEMPERATURE;
 
 /**
  * Represents a liquid amount. Both the liquid amount and type are specified.
@@ -81,16 +75,28 @@ public final class TweakerLiquidStack extends TweakerValue {
 	}
 	
 	public TweakerLiquidStack fill(IInventory inventory, TweakerItem[] containers) {
+		//#ifdef MC152
+		//+LiquidStack remaining = new LiquidStack(value.itemID, value.amount);
+		//#else
 		FluidStack remaining = new FluidStack(value.fluidID, value.amount);
+		//#endif
 		int size = inventory.getSizeInventory();
 		for (int i = 0; i < size; i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack != null) {
 				for (TweakerItem container : containers) {
 					if (container.matches(stack)) {
+						//#ifdef MC152
+						//+if (LiquidContainerRegistry.containsLiquid(stack, value)) {
+						//#else
 						if (FluidContainerRegistry.containsFluid(stack, value)) {
+						//#endif
 							while (stack.stackSize > 0) {
+								//#ifdef MC152
+								//+ItemStack filled = LiquidContainerRegistry.fillLiquidContainer(remaining, stack);
+								//#else
 								ItemStack filled = FluidContainerRegistry.fillFluidContainer(remaining, stack);
+								//#endif
 								if (filled == null) break;
 								
 								boolean stored = false;
@@ -117,7 +123,11 @@ public final class TweakerLiquidStack extends TweakerValue {
 								}
 								
 								if (stored) {
+									//#ifdef MC152
+									//+remaining.amount -= LiquidContainerRegistry.getLiquidForFilledItem(filled).amount;
+									//#else
 									remaining.amount -= FluidContainerRegistry.getFluidForFilledItem(filled).amount;
+									//#endif
 								} else {
 									break;
 								}

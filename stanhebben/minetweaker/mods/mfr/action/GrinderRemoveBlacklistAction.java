@@ -19,26 +19,26 @@ public class GrinderRemoveBlacklistAction implements IUndoableAction {
 	
 	public GrinderRemoveBlacklistAction(Class<?> entityClass) {
 		this.entityClass = entityClass;
-		existed = MFRHacks.grindableBlacklist == null ? true : MFRHacks.grindableBlacklist.contains(entityClass);
+		existed = MFRHacks.grindableBlacklist.contains(entityClass);
 	}
 
 	public void apply() {
-		
+		if (existed) MFRHacks.grindableBlacklist.remove(entityClass);
 	}
 
 	public boolean canUndo() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return true;
 	}
 
 	public void undo() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if (existed) MFRHacks.grindableBlacklist.add(entityClass);
 	}
 
 	public String describe() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return "Removing grindable blacklist entity " + entityClass.getCanonicalName();
 	}
 
 	public String describeUndo() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return "Restoring grindable blacklist entity " + entityClass.getCanonicalName();
 	}
 }

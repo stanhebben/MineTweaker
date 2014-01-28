@@ -6,7 +6,11 @@
 
 package stanhebben.minetweaker.mods.mfr.action;
 
+//#ifdef MC152
+//+import powercrystals.minefactoryreloaded.api.FarmingRegistry;
+//#else
 import powercrystals.minefactoryreloaded.api.FactoryRegistry;
+//#endif
 import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.value.TweakerItem;
@@ -34,7 +38,11 @@ public class PlanterRemovePlantableAction implements IUndoableAction {
 	}
 
 	public void undo() {
+		//#ifdef MC152
+		//+FarmingRegistry.registerPlantable(old);
+		//#else
 		FactoryRegistry.registerPlantable(old);
+		//#endif
 	}
 
 	public String describe() {

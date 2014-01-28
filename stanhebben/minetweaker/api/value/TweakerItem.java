@@ -5,6 +5,9 @@ import stanhebben.minetweaker.api.functions.FunctionSetItemDisplayName;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import stanhebben.minetweaker.api.functions.FunctionItemPatternOnly;
+import stanhebben.minetweaker.api.functions.FunctionItemAddTool;
+import stanhebben.minetweaker.api.functions.FunctionItemRemoveTool;
+import stanhebben.minetweaker.api.functions.FunctionItemSetToolClass;
 import stanhebben.minetweaker.api.functions.FunctionItemWithDamage;
 
 /**
@@ -123,6 +126,29 @@ public abstract class TweakerItem extends TweakerValue {
 	public abstract void setFuelValue(int value);
 	
 	/**
+	 * Adds a tool that can mine this block.
+	 * 
+	 * @param cls tool class (default classes are "axe", "shovel" and "pickaxe"
+	 * @param level tool level
+	 */
+	public abstract void addTool(String cls, int level);
+	
+	/**
+	 * Removes a tool that can mine this block.
+	 * 
+	 * @param cls tool class
+	 */
+	public abstract void removeTool(String cls);
+	
+	/**
+	 * Sets the tool class of this item.
+	 * 
+	 * @param cls tool class
+	 * @param level tool level
+	 */
+	public abstract void setToolClass(String cls, int level);
+	
+	/**
 	 * Converts this item to its corresponding ID string.
 	 * 
 	 * @return item ID string
@@ -214,6 +240,12 @@ public abstract class TweakerItem extends TweakerValue {
 				return liquid;
 			case ONLY:
 				return new FunctionItemPatternOnly(asItemPattern());
+			case ADDTOOL:
+				return new FunctionItemAddTool(this);
+			case REMOVETOOL:
+				return new FunctionItemRemoveTool(this);
+			case SETTOOLCLASS:
+				return new FunctionItemSetToolClass(this);
 			default:
 				throw new TweakerExecuteException("No such member in Item: " + index);
 		}
@@ -230,5 +262,11 @@ public abstract class TweakerItem extends TweakerValue {
 				return;
 		}
 		throw new TweakerExecuteException("Not a settable member in Item: " + index);
+	}
+	
+	@Override
+	public boolean equals(TweakerValue other) {
+		TweakerItem otherItem = other.toItem("value is not an item");
+		return getItemId() == otherItem.getItemId() && getItemSubId() == otherItem.getItemSubId();
 	}
 }

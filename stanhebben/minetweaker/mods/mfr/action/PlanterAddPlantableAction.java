@@ -10,7 +10,11 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+//#ifdef MC152
+//+import powercrystals.minefactoryreloaded.api.FarmingRegistry;
+//#else
 import powercrystals.minefactoryreloaded.api.FactoryRegistry;
+//#endif
 import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
 import stanhebben.minetweaker.api.IUndoableAction;
 import stanhebben.minetweaker.api.value.TweakerItem;
@@ -37,7 +41,11 @@ public class PlanterAddPlantableAction implements IUndoableAction {
 	}
 
 	public void apply() {
+		//#ifdef MC152
+		//+FarmingRegistry.registerPlantable(new SimpleFactoryPlantable(
+		//#else
 		FactoryRegistry.registerPlantable(new SimpleFactoryPlantable(
+		//#endif
 				seed.getItemId(), seed.getItemSubId(),
 				plant.getItemId(), plant.getItemSubId(),
 				preAction));
@@ -51,7 +59,11 @@ public class PlanterAddPlantableAction implements IUndoableAction {
 		if (old == null) {
 			MFRHacks.plantables.remove(seed.getItemId());
 		} else {
+			//#ifdef MC152
+			//+FarmingRegistry.registerPlantable(old);
+			//#else
 			FactoryRegistry.registerPlantable(old);
+			//#endif
 		}
 	}
 

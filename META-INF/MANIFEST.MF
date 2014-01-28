@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+FMLCorePlugin: stanhebben.minetweaker.transformer.MineTweakerTransformer
+FMLCorePluginContainsFMLMod: true

@@ -6,7 +6,11 @@
 
 package stanhebben.minetweaker.mods.mfr.function;
 
+//#ifdef MC152
+//+import net.minecraft.entity.EntityLiving;
+//#else
 import net.minecraft.entity.EntityLivingBase;
+//#endif
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
 import stanhebben.minetweaker.api.TweakerNameSpace;
@@ -32,7 +36,11 @@ public class GrinderAddGrindableFunction extends TweakerFunction {
 			Class<?> entityClass = Class.forName(
 					notNull(arguments[0], "class cannot be null")
 							.toBasicString());
+			//#ifdef MC152
+			//+if (!EntityLiving.class.isAssignableFrom(entityClass)) {
+			//#else
 			if (!EntityLivingBase.class.isAssignableFrom(entityClass)) {
+			//#endif
 				throw new TweakerExecuteException("entity class is not a living entity");
 			}
 			TweakerItemStack[] possibleDrops;

@@ -37,8 +37,8 @@ public class MFRValue extends TweakerValue {
 				return BreederValue.INSTANCE;
 			case SAFARINET:
 				return SafariNetValue.INSTANCE;
-			case RUBBERTREE:
-				return RubberTreeValue.INSTANCE;
+			//case RUBBERTREE:
+				//return RubberTreeValue.INSTANCE;
 			case MININGLASER:
 				return MiningLaserValue.INSTANCE;
 			case FRUITPICKER:

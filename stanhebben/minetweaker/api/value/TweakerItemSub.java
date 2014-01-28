@@ -1,10 +1,14 @@
 package stanhebben.minetweaker.api.value;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import stanhebben.minetweaker.api.Tweaker;
 import stanhebben.minetweaker.api.TweakerExecuteException;
+import stanhebben.minetweaker.base.actions.ItemAddToolAction;
+import stanhebben.minetweaker.base.actions.ItemRemoveToolAction;
+import stanhebben.minetweaker.base.actions.ItemSetToolClassAction;
 import stanhebben.minetweaker.base.actions.SetFuelItemAction;
 import stanhebben.minetweaker.base.actions.SetLocalizedStringAction;
 
@@ -100,5 +104,26 @@ public final class TweakerItemSub extends TweakerItem {
 	@Override
 	public String toString() {
 		return "<" + id + ":" + meta + ">";
+	}
+
+	@Override
+	public void addTool(String cls, int level) {
+		if (id >= Block.blocksList.length || Block.blocksList[id] == null) {
+			throw new TweakerExecuteException("Item " + id + " not not a block");
+		}
+		Tweaker.apply(new ItemAddToolAction(Block.blocksList[id], meta, cls, level));
+	}
+
+	@Override
+	public void removeTool(String cls) {
+		if (id >= Block.blocksList.length || Block.blocksList[id] == null) {
+			throw new TweakerExecuteException("Item " + id + " not not a block");
+		}
+		Tweaker.apply(new ItemRemoveToolAction(Block.blocksList[id], meta, cls));
+	}
+
+	@Override
+	public void setToolClass(String cls, int level) {
+		Tweaker.apply(new ItemSetToolClassAction(Item.itemsList[id], cls, level));
 	}
 }
