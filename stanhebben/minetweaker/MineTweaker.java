@@ -83,6 +83,7 @@ import stanhebben.minetweaker.mods.forestry.ForestrySupport;
 import stanhebben.minetweaker.mods.gregtech.GregTechModSupport;
 import stanhebben.minetweaker.mods.ic2.IC2ModSupport;
 import stanhebben.minetweaker.mods.mfr.MFRModSupport;
+import stanhebben.minetweaker.mods.te.ThermalExpansionSupport;
 
 /**
  * MineTweaker mod class. Includes the functionality needed for Forge mods,
@@ -542,6 +543,10 @@ public class MineTweaker {
 		if (ModLoader.isModLoaded("MineFactoryReloaded")) {
 			registerSupportInterface(MFRModSupport.INSTANCE);
 			Tweaker.log(Level.INFO, "MineFactory Reloaded support loaded");
+		}
+		if (ModLoader.isModLoaded("ThermalExpansion")) {
+			registerSupportInterface(ThermalExpansionSupport.INSTANCE);
+			Tweaker.log(Level.INFO, "Thermal Expansion support loaded");
 		}
 		
 		// Execute boot script
