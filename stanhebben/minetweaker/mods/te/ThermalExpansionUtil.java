@@ -14,7 +14,7 @@ public class ThermalExpansionUtil {
 	
 	public static Integer getInt(TweakerValue[] arguments, int index, String name, Integer _default) {
 		return arguments.length >= index ? _default :
-				notNull(arguments[index], name + " cannot be null")
+				(Integer)notNull(arguments[index], name + " cannot be null")
 				.toInt(name + " must be an int").get();
 	}
 	public static Integer getInt(TweakerValue[] arguments, int index, String name) {
@@ -23,7 +23,7 @@ public class ThermalExpansionUtil {
 	
 	public static Boolean getBool(TweakerValue[] arguments, int index, String name, Boolean _default) {
 		return arguments.length >= index ? _default :
-				notNull(arguments[index], name + " cannot be null")
+				(Boolean)notNull(arguments[index], name + " cannot be null")
 				.toBool(name + " must be a bool").get();
 	}
 	public static Boolean getBool(TweakerValue[] arguments, int index, String name) {
