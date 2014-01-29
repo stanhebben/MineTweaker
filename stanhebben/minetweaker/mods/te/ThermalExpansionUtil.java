@@ -13,25 +13,25 @@ public class ThermalExpansionUtil {
 	private ThermalExpansionUtil() {}
 	
 	public static Integer getInt(TweakerValue[] arguments, int index, String name, Integer _default) {
-		return arguments.length >= index ? _default :
-				(Integer) (notNull(arguments[index], name + " cannot be null")
-				.toInt(name + " must be an int").get());
+		return index >= arguments.length ? _default :
+				(Integer)notNull(arguments[index], name + " cannot be null")
+				.toInt(name + " must be an int").get();
 	}
 	public static Integer getInt(TweakerValue[] arguments, int index, String name) {
 		return getInt(arguments, index, name, null);
 	}
 	
 	public static Boolean getBool(TweakerValue[] arguments, int index, String name, Boolean _default) {
-		return arguments.length >= index ? _default :
-				(Boolean) (notNull(arguments[index], name + " cannot be null")
-				.toBool(name + " must be a bool").get());
+		return index >= arguments.length ? _default :
+				(Boolean)notNull(arguments[index], name + " cannot be null")
+				.toBool(name + " must be a bool").get();
 	}
 	public static Boolean getBool(TweakerValue[] arguments, int index, String name) {
 		return getBool(arguments, index, name, null);
 	}
 	
 	public static ItemStack getItemStack(TweakerValue[] arguments, int index, String name, ItemStack _default) {
-		return arguments.length >= index ? _default :
+		return index >= arguments.length ? _default :
 				notNull(arguments[index], name + " cannot be null")
 				.toItemStack(name + " must be an item stack").get();
 	}
@@ -40,7 +40,7 @@ public class ThermalExpansionUtil {
 	}
 	
 	public static Fluid getFluid(TweakerValue[] arguments, int index, String name, Fluid _default) {
-		return arguments.length >= index ? _default :
+		return index >= arguments.length ? _default :
 				notNull(arguments[index], name + " cannot be null")
 				.toFluid(name + " must be a fluid stack").get();
 	}
@@ -49,7 +49,7 @@ public class ThermalExpansionUtil {
 	}
 	
 	public static FluidStack getFluidStack(TweakerValue[] arguments, int index, String name, FluidStack _default) {
-		return arguments.length >= index ? _default :
+		return index >= arguments.length ? _default :
 				notNull(arguments[index], name + " cannot be null")
 				.toFluidStack(name + " must be a fluid stack").get();
 	}
