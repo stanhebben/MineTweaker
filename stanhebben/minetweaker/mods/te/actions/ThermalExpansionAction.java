@@ -17,6 +17,8 @@ public class ThermalExpansionAction implements IUndoableAction {
 	
 	@Override
 	public void apply() {
+		System.out.println("Sending message " + key + " to ThermalExpansion: " + nbt.toString());
+		
 		FMLInterModComms.sendMessage("ThermalExpansion", key, nbt);
 	}
 	
