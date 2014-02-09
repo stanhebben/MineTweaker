@@ -91,7 +91,7 @@ import stanhebben.minetweaker.mods.te.ThermalExpansionSupport;
  * 
  * @author Stan Hebben
  */
-@Mod(modid = "MineTweaker", name = "MineTweaker", version = MineTweaker.MCVERSION + "-2.1.2")
+@Mod(modid = "MineTweaker", name = "MineTweaker", version = MineTweaker.MCVERSION + "-2.1.2", dependencies = "before:ThermalExpansion")
 @NetworkMod(clientSideRequired = true, serverSideRequired = true, channels = {TweakerPacketHandler.CHANNEL_SERVERSCRIPT}, packetHandler = TweakerPacketHandler.class)
 public class MineTweaker {
 	//#ifdef MC152
