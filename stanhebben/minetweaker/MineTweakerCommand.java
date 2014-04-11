@@ -86,7 +86,10 @@ public class MineTweakerCommand implements ICommand {
 			"    Reloads the server-side script (experimental)",
 			"minetweaker logdamage=on",
 			"    Enables damage logging",
-			"minetweaker logdamage=off"
+			"minetweaker logdamage=off",
+			"    Disables damage logging",
+			"minetweaker reload",
+			"    Reloads the server script"
 		}, "\n");
 	}
 

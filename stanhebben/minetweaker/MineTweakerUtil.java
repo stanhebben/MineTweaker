@@ -2,6 +2,8 @@ package stanhebben.minetweaker;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 import net.minecraft.item.ItemStack;
@@ -278,44 +281,98 @@ public class MineTweakerUtil {
 	}
 	
 	public static void getSubBlocks(int id, List<ItemStack> output) {
+		Block block = Block.blocksList[id];
+		if (block == null) return;
+		
 		if (MinecraftServer.getServer() != null && MinecraftServer.getServer().isDedicatedServer()) {
 			// why, oh why, did they not implement getSubBlocks on dedicated servers. fuck you Forge!
-			HashSet<String> found = new HashSet<String>();
-			for (int i = 0; true; i++) {
-				ItemStack value = new ItemStack(id, 1, i);
+			// but.. perhaps we have the method anyways?
+			Class<? extends Block> cls = block.getClass();
+			Method method = null;
+			try {
+				method = cls.getMethod("func_71879_a", int.class, CreativeTabs.class, List.class);
+			} catch (Throwable ex) {
+				// ignore silently
+			}
+			if (method == null) {
 				try {
-					String name = Block.blocksList[id].getUnlocalizedName();
-					if (name != null && !found.contains(name)) {
-						found.add(name);
-						output.add(value);
-						continue;
-					}
-				} catch (Exception ex) {}
-				break;
+					method = cls.getMethod("getSubBlocks", int.class, CreativeTabs.class, List.class);
+				} catch (Throwable ex) {
+					// ignore silently
+				}
+			}
+			if (method == null) {
+				//Tweaker.log(Level.WARNING, "Could not load getSubBlocks for block " + id + ". Subitem names may be unavailable.");
+				HashSet<String> found = new HashSet<String>();
+				for (int i = 0; true; i++) {
+					ItemStack value = new ItemStack(id, 1, i);
+					try {
+						String name = Block.blocksList[id].getUnlocalizedName();
+						if (name != null && !found.contains(name)) {
+							found.add(name);
+							output.add(value);
+							continue;
+						}
+					} catch (Throwable ex) {}
+					break;
+				}
+			} else {
+				try {
+					method.invoke(block, id, null, output);
+				} catch (Throwable ex) {
+					// ignore silently
+				}
 			}
 		} else {
-			Block.blocksList[id].getSubBlocks(id, null, output);
+			block.getSubBlocks(id, null, output);
 		}
 	}
 	
 	public static void getSubItems(int id, List<ItemStack> output) {
+		Item item = Item.itemsList[id];
+		if (item == null) return;
+		
 		if (MinecraftServer.getServer() != null && MinecraftServer.getServer().isDedicatedServer()) {
 			// why, oh why, did they not implement getSubItems on dedicated servers. fuck you Forge!
-			HashSet<String> found = new HashSet<String>();
-			for (int i = 0; true; i++) {
-				ItemStack value = new ItemStack(id, 1, i);
+			// but.. perhaps we have the method anyways?
+			Class<? extends Item> cls = item.getClass();
+			Method method = null;
+			try {
+				method = cls.getMethod("func_77633_a", int.class, CreativeTabs.class, List.class);
+			} catch (Throwable ex) {
+				// ignore silently
+			}
+			if (method == null) {
 				try {
-					String name = Item.itemsList[id].getUnlocalizedName();
-					if (name != null && !found.contains(name)) {
-						found.add(name);
-						output.add(value);
-						continue;
-					}
-				} catch (Exception ex) {}
-				break;
+					method = cls.getMethod("getSubItems", int.class, CreativeTabs.class, List.class);
+				} catch (Throwable ex) {
+					// ignore silently
+				}
+			}
+			if (method == null) {
+				//Tweaker.log(Level.WARNING, "Could not load getSubItems for item " + id + ". Subitem names may be unavailable.");
+				HashSet<String> found = new HashSet<String>();
+				for (int i = 0; true; i++) {
+					ItemStack value = new ItemStack(id, 1, i);
+					try {
+						String name = Item.itemsList[id].getUnlocalizedName();
+						if (name != null && !found.contains(name)) {
+							found.add(name);
+							output.add(value);
+							continue;
+						}
+					} catch (Throwable ex) {}
+					return;
+				}
+			} else {
+				try {
+					method.invoke(item, id, null, output);
+				} catch (Throwable ex) {
+					// ignore silently
+				}
 			}
 		} else {
-			Item.itemsList[id].getSubItems(id, null, output);
+			item.getSubItems(id, null, output);
 		}
 	}
 	public static String formatItemName(String itemName) {

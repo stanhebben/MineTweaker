@@ -152,7 +152,7 @@ public class HashSetI {
                 }
                 int ref = index;
                 while (newKeys[index] != Integer.MIN_VALUE) {
-                    index++;
+                    index = (index + 1) & newMask;
                 }
                 newNext[ref] = index + 1;
 

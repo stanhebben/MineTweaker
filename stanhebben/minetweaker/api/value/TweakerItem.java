@@ -70,6 +70,14 @@ public abstract class TweakerItem extends TweakerValue {
 	public abstract ItemStack make(int amount);
 	
 	/**
+	 * Converts this item to an item stack. The item stack returned by this function
+	 * may reuse item stack instances.
+	 * 
+	 * @return item stack
+	 */
+	public abstract ItemStack make();
+	
+	/**
 	 * Retrieves the unlocalized item name. That item name should resolve to
 	 * this item instance, if possible; or to a similar item.
 	 * 
@@ -178,7 +186,7 @@ public abstract class TweakerItem extends TweakerValue {
 	
 	@Override
 	public TweakerItemStack asItemStack() {
-		return new TweakerItemStack(make(1));
+		return new TweakerItemStack(make());
 	}
 	
 	@Override

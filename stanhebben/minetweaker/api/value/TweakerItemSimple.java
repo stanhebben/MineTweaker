@@ -43,11 +43,12 @@ public class TweakerItemSimple extends TweakerItem {
 
 	@Override
 	public ItemStack make(int amount) {
-		if (amount == 1) {
-			return stack;
-		} else {
-			return new ItemStack(id, amount, 0);
-		}
+		return new ItemStack(id, amount, 0);
+	}
+	
+	@Override
+	public ItemStack make() {
+		return stack;
 	}
 
 	@Override

@@ -14,22 +14,22 @@ public class ParseException extends RuntimeException {
 	private final String message;
 	
     public ParseException(Token token, String error) {
-        super("Error parsing line " + token.getLine() + ":" + token.getLineOffset() + " - " + error + " (last token: " + token.getValue() + ")");
+        super(token == null ? "Error at end of file - " + error : "Error parsing line " + token.getLine() + ":" + token.getLineOffset() + " - " + error + " (last token: " + token.getValue() + ")");
         
         this.token = token;
         this.message = error;
     }
     
     public String getFile() {
-    	return token.getFile();
+    	return token == null ? null : token.getFile();
     }
     
     public int getLine() {
-    	return token.getLine();
+    	return token == null ? -1 : token.getLine();
     }
     
     public int getLineOffset() {
-    	return token.getLineOffset();
+    	return token == null ? -1 : token.getLineOffset();
     }
     
     public String getExplanation() {

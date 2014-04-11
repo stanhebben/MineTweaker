@@ -44,6 +44,11 @@ public class TweakerItemDamaged extends TweakerItem {
 	}
 
 	@Override
+	public ItemStack make() {
+		return make(1);
+	}
+
+	@Override
 	public String getName() {
 		return Item.itemsList[id].getUnlocalizedName();
 	}

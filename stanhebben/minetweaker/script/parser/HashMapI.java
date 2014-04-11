@@ -8,6 +8,7 @@ package stanhebben.minetweaker.script.parser;
  * A HashMap implementation which is optimized for integer keys.
  *
  * @author Stan Hebben
+ * @param <T>
  */
 public class HashMapI<T> {
     private int[] keys;
@@ -169,7 +170,7 @@ public class HashMapI<T> {
                 }
                 int ref = index;
                 while (newKeys[index] != Integer.MIN_VALUE) {
-                    index++;
+                    index = (index + 1) & newMask;
                 }
                 newNext[ref] = index + 1;
 
@@ -196,10 +197,12 @@ public class HashMapI<T> {
             skip();
         }
 
+		@Override
         public boolean hasNext() {
             return i < keys.length;
         }
 
+		@Override
         public int next() {
             int result = keys[i++];
             skip();

@@ -89,10 +89,11 @@ public class TokenStream implements Iterator<Token> {
     }
 
     public Token required(int type, String error) {
-        if (peek().getType() == type) {
+		Token t = peek();
+        if (t != null && t.getType() == type) {
             return next();
         } else {
-            throw new ParseException(peek(), error);
+            throw new ParseException(t, error);
         }
     }
 

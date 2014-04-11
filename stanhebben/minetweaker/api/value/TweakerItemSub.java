@@ -50,11 +50,12 @@ public final class TweakerItemSub extends TweakerItem {
 
 	@Override
 	public ItemStack make(int amount) {
-		if (amount == 1) {
-			return stack;
-		} else {
-			return new ItemStack(id, amount, meta);
-		}
+		return new ItemStack(id, amount, meta);
+	}
+	
+	@Override
+	public ItemStack make() {
+		return stack;
 	}
 
 	@Override

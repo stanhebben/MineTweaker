@@ -91,7 +91,7 @@ import stanhebben.minetweaker.mods.te.ThermalExpansionSupport;
  * 
  * @author Stan Hebben
  */
-@Mod(modid = "MineTweaker", name = "MineTweaker", version = MineTweaker.MCVERSION + "-2.1.2")
+@Mod(modid = "MineTweaker", name = "MineTweaker", version = MineTweaker.MCVERSION + "-2.1.2"/*, dependencies = "before:ThermalExpansion"*/)
 @NetworkMod(clientSideRequired = true, serverSideRequired = true, channels = {TweakerPacketHandler.CHANNEL_SERVERSCRIPT}, packetHandler = TweakerPacketHandler.class)
 public class MineTweaker {
 	//#ifdef MC152
@@ -258,7 +258,8 @@ public class MineTweaker {
 	public void reloadScripts() {
 		MinecraftServer server = MinecraftServer.getServer();
 		serverScriptBytes = getServerScripts(server);
-		signalServerStart(serverAddress, serverScriptBytes);
+		//signalServerStart(serverAddress, serverScriptBytes);
+		Tweaker.apply(new ServerAction(new InetSocketAddress("myself", 0), serverScriptBytes));
 		errorMessages.clear();
 		
 		Packet packet;
@@ -348,6 +349,8 @@ public class MineTweaker {
 				onError(ex.getFile().getName() + ":" + ex.getLine() + " " + ex.getExplanation());
 			} catch (ParseException ex) {
 				onError(ex.getFile() + ":" + ex.getLine() + " " + ex.getExplanation());
+			} catch (Exception ex) {
+				onError("Exception: " + ex.getMessage());
 			}
 		}
 	}
