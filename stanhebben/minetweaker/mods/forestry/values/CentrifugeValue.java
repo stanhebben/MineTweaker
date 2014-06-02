@@ -8,7 +8,7 @@ package stanhebben.minetweaker.mods.forestry.values;
 
 import stanhebben.minetweaker.api.value.TweakerField;
 import stanhebben.minetweaker.api.value.TweakerValue;
-import stanhebben.minetweaker.mods.gregtech.functions.CentrifugeAddRecipeFunction;
+import stanhebben.minetweaker.mods.forestry.functions.CentrifugeAddRecipeFunction;
 
 /**
  *
